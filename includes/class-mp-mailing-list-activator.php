@@ -34,24 +34,24 @@ class Mp_Mailing_List_Activator {
 
 		require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-		self::ds_mailing_lists_create_table();
+		self::mp_mailing_lists_create_table();
 	}
 
-	public static function ds_mailing_lists_create_table()
+	public static function mp_mailing_lists_create_table()
 	{
 		global $table_prefix, $wpdb;
 
-		$wp_ds_table = $table_prefix . "ds_mailing_lists";
+		$wp_mp_table = $table_prefix . "mp_mailing_lists";
 
-		if ($wpdb->get_var("show tables like '$wp_ds_table'") != $wp_ds_table) {
-			$sql = "CREATE TABLE `" . $wp_ds_table . "` ( ";
+		if ($wpdb->get_var("show tables like '$wp_mp_table'") != $wp_mp_table) {
+			$sql = "CREATE TABLE `" . $wp_mp_table . "` ( ";
 			$sql .= "  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ";
 
-			$sql .= "  `email`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, ";
+			$sql .= "  `email_address`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 
-			$sql .= "  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP, ";
-			$sql .= "  `updated_at` TIMESTAMP DEFAULT NULL, ";
-			$sql .= "  `deleted_at` TIMESTAMP DEFAULT NULL, ";
+			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
+			$sql .= "  `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, ";
+			$sql .= "  `deleted_at` TIMESTAMP NULL DEFAULT NULL, ";
 
 			$sql .= "  PRIMARY KEY (`id`) ";
 			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ; ";
