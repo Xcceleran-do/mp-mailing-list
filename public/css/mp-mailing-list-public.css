@@ -2,3 +2,37 @@
  * All of the CSS for your public-facing functionality should be
  * included in this file.
  */
+.notify-btn {
+  background-color: #3c48a5;
+  border: 1px solid #3c48a5;
+  color: #fff;
+  padding: 19px 34px;
+  border-radius: 9px;
+  margin-left: 18px;
+  font-size: 20px;
+  cursor: pointer;
+}
+.coming-sub-heading {
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  margin: 0 5px;
+  color: #424242 !important;
+  font-family: "noto serif", sans-serif !important;
+}
+.coming-input {
+  border: 1px solid #878686;
+  height: 60px;
+  padding: 26px 19px;
+  border-radius: 9px;
+  width: 76%;
+  font-size: 18px;
+  color: #787777;
+}
+.input-container {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
