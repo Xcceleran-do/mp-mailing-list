@@ -27,12 +27,25 @@ class Ds_mails
     {
     }
 
-    public function Ds_mails_form_code()
+    public function ds_mails_list_code()
     {
         include_once ds_mails_PLAGIN_DIR . '/public/partials/mails/form.php';
     }
-    public function wp_ajax_ds_mails_submit()
+    public function wp_ajax_mp_gl_save_new_email()
     {
+
+        $email = $_POST['email'];
+
+        if(isset($email)){
+		global $table_prefix, $wpdb;
+			$wp_mp_table = $table_prefix . "ds_mailing_lists";
+            $wpdb->insert($wp_mp_table, array(
+                'email' => $email,
+            ));
+            echo "done";
+        }else{
+            echo "failed";
+        }
 
         die();
     }

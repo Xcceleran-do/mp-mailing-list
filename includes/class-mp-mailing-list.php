@@ -175,7 +175,8 @@ class Mp_Mailing_List {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
 		$Ds_mails = new Ds_mails();
-		$this->loader->add_shortcode( 'Ds_mails_code', $Ds_mails, 'Ds_mails_code' );
+		$this->loader->add_shortcode( 'ds_mails_list_code', $Ds_mails, 'ds_mails_list_code' );
+		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $Ds_mails, 'wp_ajax_mp_gl_save_new_email');
 	}
 
 	/**
