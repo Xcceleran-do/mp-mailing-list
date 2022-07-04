@@ -6,6 +6,7 @@
 <script>
     const email = document.getElementById('email')
     const notifyBtn = document.querySelector('.notify-btn')
+    var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
     notifyBtn.addEventListener('click', () => {
         jQuery.ajax({
             url: ajaxurl,
