@@ -38,9 +38,9 @@ class Ds_mails
 
         if(isset($email)){
 		global $table_prefix, $wpdb;
-			$wp_mp_table = $table_prefix . "ds_mailing_lists";
+			$wp_mp_table = $table_prefix . "mp_mailing_lists";
             $wpdb->insert($wp_mp_table, array(
-                'email' => $email,
+                'email_address' => $email,
             ));
             echo "done";
         }else{
