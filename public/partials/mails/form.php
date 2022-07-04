@@ -12,11 +12,13 @@
     const email = document.getElementById('email')
     const notifyBtn = document.querySelector('.notify-btn')
     var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+    const thankYou = `
+        <h2>Thanks for contacting us! We will be in touch with you shortly.</h2>
+    `
     notifyBtn.addEventListener('click', () => {
         console.log(validateFn(email));
         if (validateFn(email)) {
             loader('notify-btn', true, 'Register')
-
             jQuery.ajax({
                 url: ajaxurl,
                 type: 'POST',
@@ -28,6 +30,8 @@
                     console.log(response);
                     if (response === "done") {
                         loader('notify-btn', false, 'Thank you')
+                        document.querySelector('.input-text-container').innerHTML = thankYou
+                        notifyBtn.remove()
                     }
                 }
             });
