@@ -29,7 +29,7 @@ class Ds_mails
 
     public function ds_mails_list_code()
     {
-        include_once ds_mails_PLAGIN_DIR . '/public/partials/mails/form.php';
+        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/form.php';
     }
     public function wp_ajax_mp_gl_save_new_email()
     {
