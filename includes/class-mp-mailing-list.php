@@ -177,6 +177,7 @@ class Mp_Mailing_List {
 		$Ds_mails = new Ds_mails();
 		$this->loader->add_shortcode( 'ds_mails_list_code', $Ds_mails, 'ds_mails_list_code' );
 		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $Ds_mails, 'wp_ajax_mp_gl_save_new_email');
+		$this->loader->add_action('wp_ajax_nopriv_mp_gl_save_new_email', $Ds_mails, 'wp_ajax_mp_gl_save_new_email');
 	}
 
 	/**

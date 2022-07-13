@@ -47,7 +47,7 @@ class Mp_Mailing_List_Activator {
 			$sql = "CREATE TABLE `" . $wp_mp_table . "` ( ";
 			$sql .= "  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ";
 
-			$sql .= "  `email_address`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, ";
+			$sql .= "  `email_address`  varchar(75) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 
 			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
 			$sql .= "  `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, ";
