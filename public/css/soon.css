@@ -1,0 +1,62 @@
+.coming-soon-container {
+	background-image: url('../assets/Gradient-comming-soon.png');
+	background-size: cover;
+	background-repeat: no-repeat;
+	min-height: 100vh;
+	text-align: center;
+	text-transform: capitalize;
+	margin: auto;
+}
+.coming-soon-container h1 {
+	font-weight: 700;
+	font-size: 80px;
+	line-height: 96px;
+	margin: auto;
+	padding-top: 10rem;
+}
+.coming-soon-container .sub-content {
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 40px;
+	margin-top: 26px;
+	max-width: 678px;
+	margin-left: auto;
+	margin-right: auto;
+}
+.input-container {
+	margin-top: 28px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-wrap: wrap;
+	max-width: 727px;
+	margin-left: auto;
+	margin-right: auto;
+	padding-bottom: 28px;
+}
+.input-text-container {
+	width: 76%;
+}
+.coming-input {
+	border: 1px solid #878686;
+	height: 60px;
+	padding: 26px 19px;
+	border-radius: 9px;
+	font-size: 18px;
+	color: #787777;
+	width: 100%;
+}
+.notify-btn {
+	background-color: var(--color-new-lightblue);
+	border: 1px solid var(--color-new-lightblue);
+	color: #fff;
+	padding: 19px 34px;
+	border-radius: 9px;
+	margin-left: 18px;
+	font-size: 20px;
+	cursor: pointer;
+}
+.error-txt{
+	position: absolute;
+	margin-top: 10px;
+}

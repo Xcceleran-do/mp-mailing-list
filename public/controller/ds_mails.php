@@ -31,6 +31,13 @@ class Ds_mails
     {
         include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/form.php';
     }
+    public function ds_mails_soon_code($data)
+    {
+        if(isset($data['title']))
+        $title = $data['title'];
+        else $title = "";
+        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/soon.php';
+    }
     public function wp_ajax_mp_gl_save_new_email()
     {
 
