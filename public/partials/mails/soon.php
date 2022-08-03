@@ -33,9 +33,9 @@
   const thankYou = `
         <h2>Thank you for subscribing.</h2>
     `;
-
-  title.textContent = 'signup to our Newsletter'
-  subTitle.textContent = 'If you want to get notified about mindplex updates,register your email address'
+    if(page_type === 'newsletter')
+        title.textContent = 'signup to our Newsletter'
+        subTitle.textContent = 'If you want to get notified about mindplex updates,register your email address'
     
   notifyBtn.addEventListener("click", () => {
     // console.log(validateFn(email));
