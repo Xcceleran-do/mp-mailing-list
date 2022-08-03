@@ -6,6 +6,7 @@
 	text-align: center;
 	text-transform: capitalize;
 	margin: auto;
+	padding-bottom: 2rem;
 }
 .coming-soon-container.coming-soon-container h1 {
 	font-weight: 700;
@@ -36,6 +37,18 @@
 }
 .coming-soon-container .input-text-container {
 	width: 76%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	/* flex: 0; */
+}
+.coming-input-textarea{
+	height: auto !important;
+}
+.coming-soon-container .input-text-container label{
+	align-self: baseline;
+	margin: 10px 0;
 }
 .coming-soon-container .coming-input {
 	border: 1px solid #878686;

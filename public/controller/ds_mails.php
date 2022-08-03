@@ -31,6 +31,10 @@ class Ds_mails
     {
         include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/form.php';
     }
+    public function ds_mails_contact_editors_code()
+    {
+        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/contact_editors.php';
+    }
     public function ds_mails_soon_code($data)
     {
         if(isset($data['title']))

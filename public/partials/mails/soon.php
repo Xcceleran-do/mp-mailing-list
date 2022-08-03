@@ -8,6 +8,7 @@
       window.location.href = `<?php echo home_url('/edit-profile/?tab=settings')?>`;
     }
 </script>
+
 <div class="coming-soon-container">
     <h1 class="comment-title">we are coming soon <?php echo $title ?></h1>
     <p class="sub-content">We are almost there! If you want to get notified when the website goes live, subscribe to our mailing list!</p>
