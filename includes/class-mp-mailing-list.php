@@ -181,9 +181,12 @@ class Mp_Mailing_List {
 		
 		$Mp_contact = new Mp_contact();
 		$this->loader->add_shortcode( 'mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code' );
+		$this->loader->add_action('wp_ajax_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
 		
 		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
 		$this->loader->add_action('wp_ajax_nopriv_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
+		
 	}
 
 	/**

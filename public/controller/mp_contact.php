@@ -31,4 +31,25 @@ class Mp_contact
     {
         include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_editors.php';
     }
+
+    public function wp_ajax_mp_mails_insert_contact()
+    {
+
+        $firstName = $_POST['firstName'];
+        $lastName = $_POST['lastName'];
+        $email = $_POST['email'];
+        $message = $_POST['message'];
+
+		global $table_prefix, $wpdb;
+			$wp_mp_table = $table_prefix . "mp_mailing_contact";
+            $wpdb->insert($wp_mp_table, array(
+                'fname' => $firstName,
+                'lname' => $lastName,
+                'email_address' => $email,
+                'message' => $message,
+                'user_id' => get_current_user_id()
+            ));
+
+        die();
+    }
 }

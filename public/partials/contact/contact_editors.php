@@ -23,3 +23,32 @@
         </div>
         <button class="notify-btn" id="notify-btn">Send message</button>
 </div>
+
+     
+
+<script type="text/javascript">
+  var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+
+  jQuery(document).ready(function() {
+      
+
+      jQuery("#notify-btn").click(function() {
+
+          jQuery.ajax({
+              url: ajaxurl,
+              type: 'POST',
+              data: {
+
+                  action: 'mp_mails_insert_contact',
+                  firstName: jQuery("#firstName").val(),
+                  lastName: jQuery("#lastName").val(),
+                  email: jQuery("#email").val(),
+                  message: jQuery("#message").val(),
+              },
+              success: function(response) {
+                  console.log(response);
+              }
+          });
+      });
+  });
+</script>
