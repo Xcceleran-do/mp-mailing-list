@@ -40,6 +40,11 @@ class Mp_contact
         $email = $_POST['email'];
         $message = $_POST['message'];
 
+        if(isset($firstName) && !empty($firstName) &&
+        isset($lastName) && !empty($lastName) &&
+        isset($email) && !empty($email) &&
+        isset($message) && !empty($message)
+        ){
 		global $table_prefix, $wpdb;
 			$wp_mp_table = $table_prefix . "mp_mailing_contact";
             $wpdb->insert($wp_mp_table, array(
@@ -49,7 +54,7 @@ class Mp_contact
                 'message' => $message,
                 'user_id' => get_current_user_id()
             ));
-
+        }
         die();
     }
 }
