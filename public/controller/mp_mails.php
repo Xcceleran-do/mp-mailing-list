@@ -6,8 +6,8 @@
  * @link       https://github.com/EsubalewAmenu
  * @since      1.0.0
  *
- * @package    Ds_mails
- * @subpackage Ds_mails/admin
+ * @package    MP_mails
+ * @subpackage MP_mails/admin
  */
 
 /**
@@ -16,31 +16,27 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the admin-specific stylesheet and JavaScript.
  *
- * @package    Ds_mails
- * @subpackage Ds_mails/admin
+ * @package    MP_mails
+ * @subpackage MP_mails/admin
  * @author     Esubalew Amenu <esubalew.a2009@gmail.com>
  */
-class Ds_mails
+class Mp_mails
 {
 
     public function __construct()
     {
     }
 
-    public function ds_mails_list_code()
+    public function mp_mails_list_code()
     {
-        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/form.php';
+        include_once mp_mails_PLAGIN_DIR . 'public/partials/mails/form.php';
     }
-    public function ds_mails_contact_editors_code()
-    {
-        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/contact_editors.php';
-    }
-    public function ds_mails_soon_code($data)
+    public function mp_mails_soon_code($data)
     {
         if(isset($data['title']))
         $title = $data['title'];
         else $title = "";
-        include_once ds_mails_PLAGIN_DIR . 'public/partials/mails/soon.php';
+        include_once mp_mails_PLAGIN_DIR . 'public/partials/mails/soon.php';
     }
     public function wp_ajax_mp_gl_save_new_email()
     {

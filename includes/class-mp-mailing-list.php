@@ -121,7 +121,8 @@ class Mp_Mailing_List {
 		 * side of the site.
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-mp-mailing-list-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/ds_mails.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mp_mails.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mp_contact.php';
 
 		$this->loader = new Mp_Mailing_List_Loader();
 
@@ -174,13 +175,15 @@ class Mp_Mailing_List {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$Ds_mails = new Ds_mails();
-		$this->loader->add_shortcode( 'ds_mails_list_code', $Ds_mails, 'ds_mails_list_code' );
-		$this->loader->add_shortcode( 'ds_mails_soon_code', $Ds_mails, 'ds_mails_soon_code' );
-		$this->loader->add_shortcode( 'ds_mails_contact_editors_code', $Ds_mails, 'ds_mails_contact_editors_code' );
+		$mp_mails = new Mp_mails();
+		$this->loader->add_shortcode( 'mp_mails_list_code', $mp_mails, 'mp_mails_list_code' );
+		$this->loader->add_shortcode( 'mp_mails_soon_code', $mp_mails, 'mp_mails_soon_code' );
 		
-		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $Ds_mails, 'wp_ajax_mp_gl_save_new_email');
-		$this->loader->add_action('wp_ajax_nopriv_mp_gl_save_new_email', $Ds_mails, 'wp_ajax_mp_gl_save_new_email');
+		$Mp_contact = new Mp_contact();
+		$this->loader->add_shortcode( 'mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code' );
+		
+		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
+		$this->loader->add_action('wp_ajax_nopriv_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
 	}
 
 	/**

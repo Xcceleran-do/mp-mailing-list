@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo ds_mails_PLAGIN_URL . 'public/css/soon.css' ?>">
+<link rel="stylesheet" href="<?php echo mp_mails_PLAGIN_URL . 'public/css/soon.css' ?>">
 <div class="coming-soon-container">
     <h1 class="comment-title">Contact our editors</h1>
     <p class="sub-content">fill the forms below to send a message to our ediors </p>

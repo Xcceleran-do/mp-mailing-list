@@ -30,12 +30,12 @@ if ( ! defined( 'WPINC' ) ) {
 	die;
 }
 
-if(!defined("ds_mails"))
-define("ds_mails","ds_mails");
-if(!defined("ds_mails_PLAGIN_DIR"))
-define("ds_mails_PLAGIN_DIR",plugin_dir_path( __FILE__ ));
-if(!defined("ds_mails_PLAGIN_URL"))
-define("ds_mails_PLAGIN_URL", plugin_dir_url(__FILE__));
+if(!defined("mp_mails"))
+define("mp_mails","mp_mails");
+if(!defined("mp_mails_PLAGIN_DIR"))
+define("mp_mails_PLAGIN_DIR",plugin_dir_path( __FILE__ ));
+if(!defined("mp_mails_PLAGIN_URL"))
+define("mp_mails_PLAGIN_URL", plugin_dir_url(__FILE__));
 
 /**
  * Currently plugin version.
