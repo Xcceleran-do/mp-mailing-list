@@ -46,7 +46,8 @@
                   message: jQuery("#message").val(),
               },
               success: function(response) {
-                  console.log(response);
+                  // console.log(response);
+                  alert(response);
               }
           });
       });
