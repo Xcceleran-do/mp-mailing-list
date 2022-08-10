@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<?php echo ds_mails_PLAGIN_URL . 'public/css/soon.css' ?>">
+<link rel="stylesheet" href="<?php echo mp_mails_PLAGIN_URL . 'public/css/soon.css' ?>">
 <script>
   const isLoggedIn = `<?php echo get_current_user_id() ?>`
   let queryString = window.location.search;
