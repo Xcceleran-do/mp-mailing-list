@@ -10,10 +10,15 @@
 }
 .coming-soon-container.coming-soon-container h1 {
 	font-weight: 700;
-	font-size: 80px;
+	font-size: 40px;
 	line-height: 96px;
 	margin: auto;
 	padding-top: 10rem;
+}
+@media screen and (min-width:600px) {
+	.coming-soon-container.coming-soon-container h1{
+		font-size: 80px;
+	}
 }
 .coming-soon-container.coming-soon-container .sub-content {
 	font-weight: 400;
