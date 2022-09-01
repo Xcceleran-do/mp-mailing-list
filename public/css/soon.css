@@ -78,3 +78,6 @@
 	position: absolute;
 	margin-top: 10px;
 }
+.error-txt a{
+	color: var(--color-new-cyan);
+  }
