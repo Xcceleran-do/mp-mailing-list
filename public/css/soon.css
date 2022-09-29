@@ -28,6 +28,7 @@
 	max-width: 678px;
 	margin-left: auto;
 	margin-right: auto;
+	text-transform: initial;
 }
 .coming-soon-container .input-container {
 	margin-top: 28px;
