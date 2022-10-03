@@ -170,7 +170,6 @@
         <h2>Thanks for contacting us! We will be in touch with you shortly.</h2>
     `;
   notifyBtn.addEventListener("click", () => {
-    console.log(validateFn(email));
     if (validateFn(email)) {
       loader("notify-btn", true, "Register");
       $.ajax({
