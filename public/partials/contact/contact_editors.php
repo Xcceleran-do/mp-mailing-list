@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="<?php echo mp_mails_PLAGIN_URL . 'public/css/soon.css' ?>">
 <div class="coming-soon-container">
-    <h1 class="comment-title">Contact our editors</h1>
-    <p class="sub-content">fill the forms below to send a message to our ediors </p>
+    <h1 class="comment-title">Contact Our Editors</h1>
+    <p class="sub-content">Fill the forms below to send a message to our ediors </p>
     <div class="input-container">
           <div class="input-text-container">
             <label for="firstName">First Name</label>
