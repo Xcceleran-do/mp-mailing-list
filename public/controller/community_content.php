@@ -41,6 +41,10 @@ class Mp_mails_community_content
             $choose_content = self::uploadFile("choose_content");
             update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $choose_content);
         }
+        if(isset($_POST['contentLink'])){
+            $content_link = sanitize_url($_POST['contentLink']);
+            update_user_meta(get_current_user_id(), 'mp_mails_content_link', $content_link);
+        }
         die();
     }
 
