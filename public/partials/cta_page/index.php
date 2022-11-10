@@ -21,7 +21,7 @@
 		toModerate.addEventListener('click',()=>{
             if (Number(isLoggedIn) <= 0) {
                 signInFn()
-                return signInFn.openSignModal('Please login or register to interact with our content!')
+                return signInFn.openSignModal('Please login or register to Contribute!')
             }
             else if(Number(isLoggedIn) > 0){
                 location.href = `<?php echo home_url("mindplex-moderator")?>`
