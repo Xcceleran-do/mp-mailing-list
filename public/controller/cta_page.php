@@ -46,10 +46,15 @@ class Mp_mails_cta_page
         isset($_POST['message']) && !empty($_POST['message'])
         ){
             $message = esc_attr($_POST['message']);
-            $user_id = esc_attr($_POST['userId']);
 		    
-            $id = update_user_meta($user_id,'mp_mails_moderator',$message);
-            echo $id;
+            $id = update_user_meta(get_current_user_id(),'mp_mails_moderator',$message);
+
+            $user = "Kebede" . get_current_user_id();
+
+            $emailContent = $user . " is applied for moderator " . $message;
+
+            $headers = array('Content-Type: text/html; charset=UTF-8');
+            echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex blabla', $emailContent, $headers);
             
         }
         die();
