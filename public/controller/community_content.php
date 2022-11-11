@@ -36,15 +36,30 @@ class Mp_mails_community_content
 
     public function wp_ajax_mp_mail_upload_content(){
 
-        if (self::isUploaded("choose_content")) {
 
-            $choose_content = self::uploadFile("choose_content");
-            update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $choose_content);
+        $first_name = get_user_meta(get_current_user_id(),'first_name',true);
+       
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        $attachments = array();
+        $content_link ='';
+        if(isset($_FILES['choose_content'])){
+            if (self::isUploaded("choose_content")) {
+                $choose_content = self::uploadFile("choose_content");
+                update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $choose_content);
+                $attachments [] = wp_upload_dir()['path'] . '/' . $_FILES['choose_content']['name'];
+            }
         }
-        if(isset($_POST['contentLink'])){
-            $content_link = sanitize_url($_POST['contentLink']);
-            update_user_meta(get_current_user_id(), 'mp_mails_content_link', $content_link);
-        }
+            if(isset($_POST['contentLink'])){
+                $content_link = sanitize_url($_POST['contentLink']);
+                update_user_meta(get_current_user_id(), 'mp_mails_content_link', $content_link);
+            }
+        
+            $emailContent = $first_name . " has sent content " . $content_link ? $content_link:'';
+            if($attachments){
+                echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex Community Content', $emailContent, $headers, $attachments);
+            }
+            else echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex Community Content', $emailContent, $headers);
+
         die();
     }
 
