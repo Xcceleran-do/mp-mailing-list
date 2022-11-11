@@ -27,42 +27,54 @@
   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
   const contentLink = document.getElementById("contentLink")
   jQuery("#upload_content").click(function() {
-    // if (isAllFiled()) {
+    function isFilled(){
+      if(jQuery('#choose_content').prop('files')[0] || contentLink.value) return true;
+      else return false
+    }
         showLoader()
-        const choose_content = jQuery('#choose_content').prop('files')[0];
-        // if(!choose_content || contentLink){
-        //   hideLoader()
-        //   alert('Please select a content')
-        // }
-        const fileSize = choose_content.size / 1024 / 1024 // MB
-        if (fileSize > 0.8) {
-            hideLoader()
-            alert('The maximum file size should be less than 800kb ')
-        }
-
         const form_data = new FormData();
-
         form_data.append('action', 'mp_mail_upload_content');
-        form_data.append('choose_content', choose_content);
-        form_data.append('contentLink', contentLink.value);
-
-
-        jQuery.ajax({
-            url: ajaxurl,
-            type: 'post',
-            contentType: false,
-            processData: false,
-            data: form_data,
-            success: function(response) {
-                console.log(response);
-                hideLoader()
-            }
-            error: function(responsse){
-              hideLoader();
-              console.log('error: ',response);
-            }
-        });
-    // }
+        if(jQuery('#choose_content').prop('files')[0]){
+          
+          var choose_content = jQuery('#choose_content').prop('files')[0];
+  
+          const fileSize = choose_content.size / 1024 / 1024 // MB
+          if (fileSize > 0.8) {
+              hideLoader()
+              alert('The maximum file size should be less than 800kb ')
+          }
+          form_data.append('choose_content', choose_content);
+          
+        }
+        if(contentLink.value ) {
+          form_data.append('contentLink', contentLink.value);
+        
+        }
+       
+        if(isFilled()){
+          jQuery.ajax({
+              url: ajaxurl,
+              type: 'post',
+              contentType: false,
+              processData: false,
+              data: form_data,
+              success: function(response) {
+                  console.log(response);
+                  hideLoader()
+                  alert("Content submitted")
+                  contentLink.value = '';
+                  document.getElementById("choose_content").value = '';
+                  
+              },
+              error: function(responsse){
+                hideLoader();
+                console.log('error: ',response);
+              }
+          });
+        } else  {
+          hideLoader()
+          alert("Please ensert a link to your content or upload one.")
+        } 
 
 });
 
