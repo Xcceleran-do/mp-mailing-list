@@ -52,7 +52,7 @@ class Mp_mails_cta_page
             $emailContent = $first_name . " is applied for moderator " . $message;
 
             $headers = array('Content-Type: text/html; charset=UTF-8');
-            echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex blabla', $emailContent, $headers);
+            echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
         }
         die();
     }
