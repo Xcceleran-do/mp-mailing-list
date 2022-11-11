@@ -84,18 +84,20 @@
     const message = document.querySelector('.message')
 
     submitLetter.addEventListener('click',()=>{
+      if(message.textContent !== ''){
       jQuery.ajax({
         url: ajaxurl,
         type: 'POST',
         data: {
             action: 'mp_mails_save_moderator',
             message: message.innerHTML,
-            userId: `<?php echo get_current_user_id()?>`,
         },
         success: function(response) {
           console.log(response);
+          alert("Message Sent !")
         }
       });
+    }else alert("Please specify your reason")
     })
   })
 </script>

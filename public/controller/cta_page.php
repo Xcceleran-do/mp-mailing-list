@@ -42,20 +42,17 @@ class Mp_mails_cta_page
 
     public function wp_ajax_mp_mails_save_moderator(){
         
-        if(
-        isset($_POST['message']) && !empty($_POST['message'])
-        ){
+        if(isset($_POST['message']) && !empty($_POST['message'])){
             $message = esc_attr($_POST['message']);
 		    
             $id = update_user_meta(get_current_user_id(),'mp_mails_moderator',$message);
 
-            $user = "Kebede" . get_current_user_id();
+            $first_name = get_user_meta(get_current_user_id(),'first_name',true);
 
-            $emailContent = $user . " is applied for moderator " . $message;
+            $emailContent = $first_name . " is applied for moderator " . $message;
 
             $headers = array('Content-Type: text/html; charset=UTF-8');
             echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex blabla', $emailContent, $headers);
-            
         }
         die();
     }
