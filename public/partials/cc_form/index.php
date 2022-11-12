@@ -69,7 +69,7 @@
       }
       else if(contentLink.value !== '' && !isValidLink(contentLink.value)){
         alert("invalid url")
-        return
+        return;
       }
     
       showLoader()
@@ -80,8 +80,8 @@
           processData: false,
           data: form_data,
           success: function(response) {
+            hideLoader()
               console.log(response);
-              hideLoader()
               alert("Content submitted")
               contentLink.value = '';
               document.getElementById("choose_content").value = '';
