@@ -101,6 +101,7 @@
         },
         error: function(response) {
           hideLoader()
+        }
       });
     }else alert("Please specify your reason")
     })
