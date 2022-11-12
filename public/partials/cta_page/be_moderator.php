@@ -95,6 +95,7 @@
         success: function(response) {
           console.log(response);
           alert("Message Sent !")
+          message.textContent = ''
         }
       });
     }else alert("Please specify your reason")
