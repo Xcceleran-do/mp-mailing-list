@@ -56,9 +56,9 @@ class Mp_mails_community_content
         
             $emailContent = $first_name . " has sent content " . $content_link ? $content_link:'';
             if($attachments){
-                echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex Community Content', $emailContent, $headers, $attachments);
+                echo wp_mail("editor@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
             }
-            else echo wp_mail("esubalew.a2009@gmail.com", 'Mindplex Community Content', $emailContent, $headers);
+            else echo wp_mail("editor@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
 
         die();
     }
