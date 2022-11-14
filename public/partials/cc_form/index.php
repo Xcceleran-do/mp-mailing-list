@@ -2,6 +2,7 @@
 <div class="coming-soon-container">
     <h1 class="comment-title">Submit your content here</h1>
     <p class="sub-content">Upload your content here or give us a link to your content </p>
+    
     <div class="input-container">
           <div class="input-text-container">
             <label for="contentLink">Link</label>
@@ -13,7 +14,7 @@
 
             <input type="file" id="choose_content" class="coming-input" name="">
 
-            <label for="choose_content">PDF, DOC, pptx Max size of 800K</label>
+            <label for="choose_content">PDF, DOC, pptx Max size of <?php echo wp_max_upload_size()/1024/1024 ?> MB</label>
           </div>
         </div>
         <div class="editors-btn-contian">
@@ -21,60 +22,77 @@
         </div>
 </div>
 
+
      
 
 <script type="text/javascript">
   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
   const contentLink = document.getElementById("contentLink")
   jQuery("#upload_content").click(function() {
-    function isFilled(){
-      if(jQuery('#choose_content').prop('files')[0] || contentLink.value) return true;
-      else return false
+
+    const isValidLink = url=>{
+      try{
+        return Boolean(new URL(url));
+      }catch(e){
+        return false;
+      }
     }
-        showLoader()
-        const form_data = new FormData();
-        form_data.append('action', 'mp_mail_upload_content');
-        if(jQuery('#choose_content').prop('files')[0]){
-          
-          var choose_content = jQuery('#choose_content').prop('files')[0];
+    const form_data = new FormData();
+    form_data.append('action', 'mp_mail_upload_content');
+    
+    function isEmpty(){
+      if(!jQuery('#choose_content').prop('files')[0] && contentLink.value === ''){
+        return true;
+      } 
+    }
+
   
-          const fileSize = choose_content.size / 1024 / 1024 // MB
-          if (fileSize > 0.8) {
-              hideLoader()
-              alert('The maximum file size should be less than 800kb ')
-          }
-          form_data.append('choose_content', choose_content);
-          
-        }
-        if(contentLink.value ) {
-          form_data.append('contentLink', contentLink.value);
+
+    if(!isEmpty()){
+
+      if(jQuery('#choose_content').prop('files')[0]){
         
+        var choose_content = jQuery('#choose_content').prop('files')[0];
+        const maxSize = `<?php echo wp_max_upload_size()?>`;
+
+        if (choose_content.size > maxSize) { 
+            // hideLoader()
+            alert (`The maximum file size should be less than ${(maxSize/1024/1024)} MB`);
+            return false;
         }
-       
-        if(isFilled()){
-          jQuery.ajax({
-              url: ajaxurl,
-              type: 'post',
-              contentType: false,
-              processData: false,
-              data: form_data,
-              success: function(response) {
-                  console.log(response);
-                  hideLoader()
-                  alert("Content submitted")
-                  contentLink.value = '';
-                  document.getElementById("choose_content").value = '';
-                  
-              },
-              error: function(responsse){
-                hideLoader();
-                console.log('error: ',response);
-              }
-          });
-        } else  {
-          hideLoader()
-          alert("Please ensert a link to your content or upload one.")
-        } 
+        form_data.append('choose_content', choose_content);
+  
+      }
+
+      if(isValidLink(contentLink.value)){
+        form_data.append('contentLink', contentLink.value);
+      }
+      else if(contentLink.value !== '' && !isValidLink(contentLink.value)){
+        alert("invalid url")
+        return;
+      }
+    
+      showLoader()
+      jQuery.ajax({
+          url: ajaxurl,
+          type: 'post',
+          contentType: false,
+          processData: false,
+          data: form_data,
+          success: function(response) {
+            hideLoader()
+              console.log(response);
+              alert("Content submitted")
+              contentLink.value = '';
+              document.getElementById("choose_content").value = '';
+              
+          },
+          error: function(responsse){
+            hideLoader();
+            console.log('error: ',response);
+          }
+      });
+    } else alert('Please ensert a link to your content or upload one.');
 
 });
 

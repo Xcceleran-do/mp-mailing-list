@@ -85,6 +85,7 @@
 
     submitLetter.addEventListener('click',()=>{
       if(message.textContent !== ''){
+        showLoader()
       jQuery.ajax({
         url: ajaxurl,
         type: 'POST',
@@ -93,8 +94,13 @@
             message: message.innerHTML,
         },
         success: function(response) {
+          hideLoader()
           console.log(response);
           alert("Message Sent !")
+          message.textContent = ''
+        },
+        error: function(response) {
+          hideLoader()
         }
       });
     }else alert("Please specify your reason")
