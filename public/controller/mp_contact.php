@@ -57,4 +57,26 @@ class Mp_contact
         }
         die();
     }
+
+    public function mp_gl_contact(){
+
+        if(isset($_POST['visitor_name'])
+         && isset($_POST['visitor_email']) 
+         && isset($_POST['visitor_message'])){
+  
+          $visitor_name = esc_attr($_POST['visitor_name']);
+          $visitor_email = esc_attr($_POST['visitor_email']);
+          $visitor_message = esc_attr($_POST['visitor_message']);
+  
+          $postarr = array(
+            'post_author' => $visitor_email,
+            'post_title' => $visitor_name,
+            'post_content' => $visitor_message,
+            'post_type' => 'mp_mails_contact'
+          );
+
+          $new_post_id = wp_insert_post( $postarr );
+        }
+  
+      }
 }
