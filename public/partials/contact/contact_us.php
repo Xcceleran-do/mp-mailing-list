@@ -1,17 +1,13 @@
-<div class="contact-form">
-  <img class="about-decoration-right-blur" src="<?php echo mp_gl_PLAGIN_URL . 'public/assets/about-us/elipse1.svg' ?>" alt="">
-  <img class="about-decoration-right" src="<?php echo mp_gl_PLAGIN_URL . 'public/assets/about-us/elipse2.svg' ?>" alt="">
-      <h1 class="about-contact">Contact us</h1>
-      <form class="about-us-container-form" id="theForm">
-          <label for="name">Name</label>
-          <input type="text" name="name" id="name" placeholder="Enter your full">
-          <label for="email">Email</label>
-          <input type="text" name="email" id="email" placeholder="Enter yout email address">
-          <label for="biography">Biography</label>
-          <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
-          <input type="submit" value="Submit" class="about-us-form-submit">
-      </form>
-</div>
+
+<form class="about-us-container-form" id="theForm">
+    <label for="name">Name</label>
+    <input type="text" name="name" id="name" placeholder="Enter your full">
+    <label for="email">Email</label>
+    <input type="text" name="email" id="email" placeholder="Enter yout email address">
+    <label for="biography">Biography</label>
+    <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
+    <input type="submit" value="Submit" class="about-us-form-submit">
+</form>
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
