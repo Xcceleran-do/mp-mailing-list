@@ -125,6 +125,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mp_contact.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/cta_page.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/community_content.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/become_moderator.php';
 
 		$this->loader = new Mp_Mailing_List_Loader();
 
@@ -194,9 +195,15 @@ class Mp_Mailing_List {
 		$this->loader->add_shortcode( 'mp_mails_interested_in_code', $mp_mails_cta, 'mp_mails_be_moderator' );
 		$this->loader->add_action( 'wp_ajax_mp_mails_save_moderator', $mp_mails_cta, 'wp_ajax_mp_mails_save_moderator' );
 		
+		
 		$mp_mails_cc_form = new Mp_mails_community_content();
 		$this->loader->add_shortcode( 'mp_mails_cc_code', $mp_mails_cc_form, 'mp_mails_cc_form' );
 		$this->loader->add_action( 'wp_ajax_mp_mail_upload_content', $mp_mails_cc_form, 'wp_ajax_mp_mail_upload_content' );
+		
+		$mp_mails_moderator = new Mp_mails_moderator();
+		$this->loader->add_shortcode( 'mp_mails_become_moderator_code', $mp_mails_moderator, 'mp_mails_become_moderator_code' );
+		$this->loader->add_action('wp_ajax_mp_mails_become_moderator', $mp_mails_moderator, 'wp_ajax_mp_mails_become_moderator');
+		
 		
 
 	}
