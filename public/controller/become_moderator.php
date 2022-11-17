@@ -128,7 +128,7 @@ class Mp_mails_moderator
           </html>';
     
           $headers = array('Content-Type: text/html; charset=UTF-8');
-          echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+          echo wp_mail("moderators@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
           die();
         }
     }
