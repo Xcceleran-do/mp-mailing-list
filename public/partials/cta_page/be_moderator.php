@@ -96,14 +96,18 @@
         success: function(response) {
           hideLoader()
           console.log(response);
-          alert("Message Sent !")
           message.textContent = ''
+          return showNotification('Your message has been successfully sent.')
         },
         error: function(response) {
           hideLoader()
+          return showNotification('Something went wrong please try again', 'danger')
         }
       });
-    }else alert("Please specify your reason")
+    }else {
+      hideLoader()
+      return showNotification('Message Can not be empty','danger');
+    }
     })
   })
 </script>

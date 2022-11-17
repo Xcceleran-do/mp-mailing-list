@@ -20,15 +20,16 @@ window.addEventListener('DOMContentLoaded', () => {
   const submitBtn = document.querySelector(".mod-form-submit");
 
   submitBtn.addEventListener("click", function(e) {
-
+    showLoader()
     const name = document.querySelector("#name").value;
     const title = document.querySelector("#title").value;
     const letter = document.querySelector("#motivationLetter").value;
     e.preventDefault();
-
+    
     if (name == "" || title == "" || letter == "") {
-      alert("Please fill out all the fields");
-      return;
+      hideLoader()
+      return showNotification('Please fill out all the fields','danger');
+      
     }
     else{
       const form_data = new FormData();
@@ -44,10 +45,14 @@ window.addEventListener('DOMContentLoaded', () => {
         processData: false,
         data: form_data,
         success: function(data) {
-
+          hideLoader()
+          return showNotification('Your message has been sent successfully!');
         },
+        error: function(data) {
+          hideLoader()
+          return showNotification('Something went wrong. Please try again later.', 'danger');
+        }
       })
-
     }
   });
 })
