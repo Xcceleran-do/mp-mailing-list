@@ -4,7 +4,7 @@
     <input type="text" name="name" id="name" placeholder="Enter your full">
     <label for="email">Email</label>
     <input type="text" name="email" id="email" placeholder="Enter yout email address">
-    <label for="biography">Biography</label>
+    <label for="biography">Message</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
     <input type="submit" value="Submit" class="about-us-form-submit">
 </form>
@@ -12,7 +12,7 @@
 <script>
 window.addEventListener('DOMContentLoaded', () => {
   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
-  const submitBtn = document.querySelector(".about-us-form-submit");
+  const submitForm = document.querySelector(".about-us-container-form");
   
   function checkEmailIsFromTrustedProvider(email) {
     const emailDomain = email.split('@')[1]
@@ -20,7 +20,7 @@ window.addEventListener('DOMContentLoaded', () => {
     return trustedDomains.includes(emailDomain)
 }
 
-  submitBtn.addEventListener("click", function(e) {
+  submitForm.addEventListener("submit", function(e) {
     showLoader()
     const name = document.querySelector("#name").value;
     const email = document.querySelector("#email").value;
@@ -30,13 +30,10 @@ window.addEventListener('DOMContentLoaded', () => {
     if (name == "" || email == "" || biography == "") {
       hideLoader()
       return showNotification('Please fill out all fields', 'danger');
-    }
-    else if (!checkEmailIsFromTrustedProvider(email)) {
+    } else if (!checkEmailIsFromTrustedProvider(email)) {
       hideLoader()
-      
       return showNotification('Please enter a valid email address', 'danger');
-    }
-    else{
+    } else{
       const form_data = new FormData();
       form_data.append('action', 'mp_mail_insert_contact');
       form_data.append('name', name);
