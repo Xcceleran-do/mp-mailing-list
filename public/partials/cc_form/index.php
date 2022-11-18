@@ -15,8 +15,12 @@
   }
 </style>
 <form class="about-us-container-form" id="theForm">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your full name">
+    <label for="fname">First Name</label>
+    <input type="text" name="fname" id="fname" placeholder="Enter your first full name">
+
+    <label for="lname">Last Name</label>
+    <input type="text" name="name" id="lname" placeholder="Enter your last full name">
+
     <label for="email">Email</label>
     <input type="text" name="email" id="email" placeholder="Enter yout email address">
     <label for="biography">Discription of the content</label>
@@ -33,7 +37,8 @@
 window.addEventListener('DOMContentLoaded', () => {
   var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
   const submitFrom = document.querySelector(".about-us-container-form");
-  const name = document.querySelector("#name");
+  const firstName = document.querySelector("#fname");
+  const lastName = document.querySelector("#lname");
   const email = document.querySelector("#email");
   const biography = document.querySelector("#biography");
 
@@ -75,8 +80,10 @@ window.addEventListener('DOMContentLoaded', () => {
       hideLoader()
       return showNotification(`File too large. The maximum file size should be less than ${(maxSize/1024/1024)} MB`, 'danger');
     }
+    
 
-    form_data.append('name', name.value);
+    form_data.append('firstName', firstName.value);
+    form_data.append('lastName', lastName.value);
     form_data.append('email', email.value);
     form_data.append('description', biography.value);
     form_data.append('file', file);

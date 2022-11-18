@@ -1,7 +1,11 @@
 
 <form class="about-us-container-form" id="theForm">
-    <label for="name">Name</label>
-    <input type="text" name="name" id="name" placeholder="Enter your full">
+    <label for="name">First Name</label>
+    <input type="text" name="name" id="firstName" placeholder="Enter your first name">
+
+    <label for="name">last Name</label>
+    <input type="text" name="name" id="lastName" placeholder="Enter your lsat name">
+
     <label for="email">Email</label>
     <input type="text" name="email" id="email" placeholder="Enter yout email address">
     <label for="biography">Message</label>
@@ -22,7 +26,8 @@ window.addEventListener('DOMContentLoaded', () => {
 
   submitForm.addEventListener("submit", function(e) {
     showLoader()
-    const name = document.querySelector("#name").value;
+    const firstName = document.querySelector("#firstName").value;
+    const lastName = document.querySelector("#lastName").value;
     const email = document.querySelector("#email").value;
     const biography = document.querySelector("#biography").value;
     e.preventDefault();
@@ -36,7 +41,8 @@ window.addEventListener('DOMContentLoaded', () => {
     } else{
       const form_data = new FormData();
       form_data.append('action', 'mp_mail_insert_contact');
-      form_data.append('name', name);
+      form_data.append('firstName', firstName);
+      form_data.append('lastName', lastName);
       form_data.append('email', email);
       form_data.append('message', biography);
 
