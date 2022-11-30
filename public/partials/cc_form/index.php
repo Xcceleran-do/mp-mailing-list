@@ -10,12 +10,18 @@
     <input type="text" name="email" id="email" placeholder="Enter your email address">
     <label for="biography">Discription of the content</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
-
+    <label for="type">File type</label>
+    <select class="file-type" name="type" id="type">
+        <option value="" selected disabled>Select the file type of your content</option>
+        <option value="text">Text</option>
+        <option value="video">Video</option>
+        <option value="audio">Audio</option>
+    </select>
     <div class="icon-unlisted">
       <label for="link">Link</label>
-      <span class="icon" id="unlisted-popup"><img class="info-icon-img"src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/info.svg' ?>" alt=""></span>
+      <span id="unlisted-popup"><img class="info-icon-img"src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/info.svg' ?>" alt=""></span>
     </div>
-    <input type="text" name="link" id="link" placeholder="Enter link to your content">
+    <input class="content-link" type="text" name="link" id="link" placeholder="Enter link to your content">
 
     <label for="biography">Upload file</label>
     <input type="file" class="community-upload" name="" id="choose_content">
@@ -60,19 +66,7 @@
               <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/get_link.png' ?>" alt="">
               <span class="modal-or">"Once you click "Get shareable link," the link to your unlisted video will automatically be copied to your clipboard. </span>
             </div>
-						
-						<!-- <div class="bottom-content">
-							<h1 class="signin-create-account">Already have an account? <a href="#"><span class="signin-create" id="signin-register">Sign in</span></a></h1>
-							<p class="signin-terms">By Clicking "Create account" i agree to MindPlex's <a href="< ?php echo home_url("/terms") ?>"> <span> Terms of Service </span>and </span>Privacy Policy</span> </a></p>
-
-						</div> -->
-
 					</div>
-
-            <!-- <h2 class="popup-title"> Share Links For Your Own Unlisted Videos.</h2>
-            <img class="unlisted-img" src php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/sign_in.png' ?>" alt=""> -->
-
-
         </div>
     </div>
 </div>
@@ -86,6 +80,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const lastName = document.querySelector("#lname");
   const email = document.querySelector("#email");
   const biography = document.querySelector("#biography");
+  const fileType = document.querySelector(".file-type");
+  const contentLink = document.querySelector(".content-link")
 
   const unlisted = document.getElementById("unlisted-popup")
   const unlistedPopup = document.getElementById("popup-unlisted")
@@ -134,31 +130,47 @@ window.addEventListener('DOMContentLoaded', () => {
     form_data.append('action', 'mp_mail_upload_content');
     showLoader()
     var file = jQuery('#choose_content').prop('files')[0];
+    function validated(){
+      
+      if(!email.value){
+        hideLoader()
+        return showNotification('Please provide your email !', 'danger');
+      }
+      
+      if(!checkEmailIsFromTrustedProvider(email.value)){
+        hideLoader()
+        return showNotification('Invalid email address.', 'danger');
+      }
+      if(!contentLink.value && !file){
+        hideLoader()
+        return showNotification('Please link your content or upload one.', 'danger');
+      }
   
-    if(!file ){
-      hideLoader()
-      return showNotification('No file selected.', 'danger');
-    }
+      if(contentLink.value && !isValidLink(contentLink.value)){
+        hideLoader()
 
-    if(!email.value){
-      hideLoader()
-      return showNotification('Please provide your email !', 'danger');
+        return showNotification('Invalid link! Make sure your link start with http://www','danger');
+      }
+  
+      if(file && file.size > maxSize){
+        hideLoader()
+        return showNotification(`File too large. The maximum file size should be less than ${(maxSize/1024/1024)} MB`, 'danger');
+      }
+  
+      if(!fileType.value) {
+        hideLoader()
+        return showNotification('Please select a file type.', 'danger');
+      }
     }
-    else if(!checkEmailIsFromTrustedProvider(email.value)){
-      hideLoader()
-      return showNotification('Invalid email address.', 'danger');
-    }
-
-    if(file.size > maxSize){
-      hideLoader()
-      return showNotification(`File too large. The maximum file size should be less than ${(maxSize/1024/1024)} MB`, 'danger');
-    }
-    
+    validated();
 
     form_data.append('firstName', firstName.value);
     form_data.append('lastName', lastName.value);
     form_data.append('email', email.value);
     form_data.append('description', biography.value);
+    form_data.append('fileType', fileType.value);
+    form_data.append('link', contentLink.value);
+    form_data.append('file', file);
     
 
     jQuery.ajax({
@@ -168,32 +180,18 @@ window.addEventListener('DOMContentLoaded', () => {
       processData: false,
       data: form_data,
       success: function(data){
+        hideLoader()
         console.log(data);
-        // data = JSON.parse(data);
-        // if(data.status =='success'){
-        //   showNotification(data.msg);
-        //   // submitFrom.reset();
-        //   // name.value = '';
-        //   // email.value = '';
-        //   // biography.value = '';
-          
-        //   return hideLoader();
-        // }
-        // showNotification(data.msg, 'danger');
-        // // submitFrom.reset();
-        // // name.value = '';
-        // // email.value = '';
-        // // biography.value = '';
-        return hideLoader();
+        if(data ==='success'){
+          submitFrom.reset();
+          return showNotification('Submitted successfully!');
+        }
       },
-      // error: function(data){
-      //   showNotification('Please try again later', 'danger');
-      //   // submitFrom.reset();
-      //   // name.value = '';
-      //   // email.value = '';
-      //   // biography.value = '';
-      //   return hideLoader();
-      // }
+      error: function(data){
+        hideLoader();
+        submitFrom.reset();
+        return showNotification('Please try again later', 'danger');
+      }
     });
   })
 })
