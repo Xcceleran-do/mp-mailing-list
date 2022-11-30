@@ -1,0 +1,47 @@
+.community-upload{
+	background: #17646F;
+	border: 1px solid #70D0A7;
+	border-radius: 9px;
+	width: 100%;
+	padding: 10px;
+	height: 50px;
+	color: #fff;
+	font-weight: 400;
+	font-size: 18px;
+	line-height: 22px;
+	color: #EEEEEE;
+  }
+
+  .icon-unlisted {
+    display: inline-block;
+    display: flex;
+	align-items: center;
+	gap: 5px;
+    align-self: baseline;
+    cursor: pointer;
+  }
+  .icon {
+	display: flex;
+  }
+  .info-icon-img {
+	width: 25px;
+  }
+
+.popup-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  display: block;
+}
+.popup-title {
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+.unlisted-img {
+  width: 33rem;
+  height: 25rem;
+}

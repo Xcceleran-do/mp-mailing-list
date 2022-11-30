@@ -1,30 +1,22 @@
 
-<style>
-  .community-upload{
-	background: #17646F;
-	border: 1px solid #70D0A7;
-	border-radius: 9px;
-	width: 100%;
-	padding: 10px;
-	height: 50px;
-	color: #fff;
-	font-weight: 400;
-	font-size: 18px;
-	line-height: 22px;
-	color: #EEEEEE;
-  }
-</style>
-<form class="about-us-container-form" id="theForm">
+<form class="about-us-container-form content" id="theForm">
     <label for="fname">First Name</label>
-    <input type="text" name="fname" id="fname" placeholder="Enter your first full name">
+    <input type="text" name="fname" id="fname" placeholder="Enter your first name">
 
     <label for="lname">Last Name</label>
-    <input type="text" name="name" id="lname" placeholder="Enter your last full name">
+    <input type="text" name="name" id="lname" placeholder="Enter your last name">
 
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" placeholder="Enter yout email address">
+    <input type="text" name="email" id="email" placeholder="Enter your email address">
     <label for="biography">Discription of the content</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
+
+    <div class="icon-unlisted">
+      <label for="link">Link</label>
+      <span class="icon" id="unlisted-popup"><img class="info-icon-img"src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/info.svg' ?>" alt=""></span>
+    </div>
+    <input type="text" name="link" id="link" placeholder="Enter link to your content">
+
     <label for="biography">Upload file</label>
     <input type="file" class="community-upload" name="" id="choose_content">
     <label for="choose_content">PDF, DOC, DOCX Max size of <?php echo wp_max_upload_size()/1024/1024 ?> MB</label>
@@ -32,6 +24,59 @@
     <input type="submit" value="Submit" class="about-us-form-submit">
     
 </form>
+
+
+<div class="popup" id="popup-unlisted">
+    <div class="popcard">
+        <div class="popup-wrapper" style="max-width: 600px;padding:1rem 2.5rem;">
+            <p class="popup-close" id="unlisted-close">&#10005;</p>
+            <div class="mindplex-wrapper">
+						<div class="register-container">
+							<h2 class="unlisted-title">Youtube unlisted links</h2>
+						</div>
+
+            <div>
+              <span class="modal-or"> 1 Sign in to your youtube studio</span>
+              <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/sign_in.png' ?>" alt="">
+            </div>
+            
+            <div>
+              <span class="modal-or">2 Select "Content" from the menu on the left-hand side. </span>
+              <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/content_unlisted.png' ?>" alt="">
+            </div>
+
+            <div>
+              <span class="modal-or">3 Choose a video and click the down arrow under "Visibility."</span>
+              <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/choose_video.png' ?>" alt="">
+            </div>
+
+            <div>
+              <span class="modal-or">4 Set your video to Unlisted and click "Save." </span>
+              <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/set_to_unlisted.png' ?>" alt="">
+            </div>
+
+            <div>
+              <span class="modal-or">5 Click Options and then "Get shareable link </span>
+              <img class="unlisted-img" src =" <?php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/get_link.png' ?>" alt="">
+              <span class="modal-or">"Once you click "Get shareable link," the link to your unlisted video will automatically be copied to your clipboard. </span>
+            </div>
+						
+						<!-- <div class="bottom-content">
+							<h1 class="signin-create-account">Already have an account? <a href="#"><span class="signin-create" id="signin-register">Sign in</span></a></h1>
+							<p class="signin-terms">By Clicking "Create account" i agree to MindPlex's <a href="< ?php echo home_url("/terms") ?>"> <span> Terms of Service </span>and </span>Privacy Policy</span> </a></p>
+
+						</div> -->
+
+					</div>
+
+            <!-- <h2 class="popup-title"> Share Links For Your Own Unlisted Videos.</h2>
+            <img class="unlisted-img" src php echo mp_mails_PLAGIN_URL . 'public/assets/unlisted-link/sign_in.png' ?>" alt=""> -->
+
+
+        </div>
+    </div>
+</div>
+
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
@@ -41,6 +86,30 @@ window.addEventListener('DOMContentLoaded', () => {
   const lastName = document.querySelector("#lname");
   const email = document.querySelector("#email");
   const biography = document.querySelector("#biography");
+
+  const unlisted = document.getElementById("unlisted-popup")
+  const unlistedPopup = document.getElementById("popup-unlisted")
+  const closeUnlistedPopup = document.getElementById("unlisted-close")
+
+
+  unlisted.addEventListener("click", openPopunlisted);
+
+  function openPopunlisted() {
+
+    unlistedPopup.style.display = "Block";
+  }
+
+  
+  closeUnlistedPopup.addEventListener("click", () => {
+    unlistedPopup.style.display = "none";
+    });
+
+    function closePopUnlisted(e) {
+        if (e.target == unlistedPopup) {
+            unlistedPopup.style.display = "none";
+        }
+    }
+    window.addEventListener("click", closePopUnlisted);
 
   const maxSize = `<?php echo wp_max_upload_size()?>`;
 
@@ -65,15 +134,19 @@ window.addEventListener('DOMContentLoaded', () => {
     form_data.append('action', 'mp_mail_upload_content');
     showLoader()
     var file = jQuery('#choose_content').prop('files')[0];
-    
-    if(!checkEmailIsFromTrustedProvider(email.value)){
-      hideLoader()
-      return showNotification('Invalid email address.', 'danger');
-    }
-
-    if(!file){
+  
+    if(!file ){
       hideLoader()
       return showNotification('No file selected.', 'danger');
+    }
+
+    if(!email.value){
+      hideLoader()
+      return showNotification('Please provide your email !', 'danger');
+    }
+    else if(!checkEmailIsFromTrustedProvider(email.value)){
+      hideLoader()
+      return showNotification('Invalid email address.', 'danger');
     }
 
     if(file.size > maxSize){
@@ -86,7 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
     form_data.append('lastName', lastName.value);
     form_data.append('email', email.value);
     form_data.append('description', biography.value);
-    form_data.append('file', file);
+    
 
     jQuery.ajax({
       url: ajaxurl,

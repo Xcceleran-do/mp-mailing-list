@@ -30,6 +30,7 @@ class Mp_mails_community_content
     public function mp_mails_cc_form()
     {
         wp_enqueue_style( 'cc-form-style',mp_mails_PLAGIN_URL . 'public/css/soon.css', false, '1.0', 'all' );  
+        wp_enqueue_style( 'mp-mails-style',mp_mails_PLAGIN_URL . 'public/css/mp-mailing-form.css', false, '1.0', 'all' );  
         
         include_once mp_mails_PLAGIN_DIR . 'public/partials/cc_form/index.php';
     }
