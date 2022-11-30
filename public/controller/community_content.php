@@ -37,34 +37,32 @@ class Mp_mails_community_content
 
     public function wp_ajax_mp_mail_upload_content(){
 
-       
-       
+        $first_name = isset($_POST['firstName']) ? $_POST['firstName'] : '';
+        $lastname = isset($_POST['lastName']) ? $_POST['lastName'] : '';
+        $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $file_type = isset($_POST['fileType']) ? $_POST['fileType'] : '';
+        $email = isset($_POST['email']) ? $_POST['email'] : '';
+    
+
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $attachments = array();
         $content_link ='';
-        if(isset($_FILES['file'])){
-            if (self::isUploaded("file")) {
-                $file = self::uploadFile("file");
-                update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $file);
-                $attachments [] = wp_upload_dir()['path'] . '/' . $_FILES['file']['name'];
-            }
-          
+        if (isset($_FILES['file']) && self::isUploaded("file")) {
+            $file = self::uploadFile("file");
+            update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $file);
+            $attachments [] = wp_upload_dir()['path'] . '/' . $_FILES['file']['name'];
         }
+
         if(isset($_POST['contentLink'])){
             $content_link = sanitize_url($_POST['contentLink']);
             update_user_meta(get_current_user_id(), 'mp_mails_content_link', $content_link);
         }
-        
-        if(isset($_POST['name'])
-        && isset($_POST['email']) 
-        && isset($_POST['description'])){
-          $name = $_POST['name'];
-          $email = $_POST['email'];
-          $description = $_POST['description'];
+       
         $data = array(
-          "name" => esc_attr($name),
+          "name" => esc_attr($first_name),
           "email" => esc_attr($email),
           "description" => esc_attr($description),
+          "file_type" => esc_attr($file_type),
         );
 
         $postarr = array(
@@ -74,77 +72,76 @@ class Mp_mails_community_content
         );
 
           $new_post_id = wp_insert_post( $postarr );
-        echo $new_post_id;
-        //   echo json_encode(array('status' => 'success', 'msg' => 'Successfull'));
-            // $emailContent = '<!DOCTYPE html>
-            //     <html lang="en">
-            //     <head>
-            //     <meta charset="UTF-8" />
-            //     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-            //     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-            //     <link rel="stylesheet" href="style.css" />
-            //     <link rel="preconnect" href="https://fonts.googleapis.com" />
-            //     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            //     <link
-            //         href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
-            //         rel="stylesheet"
-            //     />
-            //     <title>Mindplex Community Content</title>
-            //     <style>
-            //     *{
-            //         padding: 0;
-            //         margin: 0;
-            //         box-sizing: border-box;
-            //         font-family: "Barlow", sans-serif;
-            //     }
-                
-            //     .email-wrapper{
-            //         padding: 1rem;
-            //         line-height: 1.7rem;
-            //     }
-            //     .email-heading {
-            //         font-size: 30px;
-            //         margin-bottom: 2rem;
-            //     }
-            //     .email-wrapper p{
-            //         color: #787777;
-            //         font-size: 20px;
-            //         font-weight: 400;
-            //     }
-            //     .instructions-heading{
-            //         border-bottom:1px solid #c0c0c0;
-            //         padding-bottom: 1rem;
-            //     }
-            //     .instruction-description{
-            //         padding-top: 1rem;
-            //     }
-            //     .activation-btn{
-            //             background-color: #3C48A5;
-            //             border: none;
-            //             color: #fff;
-            //             border-radius: 0.3rem;
-            //             padding: 0.5rem 2rem;
-            //             cursor: pointer;
-            //             font-size: 20px;
-            //             margin: 1rem 0;
-            //             font-weight: 400;
-            //             text-transform: capitalize;
-            //     }</style>
-            //     </head>
-            //     <body>
-            //     <div class="email-wrapper">
-            //         <h1 class="email-heading">New Account Activation</h1>
-            //         <p class="instructions-heading">
-            //         A content has been sent by ' . $first_name  .' .'. $content_link ? ' With link: '.$content_link:''.'.</p>
-            //     </div>
-            //     </body>
-            // </html>';
+        if($new_post_id) echo 'success';
 
-            // if($attachments){
-            //     echo wp_mail("editor@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
-            // }
-            // else echo wp_mail("editor@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
+            $emailContent = '<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                <meta charset="UTF-8" />
+                <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <link rel="stylesheet" href="style.css" />
+                <link rel="preconnect" href="https://fonts.googleapis.com" />
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
+                    rel="stylesheet"
+                />
+                <title>Mindplex Community Content</title>
+                <style>
+                *{
+                    padding: 0;
+                    margin: 0;
+                    box-sizing: border-box;
+                    font-family: "Barlow", sans-serif;
+                }
+                
+                .email-wrapper{
+                    padding: 1rem;
+                    line-height: 1.7rem;
+                }
+                .email-heading {
+                    font-size: 30px;
+                    margin-bottom: 2rem;
+                }
+                .email-wrapper p{
+                    color: #787777;
+                    font-size: 20px;
+                    font-weight: 400;
+                }
+                .instructions-heading{
+                    border-bottom:1px solid #c0c0c0;
+                    padding-bottom: 1rem;
+                }
+                .instruction-description{
+                    padding-top: 1rem;
+                }
+                .activation-btn{
+                        background-color: #3C48A5;
+                        border: none;
+                        color: #fff;
+                        border-radius: 0.3rem;
+                        padding: 0.5rem 2rem;
+                        cursor: pointer;
+                        font-size: 20px;
+                        margin: 1rem 0;
+                        font-weight: 400;
+                        text-transform: capitalize;
+                }</style>
+                </head>
+                <body>
+                <div class="email-wrapper">
+                    <h1 class="email-heading">New Account Activation</h1>
+                    <p class="instructions-heading">
+                    A content has been sent by ' . $first_name  .' .'. $content_link ? ' With link: '.$content_link:''.'.</p>
+                </div>
+                </body>
+            </html>';
+
+            if($attachments){
+                echo wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
             }
+            else echo wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
         die();
     }
 
