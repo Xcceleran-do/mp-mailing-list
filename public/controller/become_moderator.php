@@ -35,17 +35,20 @@ class Mp_mails_moderator
     public function wp_ajax_mp_mails_become_moderator()
     {
 
-        if(isset($_POST['name'])
-        && isset($_POST['title']) 
+        if(isset($_POST['firstName'])
+        && isset($_POST['lastName']) 
+        && isset($_POST['email']) 
         && isset($_POST['letter'])){
     
-          $name = $_POST['name'];
-          $title = $_POST['title'];
-          $letter = $_POST['letter'];
+          $firstName = esc_attr($_POST['firstName']);
+          $email = esc_attr($_POST['email']);
+          $lastName = esc_attr($_POST['lastName']);
+          $letter = esc_attr( $_POST['letter']);
         $data = array(
-          "name" => esc_attr($name),
-          "title" => esc_attr($title),
-          "letter" => esc_attr($letter),
+          "firstName" =>  $firstName,
+          "lastName" => $lastName,
+          "email" => $email,
+          "letter" => $letter,
         );
     
         $postarr = array(
@@ -56,7 +59,7 @@ class Mp_mails_moderator
     
           $new_post_id = wp_insert_post( $postarr );
           echo $new_post_id;
-    
+        
           $emailContent = '<!DOCTYPE html>
           <html lang="en">
           <head>
@@ -119,8 +122,7 @@ class Mp_mails_moderator
               Below is a user message to become a Mindplex moderator.
               </p>
               <p class="instruction-description">
-              <b>Name: </b>'.$name.',<br>
-              <b>Title: </b>'.$title.',<br>
+              <b>Name: </b>'.$firstName.',<br>
               <b>Letter: </b><br>'.$letter.'
               </p>
           </div>
@@ -128,7 +130,7 @@ class Mp_mails_moderator
           </html>';
     
           $headers = array('Content-Type: text/html; charset=UTF-8');
-          echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+          echo wp_mail("moderators@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
           die();
         }
     }
