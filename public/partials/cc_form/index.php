@@ -21,7 +21,7 @@
       <label for="link">Link</label>
       <span id="unlisted-popup"><img class="info-icon-img"src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/info.svg' ?>" alt=""></span>
     </div>
-    <input class="content-link" type="text" name="link" id="link" placeholder="Enter link to your content">
+    <input class="content-link" type="text" name="link" id="link" placeholder="Enter your youtube link address">
 
     <label for="biography">Upload file</label>
     <input type="file" class="community-upload" name="" id="choose_content">
@@ -124,7 +124,23 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
   const form_data = new FormData();
-  
+  if(fileType.value.toLowerCase() === "text"){
+    contentLink.placeholder = "Enter your document link"
+  }else{
+    contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
+  }
+  $('#type').change( function() {
+      if(this.value.toLowerCase() === "text"){
+        return contentLink.placeholder = "Enter your document link"
+      }
+      return contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
+    });
+    
+    // fileType.onChange =function() {
+    //   console.log(fileType.value);
+    // /
+    // }
+
   submitFrom.addEventListener('submit',(e)=>{
     e.preventDefault()
     form_data.append('action', 'mp_mail_upload_content');
@@ -163,7 +179,7 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     }
     validated();
-
+ 
     form_data.append('firstName', firstName.value);
     form_data.append('lastName', lastName.value);
     form_data.append('email', email.value);
