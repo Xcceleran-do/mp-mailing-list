@@ -24,10 +24,10 @@
 			<input type="text" name="lastName" id="lastName" placeholder="Enter your Last Name">
 		</div>
 	</div>
-	<!-- <div class="mode-contain">
-		<label for="biography">Title of the content</label>
-		<input type="text" name="name" id="title" placeholder="Enter title of the content">
-	</div> -->
+	<div class="mode-contain">
+		<label for="email">Email</label>
+		<input type="text" name="email" id="moderatorEmail" placeholder="Enter email">
+	</div>
 	<label for="motivationLetter">Motivation letter</label>
 	<textarea name="motivationLetter" id="motivationLetter" cols="30" rows="10" class="mod-bio"></textarea>
 	<input type="submit" value="Submit" class="mod-form-submit">
@@ -41,11 +41,11 @@
 			showLoader()
 			const firstName = document.querySelector("#firstName").value;
 			const lastName = document.querySelector("#lastName").value;
-			// const title = document.querySelector("#title").value;
+			const email = document.querySelector("#moderatorEmail").value;
 			const letter = document.querySelector("#motivationLetter").value;
 			e.preventDefault();
 
-			if (firstName == "" || lastName == "" || letter == "") {
+			if (firstName == "" || lastName == "" || letter == "" || email == "") {
 				hideLoader()
 				return showNotification('Please fill out all the fields', 'danger');
 
@@ -54,7 +54,7 @@
 				form_data.append('action', 'mp_mails_become_moderator');
 				form_data.append('firstName', firstName);
 				form_data.append('lastName', lastName);
-				// form_data.append('title', title);
+				form_data.append('email', email);
 				form_data.append('letter', letter);
 
 				jQuery.ajax({
@@ -65,6 +65,7 @@
 					data: form_data,
 					success: function(data) {
 						hideLoader()
+						console.log(data);
 						return showNotification('Your request has been sent successfully!');
 					},
 					error: function(data) {
