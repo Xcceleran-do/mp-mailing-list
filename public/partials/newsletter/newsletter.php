@@ -29,7 +29,7 @@
 				
 						<div class="bottom-content">
 							<h1 class="signin-create-account">Already have an account? <a href="#"><span class="signin-create" id="signin-register">Sign in</span></a></h1>
-							<p class="signin-terms">By Clicking "Create account" i agree to MindPlex's <span> Terms of Service </span>and </span>Privacy Policy</span></p>
+							<p class="signin-terms">By Clicking "Create account" I agree to MindPlex's <span> Terms of Service </span>and </span>Privacy Policy</span></p>
 
 						</div>
 
