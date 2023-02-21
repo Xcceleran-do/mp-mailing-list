@@ -1,18 +1,4 @@
-<!-- <form class="become-mode">
-  <div class="mod-top-form">
-    <div class="mode-contain">
-        <label for="name">Full Name</label>
-        <input type="text" name="name" id="name" placeholder="Enter your Full name">
-    </div>
-    <div class="mode-contain">
-        <label for="biography">Title of the content</label>
-        <input type="text" name="name" id="title" placeholder="Enter Title of the content">
-    </div>
-  </div>
-  <label for="motivationLetter">Motivation letter</label>
-  <textarea name="motivationLetter" id="motivationLetter" cols="30" rows="10" class="mod-bio"></textarea>
-  <input type="submit" value="Submit" class="mod-form-submit">
-</form> -->
+
 <form class="become-mode">
 	<div class="mod-top-form">
 		<div class="mode-contain">
