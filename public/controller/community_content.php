@@ -139,9 +139,11 @@ class Mp_mails_community_content
             </html>';
 
             if($attachments){
-                echo wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
+                // echo 
+                wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
             }
-            else echo wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
+            else //echo 
+            wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
         die();
     }
 
