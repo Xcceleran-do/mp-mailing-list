@@ -82,6 +82,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const biography = document.querySelector("#biography");
   const fileType = document.querySelector(".file-type");
   const contentLink = document.querySelector(".content-link")
+  const submitBtn = document.querySelector('.about-us-form-submit')
 
   const unlisted = document.getElementById("unlisted-popup")
   const unlistedPopup = document.getElementById("popup-unlisted")
@@ -111,9 +112,10 @@ window.addEventListener('DOMContentLoaded', () => {
 
   
   function checkEmailIsFromTrustedProvider(email) {
-    const emailDomain = email.split('@')[1]
-    const trustedDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'singularitynet.io', 'icog-labs.com', 'protonmail.com', 'proton.me', 'pm.me', 'mail.yandex.ru', 'mail.yandex.com', 'yandex.ru', 'yandex.com', 'qq.com', 'tencent.com']
-    return trustedDomains.includes(emailDomain)
+    return true
+    // const emailDomain = email.split('@')[1]
+    // const trustedDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'singularitynet.io', 'icog-labs.com', 'protonmail.com', 'proton.me', 'pm.me', 'mail.yandex.ru', 'mail.yandex.com', 'yandex.ru', 'yandex.com', 'qq.com', 'tencent.com']
+    // return trustedDomains.includes(emailDomain)
   }
 
   const isValidLink = url=>{
@@ -200,6 +202,7 @@ window.addEventListener('DOMContentLoaded', () => {
         console.log(data);
         if(data ==='success'){
           submitFrom.reset();
+          submitBtn.style.display="none"
           return showNotification('Submitted successfully!');
         }
       },
