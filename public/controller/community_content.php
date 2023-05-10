@@ -136,7 +136,7 @@ class Mp_mails_community_content
                 </head>
                 <body>
                 <div class="email-wrapper">
-                    <h1 class="email-heading">New Account Activation</h1>
+                    <h1 class="email-heading">New Community Content</h1>
                     <p class="instructions-heading">
                     A content has been sumbitted by ' . $first_name  .' ('.$email.') '; 
                     
@@ -150,7 +150,7 @@ class Mp_mails_community_content
 
             if($attachments){
                 // echo 
-                wp_mail("community_content@mindplex.ai", 'Community Content with attachments', $emailContent, $headers, $attachments);
+                wp_mail("community_content@mindplex.ai", 'Community Content with attachment', $emailContent, $headers, $attachments);
             }
             else //echo 
             wp_mail("community_content@mindplex.ai", 'Community Content', $emailContent, $headers);
