@@ -36,9 +36,10 @@ class Mp_mails_community_content
     }
 
     public function wp_ajax_mp_mail_upload_content(){
-
+        
         $first_name = isset($_POST['firstName']) ? $_POST['firstName'] : '';
         $lastname = isset($_POST['lastName']) ? $_POST['lastName'] : '';
+        $wallet_address = isset($_POST['wallet_address']) ? $_POST['wallet_address'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
         $file_type = isset($_POST['fileType']) ? $_POST['fileType'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
@@ -47,19 +48,11 @@ class Mp_mails_community_content
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $attachments = array();
         $content_link ='';
-        if (isset($_FILES['file']) && self::isUploaded("file")) {
-            $file = self::uploadFile("file");
-            update_user_meta(get_current_user_id(), 'mp_mails_contributor_content', $file);
-            $attachments [] = wp_upload_dir()['path'] . '/' . $_FILES['file']['name'];
-        }
-
-        if(isset($_POST['contentLink'])){
-            $content_link = sanitize_url($_POST['contentLink']);
-            update_user_meta(get_current_user_id(), 'mp_mails_content_link', $content_link);
-        }
        
         $data = array(
-          "name" => esc_attr($first_name),
+          "first_name" => esc_attr($first_name),
+          "last_name" => esc_attr($lastname),
+          "wallet_address" => esc_attr($wallet_address),
           "email" => esc_attr($email),
           "description" => esc_attr($description),
           "file_type" => esc_attr($file_type),
@@ -72,8 +65,20 @@ class Mp_mails_community_content
         );
 
           $new_post_id = wp_insert_post( $postarr );
-        if($new_post_id) echo 'success';
+        if($new_post_id){
+             echo 'success';
 
+            if (isset($_FILES['file']) && self::isUploaded("file")) {
+                $file = self::uploadFile("file");
+                update_post_meta($new_post_id, 'mp_mails_contributor_content', $file);
+                $attachments [] = wp_upload_dir()['path'] . '/' . $_FILES['file']['name'];
+            }
+
+            if(isset($_POST['link'])){
+                $content_link = sanitize_url($_POST['link']);
+                update_post_meta($new_post_id, 'mp_mails_content_link', $content_link);
+            }
+        }
             $emailContent = '<!DOCTYPE html>
                 <html lang="en">
                 <head>
@@ -133,17 +138,22 @@ class Mp_mails_community_content
                 <div class="email-wrapper">
                     <h1 class="email-heading">New Account Activation</h1>
                     <p class="instructions-heading">
-                    A content has been sent by ' . $first_name  .' .'. $content_link ? ' With link: '.$content_link:''.'.</p>
+                    A content has been sumbitted by ' . $first_name  .' ('.$email.') '; 
+                    
+                    $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
+                    $cont_link = $content_link ? ' With link: '.$content_link : '.';
+
+                    $emailContent .= $wallet_address. $cont_link. '</p>
                 </div>
                 </body>
             </html>';
 
             if($attachments){
                 // echo 
-                wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers, $attachments);
+                wp_mail("community_content@mindplex.ai", 'Community Content with attachments', $emailContent, $headers, $attachments);
             }
             else //echo 
-            wp_mail("community_content@mindplex.ai", 'Mindplex Community Content', $emailContent, $headers);
+            wp_mail("community_content@mindplex.ai", 'Community Content', $emailContent, $headers);
         die();
     }
 
