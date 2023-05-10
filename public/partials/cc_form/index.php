@@ -6,9 +6,12 @@
     <label for="lname">Last Name</label>
     <input type="text" name="name" id="lname" placeholder="Enter your last name">
 
+    <label for="wallet_address">Wallet address (Optional)</label>
+    <input type="text" name="wallet_address" id="wallet_address" placeholder="Enter Etheruim or Cardano network wallet address">
+
     <label for="email">Email</label>
     <input type="text" name="email" id="email" placeholder="Enter your email address">
-    <label for="biography">Discription of the content</label>
+    <label for="biography">Description of the content</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
     <label for="type">File type</label>
     <select class="file-type" name="type" id="type">
@@ -78,6 +81,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const submitFrom = document.querySelector(".about-us-container-form");
   const firstName = document.querySelector("#fname");
   const lastName = document.querySelector("#lname");
+  const wallet_address = document.querySelector("#wallet_address");
   const email = document.querySelector("#email");
   const biography = document.querySelector("#biography");
   const fileType = document.querySelector(".file-type");
@@ -147,7 +151,7 @@ window.addEventListener('DOMContentLoaded', () => {
     e.preventDefault()
     form_data.append('action', 'mp_mail_upload_content');
     showLoader()
-    var file = jQuery('#choose_content').prop('files')[0];
+    var file = jQuery('#choose_content').prop('files')[0]; 
     function validated(){
       
       if(!email.value){
@@ -184,6 +188,7 @@ window.addEventListener('DOMContentLoaded', () => {
  
     form_data.append('firstName', firstName.value);
     form_data.append('lastName', lastName.value);
+    form_data.append('wallet_address', wallet_address.value);
     form_data.append('email', email.value);
     form_data.append('description', biography.value);
     form_data.append('fileType', fileType.value);
