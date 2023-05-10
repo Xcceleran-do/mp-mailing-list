@@ -138,12 +138,21 @@ class Mp_mails_community_content
                 <div class="email-wrapper">
                     <h1 class="email-heading">New Community Content</h1>
                     <p class="instructions-heading">
-                    A content has been sumbitted by ' . $first_name  .' ('.$email.') '; 
-                    
-                    $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
-                    $cont_link = $content_link ? ' With link: '.$content_link : '.';
+                    A content has been sumbitted by </br></br>' . 
 
-                    $emailContent .= $wallet_address. $cont_link. '</p>
+                    '</br>First name :- ' . esc_attr($first_name) .
+                    '</br>Last name :- ' . esc_attr($lastname) .
+                    '</br>Wallet Address :- ' . esc_attr($wallet_address) .
+                    '</br>description :- ' . esc_attr($description) .
+                    '</br>file_type :- ' . esc_attr($file_type) .
+                    '</br>Content link :- ' . esc_attr($content_link); 
+                    
+
+                    // $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
+                    // $cont_link = $content_link ? ' With link: '.$content_link : '.';
+                    // $emailContent .= $wallet_address. $cont_link. '</p>
+
+                    $emailContent .= '</p>
                 </div>
                 </body>
             </html>';
