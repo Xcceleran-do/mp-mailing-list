@@ -142,6 +142,7 @@ class Mp_mails_community_content
 
                     '</br>First name :- ' . esc_attr($first_name) .
                     '</br>Last name :- ' . esc_attr($lastname) .
+                    '</br>Email Address:- ' . esc_attr($email) .
                     '</br>Wallet Address :- ' . esc_attr($wallet_address) .
                     '</br>description :- ' . esc_attr($description) .
                     '</br>file_type :- ' . esc_attr($file_type) .
