@@ -18,7 +18,7 @@
           </div>
           <div class="input-text-container">
           <label for="message">message</label>
-<textarea id="message" class="coming-input coming-input-textarea" name="new_user_email" placeholder="Please Enter your email address" cols="30" rows="10"></textarea>
+<textarea id="message" class="coming-input coming-input-textarea" name="new_user_email" placeholder="Please enter your message" cols="30" rows="10"></textarea>
           </div>
         </div>
         <div class="editors-btn-contian">
