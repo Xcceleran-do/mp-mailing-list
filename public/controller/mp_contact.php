@@ -62,7 +62,7 @@ class Mp_contact
         '</br>Email Address :- ' . esc_attr($email) .
         '</br></br>Message :- ' . esc_attr($message); 
 
-        wp_mail("community_content@mindplex.ai", 'New Community Contact', $emailContent, $headers);
+        wp_mail("editor@mindplex.ai", 'New Message to the Editor', $emailContent, $headers);
 
         }
         die();
