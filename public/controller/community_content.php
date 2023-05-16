@@ -48,6 +48,7 @@ class Mp_mails_community_content
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $attachments = array();
         $content_link ='';
+        $email_address = 'community_content@mindplex.ai';
        
         $data = array(
           "first_name" => esc_attr($first_name),
@@ -138,15 +139,15 @@ class Mp_mails_community_content
                 <div class="email-wrapper">
                     <h1 class="email-heading">New Community Content</h1>
                     <p class="instructions-heading">
-                    A content has been sumbitted by </br></br>' . 
+                    A content has been sumbitted by <br>' . 
 
-                    '</br>First name :- ' . esc_attr($first_name) .
-                    '</br>Last name :- ' . esc_attr($lastname) .
-                    '</br>Email Address:- ' . esc_attr($email) .
-                    '</br>Wallet Address :- ' . esc_attr($wallet_address) .
-                    '</br>description :- ' . esc_attr($description) .
-                    '</br>file_type :- ' . esc_attr($file_type) .
-                    '</br>Content link :- ' . esc_attr($content_link); 
+                    '<br>First name : ' . esc_attr($first_name) .
+                    '<br>Last name : ' . esc_attr($lastname) .
+                    '<br>Email Address: ' . esc_attr($email) .
+                    '<br>Wallet Address : ' . esc_attr($wallet_address) .
+                    '<br>File type : ' . esc_attr($file_type) .
+                    '<br>Content link : ' . esc_attr($content_link).
+                    '<br>Description : ' . html_entity_decode(preg_replace('/\\\\\"/', '"', $description)) ;
                     
 
                     // $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
@@ -160,11 +161,12 @@ class Mp_mails_community_content
 
             if($attachments){
                 // echo 
-                wp_mail("community_content@mindplex.ai", 'Community Content with attachment', $emailContent, $headers, $attachments);
+                wp_mail($email_address, 'Community Content with attachment', $emailContent, $headers, $attachments);
             }
             else //echo 
-            wp_mail("community_content@mindplex.ai", 'Community Content', $emailContent, $headers);
-        die();
+            wp_mail($email_address, 'Community Content', $emailContent, $headers);
+
+            die();
     }
 
 
