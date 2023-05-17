@@ -166,7 +166,15 @@ class Mp_mails_community_content
             else //echo 
             wp_mail($email_address, 'Community Content', $emailContent, $headers);
 
-            die();
+            $to_sender = 'Dear ' . esc_attr($first_name) .',<br><br>'.
+            'Thank you for submitting your content to our platform. We have received your submission, and it is currently awaiting approval from our community content moderators. We appreciate your patience as we carefully review and consider each submission.
+            Rest assured that we will contact you as soon as possible regarding the status of your submission. We will inform you if your content is approved for publication or if any changes or modifications are necessary.
+            Thank you again for considering us for your submission. We value your contribution to our platform and look forward to potentially showcasing your work to our audience.<br><br>'.
+            'Best regards,<br>'.
+            'Mindplex';
+            wp_mail($email, 'Community Content', $to_sender, $headers);
+
+        die();
     }
 
 
