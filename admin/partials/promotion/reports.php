@@ -10,6 +10,7 @@
     <table class="wp-list-table widefat fixed striped">
     <thead>
     <tr>
+    <th>#</th>
     <th>Email</th>
     <th>Status</th>
     </tr>
@@ -17,11 +18,12 @@
     <tbody>
 
     <!-- // Display reports in table rows -->
-    <?php   foreach ($reports_slice as $report) { ?>
+    <?php   for ($i=0; $i < count($reports_slice); $i++) { ?>
 
       <tr>
-      <td> <?php echo $report['email'] ?> </td>
-      <td> <?php echo absint($report['status'])? "Sent" : "Failed"; ?> </td>
+      <td> <?php echo $i+1 ?> </td>
+      <td> <?php echo $reports_slice[$i]['email'] ?> </td>
+      <td> <?php echo absint($reports_slice[$i]['status'])? "success" : "Failed"; ?> </td>
       </tr>
       <?php   } ?>
 

@@ -41,7 +41,7 @@ function mp_mail_promotions_sent_to_column_content($column, $post_id) {
         $sent_to = get_post_meta( $post_id, 'sent_promo_email', true);
 
         $reports_url = admin_url('edit.php?post_type=mp_mail_promotions&page=mp_mail_promotions_report&post='.$post_id);
-        echo $sent_to ? '<a href="' . esc_url($reports_url) . '">'.count($sent_to) . " Subscribers</a>" : "Not Sent";
+        echo $sent_to ? '<a href="' . esc_url($reports_url) . '">'.$sent_to['success'].'/'.count($sent_to['all']) . " Subscribers</a>" : "Not Sent";
 
     }
 }
@@ -68,13 +68,13 @@ function mp_mail_promotions_sent_to_column_content($column, $post_id) {
 
         // Prepare pagination
         $per_page = 10; // Number of reports to display per page
-        $total_items = count($sent_to);
+        $total_items = count($sent_to['all']);
         $total_pages = ceil($total_items / $per_page);
     
         $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
         $start = ($current_page - 1) * $per_page;
         $end = $start + $per_page;
-        $reports_slice = array_slice($sent_to, $start, $per_page);
+        $reports_slice = array_slice($sent_to['all'], $start, $per_page);
     
           include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/reports.php';
             

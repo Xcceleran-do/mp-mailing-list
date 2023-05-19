@@ -50,7 +50,11 @@ class Mp_mail_send_Admin
             foreach ($subscribers as $user) {
                 $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'status' => 1);
             }
-            update_post_meta( $post->ID, 'sent_promo_email', $userIds );
+            
+            $success = count($userIds); // temporary for now
+            $sentEmails = array("success" => $success, 'all' => $userIds);
+            
+            update_post_meta( $post->ID, 'sent_promo_email', $sentEmails );
         }
     }
   }
