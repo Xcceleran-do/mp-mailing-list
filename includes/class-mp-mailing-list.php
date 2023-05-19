@@ -179,6 +179,7 @@ class Mp_Mailing_List {
 
 
 		$Mp_mail_send_Admin = new Mp_mail_send_Admin();
+		$this->loader->add_action('transition_post_status', $Mp_mail_send_Admin, 'mp_mail_promotions_status_change_event', 10, 3);
 		// $this->loader->add_filter('post_updated_messages', $Mp_mail_send_Admin, 'change_publish_button_label', 1, 1);
 
 

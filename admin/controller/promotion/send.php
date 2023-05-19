@@ -23,14 +23,37 @@
 class Mp_mail_send_Admin
 {
 
-    // function change_publish_button_label( $messages ) {
-    //     global $post_type;
-        
-    //     if ( 'mp_mail_promotions' === $post_type ) {
-    //         $messages['post'][1] = 'Send';
-    //     }
-        
-    //     return $messages;
-    // }
+  // Add status change event to custom post type
+  function mp_mail_promotions_status_change_event($new_status, $old_status, $post)
+  {
+    // Check if the post type is "mp_mail_promotions"
+    if ($post->post_type === 'mp_mail_promotions') {
+        // Perform actions based on the status change
+        if ($new_status === 'publish' && $old_status !== 'publish') {
+        // Status changed to "publish" from any other status
+        // Add your custom code here
+
+        $subscribers = get_users(array(
+            'meta_query' => array(
+            array(
+                'key' => 'mp_gl_notify_weekly',
+                'value' => "true",
+                'compare' => '=='
+            )
+            )
+        ));
+                
+            // Create an array to store the user IDs
+            $userIds = array();
+
+            // Extract the user IDs from the retrieved user objects
+            foreach ($subscribers as $user) {
+                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email);
+            }
+            update_post_meta( $post->ID, 'sent_promo_email', $userIds );
+        }
+    }
+  }
+
 
 }
