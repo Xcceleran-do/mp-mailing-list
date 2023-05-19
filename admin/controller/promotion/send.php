@@ -48,7 +48,7 @@ class Mp_mail_send_Admin
 
             // Extract the user IDs from the retrieved user objects
             foreach ($subscribers as $user) {
-                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email);
+                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'status' => 1);
             }
             update_post_meta( $post->ID, 'sent_promo_email', $userIds );
         }
