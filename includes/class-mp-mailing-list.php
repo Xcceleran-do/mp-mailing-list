@@ -116,6 +116,11 @@ class Mp_Mailing_List {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mp-mailing-list-admin.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/email_types_taxonomy.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/post_type_promotions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/submenu.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -162,6 +167,20 @@ class Mp_Mailing_List {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+
+		$Mp_mail_submenu_Admin = new Mp_mail_submenu_Admin();
+		$this->loader->add_action('admin_menu', $Mp_mail_submenu_Admin, 'posts_catalog_submenu_page', 1, 1);
+
+		$Mp_mail_promotions_Admin = new Mp_mail_promotions_Admin();
+		$this->loader->add_action('init', $Mp_mail_promotions_Admin, 'Mp_mail_promotion_registration_init', 1, 1);
+
+		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
+		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
+
+
+		$Mp_mail_send_Admin = new Mp_mail_send_Admin();
+		// $this->loader->add_filter('post_updated_messages', $Mp_mail_send_Admin, 'change_publish_button_label', 1, 1);
+
 
 	}
 
