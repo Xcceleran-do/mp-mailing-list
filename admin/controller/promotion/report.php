@@ -39,7 +39,7 @@ function mp_mail_promotions_sent_to_column_content($column, $post_id) {
         // echo 'Custom Column Content';
 
         $sent_to = get_post_meta( $post_id, 'sent_promo_email', true);
-        echo $sent_to ? count($sent_to) : 0;
+        echo $sent_to ? count($sent_to) . " Subscribers" : "Not Sent";
 
     }
 }
