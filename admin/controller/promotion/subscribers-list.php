@@ -20,7 +20,7 @@
  * @subpackage Mp_mail_metas/admin
  * @author     Esubalew A. <esubalew.amenu@singularitynet.io>
  */
-class Mp_mail_submenu_Admin
+class Mp_mail_subscribers_list_Admin
 {
 
     // Add submenu page
