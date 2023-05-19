@@ -186,6 +186,7 @@ class Mp_Mailing_List {
 		$Mp_mail_sent_report_Admin = new Mp_mail_sent_report_Admin();
 		$this->loader->add_filter('manage_mp_mail_promotions_posts_columns', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column');
 		$this->loader->add_action('manage_mp_mail_promotions_posts_custom_column', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column_content', 10, 2);
+		$this->loader->add_action('admin_menu', $Mp_mail_sent_report_Admin, 'posts_catalog_report_page', 1, 1);
 
 
 	}
