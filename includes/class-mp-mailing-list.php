@@ -120,6 +120,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/post_type_promotions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/submenu.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/report.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -181,6 +182,10 @@ class Mp_Mailing_List {
 		$Mp_mail_send_Admin = new Mp_mail_send_Admin();
 		$this->loader->add_action('transition_post_status', $Mp_mail_send_Admin, 'mp_mail_promotions_status_change_event', 10, 3);
 		// $this->loader->add_filter('post_updated_messages', $Mp_mail_send_Admin, 'change_publish_button_label', 1, 1);
+
+		$Mp_mail_sent_report_Admin = new Mp_mail_sent_report_Admin();
+		$this->loader->add_filter('manage_mp_mail_promotions_posts_columns', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column');
+		$this->loader->add_action('manage_mp_mail_promotions_posts_custom_column', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column_content', 10, 2);
 
 
 	}
