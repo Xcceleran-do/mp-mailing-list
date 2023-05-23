@@ -13,6 +13,7 @@
     <th>#</th>
     <th>Email</th>
     <th>Status</th>
+    <th>Date</th>
     </tr>
     </thead>
     <tbody>
@@ -24,6 +25,7 @@
       <td> <?php echo $i+1 ?> </td>
       <td> <?php echo $reports_slice[$i]['email'] ?> </td>
       <td> <?php echo absint($reports_slice[$i]['status'])? "success" : "Failed"; ?> </td>
+      <td> <?php echo get_the_date('Y-m-d H:m:i', $post_id); ?> </td>
       </tr>
       <?php   } ?>
 
