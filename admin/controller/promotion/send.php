@@ -29,20 +29,43 @@ class Mp_mail_send_Admin
     // Check if the post type is "mp_mail_promotions"
     if ($post->post_type === 'mp_mail_promotions') {
         // Perform actions based on the status change
-        if ($new_status === 'publish' && $old_status !== 'publish') {
-        // Status changed to "publish" from any other status
-        // Add your custom code here
 
-        $subscribers = get_users(array(
-            'meta_query' => array(
-            array(
-                'key' => 'mp_gl_notify_weekly',
-                'value' => "true",
-                'compare' => '=='
-            )
-            )
-        ));
-                
+        if ($new_status === 'publish' && $old_status !== 'publish') {
+
+            // Status changed to "publish" from any other status
+            // Add your custom code here
+
+
+            $email_type_ids = wp_get_post_categories($post->ID);
+
+            $email_type_slugs = array();
+            $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
+            $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
+
+            if (!is_wp_error($terms)) {
+                // Loop through the slugs and display or use them as needed
+                foreach ($terms as $slug) {
+                    $email_type_slugs[] = $slug;
+
+                }
+            }
+
+            $meta_query = array(
+                'relation' => 'OR',
+            );
+
+            foreach ($email_type_slugs as $email_type_slug) {
+                $meta_query[] = array(
+                    'key' => $email_type_slug,
+                    'value' => 'true',
+                    'compare' => '==',
+                );
+            }
+
+            $subscribers = get_users(array(
+                'meta_query' => $meta_query,
+            ));
+
             // Create an array to store the user IDs
             $userIds = array();
 
