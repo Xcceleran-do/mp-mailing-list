@@ -71,7 +71,7 @@ class Mp_mail_send_Admin
 
             // Extract the user IDs from the retrieved user objects
             foreach ($subscribers as $user) {
-                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'status' => 1);
+                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'status' => 1, 'has_opened' => 0, 'opened_at' => null);
             }
             
             $success = count($userIds); // temporary for now
