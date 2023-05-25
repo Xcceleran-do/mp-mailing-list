@@ -12,8 +12,8 @@
     <tr>
     <th>#</th>
     <th>Email</th>
-    <th>Status</th>
-    <th>Date</th>
+    <th>Email status</th>
+    <th>Is opened</th>
     </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
       <td> <?php echo $i+1 ?> </td>
       <td> <?php echo $reports_slice[$i]['email'] ?> </td>
       <td> <?php echo absint($reports_slice[$i]['status'])? "success" : "Failed"; echo ' - ' .get_the_date('Y-m-d H:m:i', $post_id);?> </td>
-      <td> <?php echo $reports_slice[$i]['has_opened'] == "1" ? "Opened" : "Unknown"; ?> </td>
+      <td> <?php echo $reports_slice[$i]['has_opened'] == "1" ? "Opened at " . $reports_slice[$i]['opened_at'] : "Unknown"; ?> </td>
       </tr>
       <?php   } ?>
 

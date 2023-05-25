@@ -134,6 +134,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/community_content.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mails_about_us.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/become_moderator.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/api/view_tracker.php';
 
 		$this->loader = new Mp_Mailing_List_Loader();
 
@@ -239,6 +240,8 @@ class Mp_Mailing_List {
 		$this->loader->add_shortcode( 'mp_mails_become_moderator_code', $mp_mails_moderator, 'mp_mails_become_moderator_code' );
 		$this->loader->add_action('wp_ajax_mp_mails_become_moderator', $mp_mails_moderator, 'wp_ajax_mp_mails_become_moderator');
 		
+		$Mp_mail_get_view_tracks_api_public = new Mp_mail_get_view_tracks_api_public();
+		$this->loader->add_action('rest_api_init', $Mp_mail_get_view_tracks_api_public, 'wp_rest_view_tracks_endpoints');
 		
 
 	}

@@ -35,9 +35,6 @@ class Mp_mail_send_Admin
             // Status changed to "publish" from any other status
             // Add your custom code here
 
-
-            $email_type_ids = wp_get_post_categories($post->ID);
-
             $email_type_slugs = array();
             $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
             $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
@@ -71,7 +68,28 @@ class Mp_mail_send_Admin
 
             // Extract the user IDs from the retrieved user objects
             foreach ($subscribers as $user) {
-                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'status' => 1, 'has_opened' => 0, 'opened_at' => null);
+
+
+            $taxonomy = 'mp_mail_promo_temp_types'; // Replace with your custom taxonomy slug
+            $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+
+            if(count($terms))
+            {
+                $templete_id = $terms[0];
+
+                $before_content = get_term_meta($templete_id, 'mp_mail_template_before_content', true);
+                $after_content = get_term_meta($templete_id, 'mp_mail_template_after_content', true);
+       
+                $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
+                $email_content = $before_content . $tracker . $post->post_content . $after_content.'</body></html>';
+
+                $headers = array('Content-Type: text/html; charset=UTF-8');
+                $is_sent = wp_mail($user->user_email, $post->post_title, $email_content, $headers);
+                // $is_sent = 1;
+
+                $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
+            }
+
             }
             
             $success = count($userIds); // temporary for now
