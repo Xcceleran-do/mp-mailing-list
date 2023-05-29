@@ -54,6 +54,16 @@ class Mp_contact
                 'message' => $message,
                 'user_id' => get_current_user_id()
             ));
+
+        $headers = array('Content-Type: text/html; charset=UTF-8');
+        $emailContent = 
+        '</br>First name :- ' . esc_attr($firstName) .
+        '</br>Last name :- ' . esc_attr($lastName) .
+        '</br>Email Address :- ' . esc_attr($email) .
+        '</br></br>Message :- ' . esc_attr($message); 
+
+        wp_mail("editor@mindplex.ai", 'New Message to the Editor', $emailContent, $headers);
+
         }
         die();
     }

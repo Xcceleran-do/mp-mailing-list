@@ -116,6 +116,13 @@ class Mp_Mailing_List {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mp-mailing-list-admin.php';
 
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/email_types_taxonomy.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/post_type_promotions.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/subscribers-list.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/report.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_types_taxonomy.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
@@ -127,6 +134,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/community_content.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mails_about_us.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/become_moderator.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/api/view_tracker.php';
 
 		$this->loader = new Mp_Mailing_List_Loader();
 
@@ -163,6 +171,29 @@ class Mp_Mailing_List {
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
 
+		$Mp_mail_subscribers_list_Admin = new Mp_mail_subscribers_list_Admin();
+		$this->loader->add_action('admin_menu', $Mp_mail_subscribers_list_Admin, 'posts_catalog_submenu_page', 1, 1);
+
+		$Mp_mail_promotions_Admin = new Mp_mail_promotions_Admin();
+		$this->loader->add_action('init', $Mp_mail_promotions_Admin, 'Mp_mail_promotion_registration_init', 1, 1);
+
+		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
+		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
+
+		$Mp_mail_templete_types_taxonomy_Admin = new Mp_mail_templete_types_taxonomy_Admin();
+		$this->loader->add_action('init', $Mp_mail_templete_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_templete_types_taxonomy', 1, 1);
+		$this->loader->add_action('init', $Mp_mail_templete_types_taxonomy_Admin, 'Mp_mail_template_metas', 1, 1);
+
+		$Mp_mail_send_Admin = new Mp_mail_send_Admin();
+		$this->loader->add_action('transition_post_status', $Mp_mail_send_Admin, 'mp_mail_promotions_status_change_event', 10, 3);
+		// $this->loader->add_filter('post_updated_messages', $Mp_mail_send_Admin, 'change_publish_button_label', 1, 1);
+
+		$Mp_mail_sent_report_Admin = new Mp_mail_sent_report_Admin();
+		$this->loader->add_filter('manage_mp_mail_promotions_posts_columns', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column');
+		$this->loader->add_action('manage_mp_mail_promotions_posts_custom_column', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column_content', 10, 2);
+		$this->loader->add_action('admin_menu', $Mp_mail_sent_report_Admin, 'posts_catalog_report_page', 1, 1);
+
+
 	}
 
 	/**
@@ -194,6 +225,7 @@ class Mp_Mailing_List {
 		$mp_mails_contact_us = new Mp_mails_about_contact();
 		$this->loader->add_shortcode( 'mp_mails_contact_us_code', $mp_mails_contact_us, 'mp_mails_contact_us_code' );
 		$this->loader->add_action('wp_ajax_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
 				
 		$mp_mails_cta = new Mp_mails_cta_page();
 		$this->loader->add_shortcode( 'mp_cta_code', $mp_mails_cta, 'mp_mails_cta_page' );
@@ -209,6 +241,8 @@ class Mp_Mailing_List {
 		$this->loader->add_shortcode( 'mp_mails_become_moderator_code', $mp_mails_moderator, 'mp_mails_become_moderator_code' );
 		$this->loader->add_action('wp_ajax_mp_mails_become_moderator', $mp_mails_moderator, 'wp_ajax_mp_mails_become_moderator');
 		
+		$Mp_mail_get_view_tracks_api_public = new Mp_mail_get_view_tracks_api_public();
+		$this->loader->add_action('rest_api_init', $Mp_mail_get_view_tracks_api_public, 'wp_rest_view_tracks_endpoints');
 		
 
 	}

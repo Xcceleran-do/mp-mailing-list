@@ -35,11 +35,13 @@ class Mp_mails_about_contact
   public function wp_ajax_mp_mail_insert_contact(){
 
 
-    if(isset($_POST['name'])
+    if(isset($_POST['firstName'])
     && isset($_POST['email']) 
     && isset($_POST['message'])){
 
-      $name = $_POST['name'];
+      $first_name = $_POST['firstName'];
+      $last_name = isset($_POST['lastName']) ? $_POST['lastName'] : '';
+      $name = $first_name . ' '. $last_name;
       $email = $_POST['email'];
       $message = $_POST['message'];
     $data = array(

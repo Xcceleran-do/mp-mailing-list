@@ -48,6 +48,7 @@ class Mp_mails_community_content
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $attachments = array();
         $content_link ='';
+        $email_address = 'community_content@mindplex.ai';
        
         $data = array(
           "first_name" => esc_attr($first_name),
@@ -136,24 +137,43 @@ class Mp_mails_community_content
                 </head>
                 <body>
                 <div class="email-wrapper">
-                    <h1 class="email-heading">New Account Activation</h1>
+                    <h1 class="email-heading">New Community Content</h1>
                     <p class="instructions-heading">
-                    A content has been sumbitted by ' . $first_name  .' ('.$email.') '; 
-                    
-                    $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
-                    $cont_link = $content_link ? ' With link: '.$content_link : '.';
+                    A content has been sumbitted by <br>' . 
 
-                    $emailContent .= $wallet_address. $cont_link. '</p>
+                    '<br>First name : ' . esc_attr($first_name) .
+                    '<br>Last name : ' . esc_attr($lastname) .
+                    '<br>Email Address: ' . esc_attr($email) .
+                    '<br>Wallet Address : ' . esc_attr($wallet_address) .
+                    '<br>File type : ' . esc_attr($file_type) .
+                    '<br>Content link : ' . esc_attr($content_link).
+                    '<br>Description : ' . html_entity_decode(preg_replace('/\\\\\"/', '"', $description)) ;
+                    
+
+                    // $wallet_address = $wallet_address ? ' wallet address: '.$wallet_address : '';
+                    // $cont_link = $content_link ? ' With link: '.$content_link : '.';
+                    // $emailContent .= $wallet_address. $cont_link. '</p>
+
+                    $emailContent .= '</p>
                 </div>
                 </body>
             </html>';
 
             if($attachments){
                 // echo 
-                wp_mail("community_content@mindplex.ai", 'Community Content with attachments', $emailContent, $headers, $attachments);
+                wp_mail($email_address, 'Community Content with attachment', $emailContent, $headers, $attachments);
             }
             else //echo 
-            wp_mail("community_content@mindplex.ai", 'Community Content', $emailContent, $headers);
+            wp_mail($email_address, 'Community Content', $emailContent, $headers);
+
+            $to_sender = 'Dear ' . esc_attr($first_name) .',<br><br>'.
+            'Thank you for submitting your content to our platform. We have received your submission, and it is currently awaiting approval from our community content moderators. We appreciate your patience as we carefully review and consider each submission.
+            Rest assured that we will contact you as soon as possible regarding the status of your submission. We will inform you if your content is approved for publication or if any changes or modifications are necessary.
+            Thank you again for considering us for your submission. We value your contribution to our platform and look forward to potentially showcasing your work to our audience.<br><br>'.
+            'Best regards,<br>'.
+            'Mindplex';
+            wp_mail($email, 'Community Content', $to_sender, $headers);
+
         die();
     }
 

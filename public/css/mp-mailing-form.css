@@ -62,3 +62,20 @@
 .file-type option{
   background: #17646F;
 }
+.ql-snow.ql-toolbar button, .ql-snow .ql-toolbar button {
+	background: none;
+	border: none;
+	cursor: pointer;
+	display: inline-block;
+	float: left;
+	height: 24px;
+	padding: 3px 5px;
+	width: 28px;
+}
+
+#community-content-container button svg .ql-stroke {
+	stroke: #fff;
+}
+#community-content-container .ql-active svg .ql-stroke{
+	stroke: cyan;
+}

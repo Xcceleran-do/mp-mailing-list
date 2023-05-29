@@ -11,8 +11,22 @@
 
     <label for="email">Email</label>
     <input type="text" name="email" id="email" placeholder="Enter your email address">
-    <label for="biography">Description of the content</label>
-    <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
+    <label for="description">Description of the content</label>
+
+    <!-- <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea> -->
+    <div class="wall-post-textarea">
+      <div id="community-content-container">
+          <button class="ql-bold"></button>
+          <button class="ql-italic"></button>
+          <button class="ql-underline"></button>
+          <button class="ql-link"></button>
+          <!-- <button id="custom-button" class="custom-button">
+              &#x1F642;
+          </button> -->
+      </div>
+      <div id="communityContent"></div>
+    </div>
+
     <label for="type">File type</label>
     <select class="file-type" name="type" id="type">
         <option value="" selected disabled>Select the file type of your content</option>
@@ -26,12 +40,12 @@
     </div>
     <input class="content-link" type="text" name="link" id="link" placeholder="Enter your youtube link address">
 
-    <label for="biography">Upload file</label>
+    <label for="file">Upload file</label>
     <input type="file" class="community-upload" name="" id="choose_content">
     <label for="choose_content">PDF, DOC, DOCX Max size of <?php echo wp_max_upload_size()/1024/1024 ?> MB</label>
-    
-    <input type="submit" value="Submit" class="about-us-form-submit">
-    
+    <button id="community-submit" class="about-us-form-submit">
+      Submit
+    </button>
 </form>
 
 
@@ -74,6 +88,8 @@
     </div>
 </div>
 
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+<link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
 <script>
 window.addEventListener('DOMContentLoaded', () => {
@@ -83,7 +99,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const lastName = document.querySelector("#lname");
   const wallet_address = document.querySelector("#wallet_address");
   const email = document.querySelector("#email");
-  const biography = document.querySelector("#biography");
+
   const fileType = document.querySelector(".file-type");
   const contentLink = document.querySelector(".content-link")
   const submitBtn = document.querySelector('.about-us-form-submit')
@@ -92,6 +108,13 @@ window.addEventListener('DOMContentLoaded', () => {
   const unlistedPopup = document.getElementById("popup-unlisted")
   const closeUnlistedPopup = document.getElementById("unlisted-close")
 
+  const quill = new Quill('#communityContent', {  
+    modules: {
+        toolbar: '#community-content-container'
+    },
+    theme: 'snow'
+  });
+  const description = document.querySelector('#communityContent') 
 
   unlisted.addEventListener("click", openPopunlisted);
 
@@ -136,87 +159,115 @@ window.addEventListener('DOMContentLoaded', () => {
     contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
   }
   $('#type').change( function() {
-      if(this.value.toLowerCase() === "text"){
-        return contentLink.placeholder = "Enter your document link"
-      }
-      return contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
-    });
+    if(this.value.toLowerCase() === "text"){
+      return contentLink.placeholder = "Enter your document link"
+    }
+    return contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
+  });
     
-    // fileType.onChange =function() {
-    //   console.log(fileType.value);
-    // /
-    // }
+  const submitCommunityLoader = (id, status, text) => {
+    const element = document.getElementById(id)
+    if (status) {
+      element.innerHTML = `<img class="loading-btn" style="width:20px;height:20px" src="<?php echo get_template_directory_uri(); ?>/assets/header/loader.svg" alt=""/>`
+      element.disabled = true
+    } else {
+      element.innerHTML = text
+      element.disabled = false
+    }
+  }
 
   submitFrom.addEventListener('submit',(e)=>{
     e.preventDefault()
+
     form_data.append('action', 'mp_mail_upload_content');
     showLoader()
     var file = jQuery('#choose_content').prop('files')[0]; 
     function validated(){
       
+      if(!firstName.value){
+        hideLoader()
+        showNotification('Please provide your First name !', 'danger');
+        return false 
+      }
+      if(!lastName.value){
+        hideLoader()
+        showNotification('Please provide your Last name !', 'danger');
+        return false 
+      }
       if(!email.value){
         hideLoader()
-        return showNotification('Please provide your email !', 'danger');
+        showNotification('Please provide your email !', 'danger');
+        return false 
       }
       
       if(!checkEmailIsFromTrustedProvider(email.value)){
         hideLoader()
-        return showNotification('Invalid email address.', 'danger');
+        showNotification('Invalid email address.', 'danger');
+        return false 
       }
       if(!contentLink.value && !file){
         hideLoader()
-        return showNotification('Please link your content or upload one.', 'danger');
+        showNotification('Please link your content or upload one.', 'danger');
+        return false 
       }
   
       if(contentLink.value && !isValidLink(contentLink.value)){
         hideLoader()
 
-        return showNotification('Invalid link! Make sure your link start with http://www','danger');
+        showNotification('Invalid link! Make sure your link start with http://www','danger');
+        return false 
       }
   
       if(file && file.size > maxSize){
         hideLoader()
-        return showNotification(`File too large. The maximum file size should be less than ${(maxSize/1024/1024)} MB`, 'danger');
+        showNotification(`File too large. The maximum file size should be less than ${(maxSize/1024/1024)} MB`, 'danger');
+        return false 
       }
   
       if(!fileType.value) {
         hideLoader()
-        return showNotification('Please select a file type.', 'danger');
+        showNotification('Please select a file type.', 'danger');
+        return false 
       }
+      return true;
     }
-    validated();
+    if(validated()){
+      submitCommunityLoader('community-submit', true, '')
  
-    form_data.append('firstName', firstName.value);
-    form_data.append('lastName', lastName.value);
-    form_data.append('wallet_address', wallet_address.value);
-    form_data.append('email', email.value);
-    form_data.append('description', biography.value);
-    form_data.append('fileType', fileType.value);
-    form_data.append('link', contentLink.value);
-    form_data.append('file', file);
-    
+      form_data.append('firstName', firstName.value);
+      form_data.append('lastName', lastName.value);
+      form_data.append('wallet_address', wallet_address.value);
+      form_data.append('email', email.value);
+      form_data.append('description', quill.root.innerHTML);
+      form_data.append('fileType', fileType.value);
+      form_data.append('link', contentLink.value);
+      form_data.append('file', file);
 
-    jQuery.ajax({
-      url: ajaxurl,
-      type: 'POST',
-      contentType: false,
-      processData: false,
-      data: form_data,
-      success: function(data){
-        hideLoader()
-        console.log(data);
-        if(data ==='success'){
+      jQuery.ajax({
+        url: ajaxurl,
+        type: 'POST',
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success: function(data){
+          hideLoader()
+          console.log(data);
+          if(data ==='success'){
+            submitFrom.reset();
+            submitCommunityLoader('community-submit', false, 'Submit')
+
+            return showNotification('Submitted successfully!');
+          }
+        },
+        error: function(data){
+          hideLoader();
           submitFrom.reset();
-          submitBtn.style.display="none"
-          return showNotification('Submitted successfully!');
+          submitCommunityLoader('community-submit', false, 'Submit')
+
+          return showNotification('Please try again later', 'danger');
         }
-      },
-      error: function(data){
-        hideLoader();
-        submitFrom.reset();
-        return showNotification('Please try again later', 'danger');
-      }
-    });
+      });
+    }
   })
 })
 </script>
