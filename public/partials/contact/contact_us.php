@@ -10,7 +10,7 @@
     <input type="text" name="email" id="email" placeholder="Enter yout email address">
     <label for="biography">Message</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
-    <input type="submit" value="Submit" class="about-us-form-submit">
+    <button id="contactUsSubmit"class="about-us-form-submit"> Submit</button>
 </form>
 
 <script>
@@ -24,6 +24,19 @@ window.addEventListener('DOMContentLoaded', () => {
     return trustedDomains.includes(emailDomain)
 }
 
+const contactLoader = (id, status, text) => {
+    const contactSubmitBtn = document.getElementById(id)
+    if (status) {
+        contactSubmitBtn.innerHTML = text
+        contactSubmitBtn.disabled = true
+
+    } else {
+        contactSubmitBtn.innerHTML = text
+        contactSubmitBtn.disabled = false
+
+    }
+}
+
   submitForm.addEventListener("submit", function(e) {
     showLoader()
     const firstName = document.querySelector("#firstName").value;
@@ -31,14 +44,16 @@ window.addEventListener('DOMContentLoaded', () => {
     const email = document.querySelector("#email").value;
     const biography = document.querySelector("#biography").value;
     e.preventDefault();
-
-    if (name == "" || email == "" || biography == "") {
+    if (firstName == "" || email == "" || biography == "") {
       hideLoader()
       return showNotification('Please fill out all fields', 'danger');
-    } else if (!checkEmailIsFromTrustedProvider(email)) {
+    }
+     else if (!checkEmailIsFromTrustedProvider(email)) {
       hideLoader()
       return showNotification('Please enter a valid email address', 'danger');
     } else{
+      contactLoader('contactUsSubmit', true, 'Please wait.')
+      
       const form_data = new FormData();
       form_data.append('action', 'mp_mail_insert_contact');
       form_data.append('firstName', firstName);
@@ -54,11 +69,15 @@ window.addEventListener('DOMContentLoaded', () => {
         data: form_data,
         success: function(data) {
           hideLoader();
+          contactLoader('contactUsSubmit', false, 'Submit')
           return showNotification('Your form has been successfully submitted!');    
         },
         error: function(data) {
+          console.log(data);
           hideLoader();
-          return showNotification('Something went wrong please try again later', 'danger');
+          contactLoader('contactUsSubmit', false, 'Submit')
+
+          return showNotification('Something went wrong please try again later.', 'danger');
         } 
       })
 
