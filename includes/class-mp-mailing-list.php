@@ -111,6 +111,9 @@ class Mp_Mailing_List {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mp-mailing-list-i18n.php';
 
+		if (!class_exists('Tax_Meta_Class'))
+			require_once plugin_dir_path(dirname(__FILE__)) . '../mp-general/meta_files/Taxonomy-meta-class.php';
+
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
