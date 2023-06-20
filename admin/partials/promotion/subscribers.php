@@ -2,15 +2,19 @@
 <!-- // Display the content for the submenu page -->
   <div class="wrap">
   <h1>Subscribers</h1>
-
-
-  <!-- // Search form -->
-  
   <form method="post" action="<?php echo esc_url(admin_url('edit.php?post_type=mp_mail_promotions&page=subscribers'))?>">
-  <!-- <input type="text" name="search" placeholder="Search" value="< ?php echo esc_attr($search)?>"> -->
+  
   <select class="page-title-action" name="filter_by" > 
-    <option value="mp_gl_notify_weekly" <?php if($filter_by==='mp_gl_notify_weekly') echo 'selected="selected"'?>>Weekly Notifications</option> 
-    <option value="mp_gl_notify_mp_updates" <?php if($filter_by==='mp_gl_notify_mp_updates') echo 'selected="selected"'?>>MP Updates</option>     
+    <?php
+    
+      foreach ($mail_promo_types as $promo_type) {
+        ?>
+          <option value="<?php echo $promo_type->slug?>" <?php if($filter_by===$promo_type->slug) echo 'selected="selected"'?>><?php echo $promo_type->name?></option> 
+      <?php
+          echo $promo_type->name . '<br>';
+      }
+
+  ?>
   </select>
   
     <input type="submit" name="submit" value="Search">

@@ -72,6 +72,12 @@ function posts_catalog_submenu_page() {
     $end = $start + $per_page;
     $subscribers_slice = array_slice($subscribers, $start, $per_page);
 
+    $mail_promo_types = get_terms(array(
+        'taxonomy' => 'mp_mail_promo_types',
+        'hide_empty' => false,
+    ));
+    
+    
       include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/subscribers.php';
         
 }
