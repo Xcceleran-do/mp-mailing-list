@@ -1,7 +1,9 @@
 
 <!-- // Display the content for the submenu page -->
+  <?php $statusCount = 0; $openedCount = 0 ?>
   <div class="wrap">
   <h1>Report of '<?php echo get_the_title($post_id);?>'</h1>
+  <h1 id="opened-email-h1">Out of <?php echo count($reports_slice);?>/</h1>
 
 
   <!-- // Check if there are reports -->
@@ -25,9 +27,23 @@
       <td> <?php echo $i+1 ?> </td>
       <td> <?php echo $reports_slice[$i]['email'] ?> </td>
       <td> <?php echo absint($reports_slice[$i]['status'])? "success" : "Failed"; echo ' - ' .get_the_date('Y-m-d H:m:i', $post_id);?> </td>
-      <td> <?php echo $reports_slice[$i]['has_opened'] == "1" ? "Opened at " . $reports_slice[$i]['opened_at'] : "Unknown"; ?> </td>
+      <td> <?php 
+        if ($reports_slice[$i]['has_opened'] == "1"){
+          echo "Opened at " . $reports_slice[$i]['opened_at'];
+          $openedCount++;
+          }else{
+          echo  "Not opened"; 
+        }
+      ?> </td>
       </tr>
-      <?php   } ?>
+      <?php  
+    
+    } ?>
+    <script>
+      var openedCount = `<?php echo $openedCount;?>`
+      var h1 = document.getElementById("opened-email-h1");
+      h1.textContent += openedCount + ' Opened';
+    </script>
 
     </tbody>
     </table>
