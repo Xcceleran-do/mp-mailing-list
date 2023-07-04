@@ -122,6 +122,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/email_types_taxonomy.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/post_type_promotions.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/subscribers-list.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/yearly-report.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/report.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_types_taxonomy.php';
@@ -177,6 +178,9 @@ class Mp_Mailing_List {
 		$Mp_mail_subscribers_list_Admin = new Mp_mail_subscribers_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_subscribers_list_Admin, 'posts_catalog_submenu_page', 1, 1);
 
+		$Mp_mail_yearly_report_list_Admin = new Mp_mail_yearly_report_list_Admin();
+		$this->loader->add_action('admin_menu', $Mp_mail_yearly_report_list_Admin, 'yearly_report_submenu_page', 1, 1);
+		
 		$Mp_mail_promotions_Admin = new Mp_mail_promotions_Admin();
 		$this->loader->add_action('init', $Mp_mail_promotions_Admin, 'Mp_mail_promotion_registration_init', 1, 1);
 
