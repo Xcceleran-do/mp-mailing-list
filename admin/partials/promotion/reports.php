@@ -4,7 +4,7 @@
   <div class="wrap">
   <h1>Report of '<?php echo get_the_title($post_id);?>'</h1>
   <h1 id="opened-email-h1">Out of <?php echo count($reports_slice);?>/</h1>
-  <h1 id="success-email-h1">Out of <?php echo count($reports_slice);?>/</h1>
+  <h1 id="success-email-h1">Out of <?php echo count($reports_slice);?></h1>
 
 
   <!-- // Check if there are reports -->
@@ -56,7 +56,7 @@
 
       var successEmailCount = `<?php echo $successEmailCount;?>`
       var success_email_h1 = document.getElementById("success-email-h1");
-      success_email_h1.textContent += successEmailCount + ' successfully delivered';
+      success_email_h1.textContent += " recipiant " + successEmailCount + ' successfully recieved the email';
     </script>
 
     </tbody>
