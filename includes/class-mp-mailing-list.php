@@ -126,6 +126,7 @@ class Mp_Mailing_List {
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/report.php';
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_types_taxonomy.php';
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_post_type.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
@@ -186,6 +187,9 @@ class Mp_Mailing_List {
 
 		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
 		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
+
+		$Mp_mail_templete_post_type_Admin = new Mp_mail_templete_post_type_Admin();
+		$this->loader->add_action('init', $Mp_mail_templete_post_type_Admin, 'Mp_mail_templete_format_init', 1, 1);
 
 		$Mp_mail_templete_types_taxonomy_Admin = new Mp_mail_templete_types_taxonomy_Admin();
 		$this->loader->add_action('init', $Mp_mail_templete_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_templete_types_taxonomy', 1, 1);
