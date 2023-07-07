@@ -27,6 +27,22 @@
       <div id="communityContent"></div>
     </div>
 
+    <label for="user_bio">Your brief bio (max length 50 words) </label>
+
+    <!-- <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea> -->
+    <div class="wall-post-textarea">
+      <div id="user-bio-container">
+          <button class="ql-bold"></button>
+          <button class="ql-italic"></button>
+          <button class="ql-underline"></button>
+          <button class="ql-link"></button>
+          <!-- <button id="custom-button" class="custom-button">
+              &#x1F642;
+          </button> -->
+      </div>
+      <div id="userBioContent"></div>
+    </div>
+
     <label for="type">File type</label>
     <select class="file-type" name="type" id="type">
         <option value="" selected disabled>Select the file type of your content</option>
@@ -116,6 +132,12 @@ window.addEventListener('DOMContentLoaded', () => {
   });
   const description = document.querySelector('#communityContent') 
 
+  const userBioContent = new Quill('#userBioContent', {  
+    modules: {
+        toolbar: '#user-bio-container'
+    },
+    theme: 'snow'
+  });
   unlisted.addEventListener("click", openPopunlisted);
 
   function openPopunlisted() {
@@ -239,6 +261,7 @@ window.addEventListener('DOMContentLoaded', () => {
       form_data.append('wallet_address', wallet_address.value);
       form_data.append('email', email.value);
       form_data.append('description', quill.root.innerHTML);
+      form_data.append('userBioContent', userBioContent.root.innerHTML);
       form_data.append('fileType', fileType.value);
       form_data.append('link', contentLink.value);
       form_data.append('file', file);

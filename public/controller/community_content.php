@@ -41,9 +41,10 @@ class Mp_mails_community_content
         $lastname = isset($_POST['lastName']) ? $_POST['lastName'] : '';
         $wallet_address = isset($_POST['wallet_address']) ? $_POST['wallet_address'] : '';
         $description = isset($_POST['description']) ? $_POST['description'] : '';
+        $userBioContent = isset($_POST['userBioContent']) ? $_POST['userBioContent'] : '';
         $file_type = isset($_POST['fileType']) ? $_POST['fileType'] : '';
         $email = isset($_POST['email']) ? $_POST['email'] : '';
-    
+        
 
         $headers = array('Content-Type: text/html; charset=UTF-8');
         $attachments = array();
@@ -56,9 +57,10 @@ class Mp_mails_community_content
           "wallet_address" => esc_attr($wallet_address),
           "email" => esc_attr($email),
           "description" => esc_attr($description),
+          "userBioContent" => esc_attr($userBioContent),
           "file_type" => esc_attr($file_type),
         );
-
+        
         $postarr = array(
           'post_title' => 'Mindplex Community Content',
           'post_content' => json_encode($data),
