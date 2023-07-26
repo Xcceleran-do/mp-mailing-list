@@ -1,7 +1,10 @@
 
 <!-- // Display the content for the submenu page -->
+  <?php $successEmailCount = 0; $openedCount = 0 ?>
   <div class="wrap">
   <h1>Report of '<?php echo get_the_title($post_id);?>'</h1>
+  <h1 id="opened-email-h1">Out of <?php echo count($reports_slice);?>/</h1>
+  <h1 id="success-email-h1">Out of <?php echo count($reports_slice);?></h1>
 
 
   <!-- // Check if there are reports -->
@@ -24,10 +27,37 @@
       <tr>
       <td> <?php echo $i+1 ?> </td>
       <td> <?php echo $reports_slice[$i]['email'] ?> </td>
-      <td> <?php echo absint($reports_slice[$i]['status'])? "success" : "Failed"; echo ' - ' .get_the_date('Y-m-d H:m:i', $post_id);?> </td>
-      <td> <?php echo $reports_slice[$i]['has_opened'] == "1" ? "Opened at " . $reports_slice[$i]['opened_at'] : "Unknown"; ?> </td>
+      <td> <?php 
+      
+      if (absint($reports_slice[$i]['status'])){
+        echo "success";
+        $successEmailCount++;
+        }else{
+        echo  "Failed"; 
+      }
+      echo ' - ' .get_the_date('Y-m-d H:m:i', $post_id);
+      ?> </td>
+      <td> <?php 
+        if ($reports_slice[$i]['has_opened'] == "1"){
+          echo "Opened at " . $reports_slice[$i]['opened_at'];
+          $openedCount++;
+          }else{
+          echo  "Not opened"; 
+        }
+      ?> </td>
       </tr>
-      <?php   } ?>
+      <?php  
+    
+    } ?>
+    <script>
+      var openedCount = `<?php echo $openedCount;?>`
+      var opened_email_h1 = document.getElementById("opened-email-h1");
+      opened_email_h1.textContent += openedCount + ' Opened';
+
+      var successEmailCount = `<?php echo $successEmailCount;?>`
+      var success_email_h1 = document.getElementById("success-email-h1");
+      success_email_h1.textContent += " recipiant " + successEmailCount + ' successfully recieved the email';
+    </script>
 
     </tbody>
     </table>
