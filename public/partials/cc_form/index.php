@@ -59,9 +59,13 @@
     <label for="file">Upload file</label>
     <input type="file" class="community-upload" name="" id="choose_content">
     <label for="choose_content">PDF, DOC, DOCX Max size of <?php echo wp_max_upload_size()/1024/1024 ?> MB</label>
+    <?php if(get_current_user_id() > 0 ){ ?>
     <button id="community-submit" class="about-us-form-submit">
       Submit
     </button>
+    <?php } else{ ?>
+    <label >Please login first to submit the content </label>
+    <?php } ?>
 </form>
 
 
