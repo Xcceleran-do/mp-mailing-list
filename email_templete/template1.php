@@ -141,41 +141,7 @@
           "
         >
         {{--body--}}
-          <!-- Hi John Doe,<br style="margin: 0; padding: 0" />
-          Thanks for joining Mindplex, the platform for publishers and readers!
-        </p>
-        <p
-          class="para_2"
-          style="
-            margin: 0;
-            padding: 0;
-            font-family: barlowmedium;
-            font-size: 17;
-            margin-bottom: 16px;
-          "
-        >
-          You're receiving this email because you requested a password reset for
-          your MIndplex Account.
-        </p>
-        <p class="para_3" style="margin: 0; padding: 0; margin-bottom: 16px">
-          To choose a new password and complete your request, please follow the
-          link below:
-        </p>
-        <p
-          class="para_link"
-          style="
-            margin: 0;
-            padding: 0;
-            margin-bottom: 16px;
-            color: #66B6FF;
-          "
-        >
-          https://www.google.com/search?q=ai&sxsrf=APwXEdfqpxfqkGEstge0DWRZlw3T835FHg%3A1680693753600&source=hp&ei=-VktZOzjH7WUxc8P5YSkqAk&iflsig=AOEireoAAAAAZC1oCQm_PdntmbAlFptbHhtBiRba3IKC&ved=0ahUKEwisxJ6R0JL-AhU1SvEDHWUCCZUQ4dUDCAg&uact=5&oq=ai&gs_lcp=Cgdnd3Mtd2l6EAMyEQguEIAEELEDEIMBEMcBENEDMhEILhCABBCxAxCDARDHARDRAzIFCAAQgAQyCwgAEIAEELEDEIMBMgsILhCKBRCxAxCDATILCAAQgAQQsQMQgwEyDgguEIAEELEDEMcBEK8BMgsIABCABBCxAxCDATILCAAQgAQQsQMQgwEyCwgAEIAEELEDEIMBOgcIIxDqAhAnOgYIIxAnEBM6EQguEIAEELEDEIMBEMcBEK8BOggIABCABBCxAzoLCC4QgAQQxwEQ0QNQtwpYpw1gwA9oAXAAeACAAUKIAXeSAQEymAEAoAEBsAEK&sclient=gws-wiz
-        </p>
-        <p class="para_4" style="margin: 0; padding: 0; margin-bottom: 16px">
-          You can change your password again at any time from within your My
-          Account portal at https://magazine.mindplex.ai/.
-        </p> -->
+        
         <p class="para_5" style="margin: 0; padding: 0; margin-bottom: 16px">
           Best Regards, MIndplex team.
         </p>
