@@ -56,7 +56,7 @@ class Mp_mail_templete_types_taxonomy_Admin
                'show_in_rest'       => true
           );
 
-          register_taxonomy('mp_mail_promo_temp_types', array('mp_mail_promotions'), $args);
+          register_taxonomy('mp_mail_promo_temp_types', array(), $args); //array('mp_mail_promotions'), $args);
 
           unset($args);
           unset($labels);

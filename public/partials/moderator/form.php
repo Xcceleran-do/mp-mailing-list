@@ -16,7 +16,11 @@
 	</div>
 	<label for="motivationLetter">Motivation letter</label>
 	<textarea name="motivationLetter" id="motivationLetter" cols="30" rows="10" class="mod-bio"></textarea>
+	<?php if(get_current_user_id() > 0 ){ ?>
 	<input type="submit" value="Submit" class="mod-form-submit">
+    <?php } else{ ?>
+    <label class="mod-form-submit">Please login first </label>
+    <?php } ?>
 </form>
 <script>
 	window.addEventListener('DOMContentLoaded', () => {
