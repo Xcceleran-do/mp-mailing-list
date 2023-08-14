@@ -42,16 +42,17 @@ class Mp_mails_templetes_posts_div
               $src_img = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
 
       $overview = get_post_meta($filtered_post->ID, 'mp_gl_post_brief_overview', true);
-      $strippedContent= strip_tags($overview);
+      $strippedContent=  strlen(strip_tags($overview)) > 100 ? substr(strip_tags($overview), 0, 100).'....' :strip_tags($overview);
 
 
-    $posts_content .= '<div style="width: 176px; height: auto; display: flex; flex-direction: column; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);">
-        <img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative;   margin: 4px auto;   width: 161.46px;" />
-        <div style="display: flex; justify-content: start; align-items: center;">'.
+    $posts_content .= '<a style="color: #fff !important;text-decoration:none;" href='.get_permalink($filtered_post->ID).'> <div style="width: 176px; height: auto; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-right:10px;">
+        <img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative;   margin: 4px auto;  min-height: 63%; width: 100%" />
+        <a href='.home_url("user/".get_the_author_meta('display_name', $filtered_post->post_author)).'>'.
         get_avatar($filtered_post->post_author, 16).
-            '<p style="font-size: 10px;">'.get_the_author_meta('display_name', $filtered_post->post_author).
-            ' . '.date('M. d, Y.', strtotime($filtered_post->post_date)).'</p>
-        </div>
+            '<span style="color: #fff !important;font-size:10px; margin-left: 4px;">'.get_the_author_meta('display_name', $filtered_post->post_author).'</span>
+            </a>
+            <div style="color: #fff !important;font-size:10px;">'.date('M. d, Y.', strtotime($filtered_post->post_date)).'</div>
+        
         <div style="text-align: start;">
             <p style="font-size: 9px; color: #49FFB3; margin: 6px auto;">
                 '.$filtered_post->post_title.'
@@ -61,7 +62,7 @@ class Mp_mails_templetes_posts_div
             </p>';
             // <p style="font-size: 6px;">21 min read . 19.9K views</p>
         $posts_content .= '</div>
-    </div>';
+    </div> </a>';
     
   }
   if($posts_content == "") return "";

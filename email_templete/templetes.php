@@ -63,6 +63,8 @@ class Mp_mails_templetes
             $email_content = str_replace("{{--subject--}}", $subject, $email_content);
             $email_content = str_replace("{{--content_title--}}", $content_title, $email_content);
             $email_content = str_replace("{{--body--}}", $body, $email_content);
+            $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+
 
             $header = array('Content-Type: text/html; charset=UTF-8');
 
@@ -144,6 +146,8 @@ class Mp_mails_templetes
             $email_content = str_replace("{{--subject--}}", $subject, $email_content);
             $email_content = str_replace("{{--content_title--}}", $content_title, $email_content);
             $email_content = str_replace("{{--body--}}", $body, $email_content);
+
+            $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
 
             $header = array('Content-Type: text/html; charset=UTF-8');
 
