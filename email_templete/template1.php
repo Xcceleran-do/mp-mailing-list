@@ -45,7 +45,7 @@
         width: 100%;
       "
     >
-      <div>
+      <div >
         <img
           src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/logo.png"
           alt=""
@@ -64,7 +64,6 @@
         style="
           margin: 0;
           padding: 0;
-          display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 20px;

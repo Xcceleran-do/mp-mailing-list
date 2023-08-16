@@ -54,10 +54,10 @@ class Mp_mails_templetes_posts_div
             <div style="color: #fff !important;font-size:10px;">'.date('M. d, Y.', strtotime($filtered_post->post_date)).'</div>
         
         <div style="text-align: start;">
-            <p style="font-size: 9px; color: #49FFB3; margin: 6px auto;">
+            <p style="font-size: 15px; color: #49FFB3; margin: 6px auto;">
                 '.$filtered_post->post_title.'
             </p>
-            <p style="font-size: 8px;margin: 6px auto;">
+            <p style="font-size: 11px;margin: 6px auto;">
                 '.$strippedContent.'
             </p>';
             // <p style="font-size: 6px;">21 min read . 19.9K views</p>
