@@ -107,6 +107,48 @@ class Mp_mails_templetes
         }
         return 0;
     }
+
+    public function account_activate_email_template($email, $slug, $bodyReplacements)
+    {
+        $args = array(
+            'name' => $slug,
+            'post_type' => array('mp_mail_formats'),
+            'post_status' => 'publish',
+            'showposts' => 1,
+            'ignore_sticky_posts' => 1,
+        );
+        $my_posts = get_posts($args);
+
+        if ($my_posts) {
+            $subject = $my_posts[0]->post_title;
+            $content_title = $my_posts[0]->post_title;
+
+            $body = $my_posts[0]->post_content;
+
+            foreach ($bodyReplacements as $key => $value) {
+                $subject = str_replace("{{--" . $key . "--}}", $value, $subject);
+                $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+                $body = str_replace("{{--" . $key . "--}}", $value, $body);
+            }
+            
+
+            $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
+            $email_content = file_get_contents($file_path);
+
+            $email_content = str_replace("{{--subject--}}", $subject, $email_content);
+            $email_content = str_replace("{{--content_title--}}", "Mindplex<p style='font-size:15px !important'>Where the future gets [sur]real", $email_content);
+            $email_content = str_replace("{{--body--}}", $body, $email_content);
+
+            $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+
+            $header = array('Content-Type: text/html; charset=UTF-8');
+
+            return wp_mail($email, $subject, $email_content, $header);
+        }
+        return 0;
+    }
+
+    
     public function template2($email, $slug, $post_ids, $bodyReplacements)
     {
         $args = array(
@@ -144,7 +186,7 @@ class Mp_mails_templetes
             $email_content = file_get_contents($file_path);
 
             $email_content = str_replace("{{--subject--}}", $subject, $email_content);
-            $email_content = str_replace("{{--content_title--}}", $content_title, $email_content);
+            $email_content = str_replace("{{--content_title--}}", "Mindplex<p style='font-size:15px !important'>Where the future gets [sur]real", $email_content);
             $email_content = str_replace("{{--body--}}", $body, $email_content);
 
             $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
