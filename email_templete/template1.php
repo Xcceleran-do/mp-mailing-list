@@ -45,7 +45,7 @@
         width: 100%;
       "
     >
-      <div>
+      <div >
         <img
           src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/logo.png"
           alt=""
@@ -58,20 +58,20 @@
           class="mindplex_logo"
           style="margin: 17px auto; padding: 0"
         />
+        <span>{{--content_title--}}</span>
       </div>
       <div
         class="main_header"
         style="
           margin: 0;
           padding: 0;
-          display: flex;
           align-items: center;
           justify-content: space-between;
           margin-bottom: 20px;
         "
       >
    
-        <h4
+        <!-- <h4
           class="main_title"
           style="
             margin: 0;
@@ -82,7 +82,7 @@
           "
         >
           {{--content_title--}}
-        </h4>
+        </h4> -->
        
       </div>
       <div
