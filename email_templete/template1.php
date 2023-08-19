@@ -58,6 +58,7 @@
           class="mindplex_logo"
           style="margin: 17px auto; padding: 0"
         />
+        <span>{{--content_title--}}</span>
       </div>
       <div
         class="main_header"
@@ -70,7 +71,7 @@
         "
       >
    
-        <h4
+        <!-- <h4
           class="main_title"
           style="
             margin: 0;
@@ -81,7 +82,7 @@
           "
         >
           {{--content_title--}}
-        </h4>
+        </h4> -->
        
       </div>
       <div
