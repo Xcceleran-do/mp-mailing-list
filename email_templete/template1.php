@@ -10,7 +10,7 @@
     <title style="margin: 0; padding: 0">{{--subject--}}</title>
   </head>
   <body
-   style=" background-image: linear-gradient(to bottom, #032E44, #01243E, #22223B);"
+   style=" background: linear-gradient(to bottom, #032E44, #01243E, #22223B);"
   >
   <div class="parent" style="
       font-family:roboto;
@@ -30,6 +30,7 @@
       color: #fff;
       max-width: 600px;
       margin: auto;
+      padding:5px;
     ">
    
     <main class="main"
