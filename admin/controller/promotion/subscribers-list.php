@@ -76,7 +76,12 @@ function posts_catalog_submenu_page() {
         'taxonomy' => 'mp_mail_promo_types',
         'hide_empty' => false,
     ));
-    
+
+    $additional_subscribers = array(
+        array("slug" => "mindplex-ai", "name" => "All Users"),
+        array("slug" => "magazine-users", "name" => "Magazine Users"),
+        array("slug" => "editorial", "name" => "Editorial"),
+    );
     
       include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/subscribers.php';
         
