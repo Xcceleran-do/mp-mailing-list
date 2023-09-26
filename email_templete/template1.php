@@ -158,7 +158,7 @@
             "
           >
           <a style="color: #fff !important; " href="{{--home_url--}}/privacy-policy" target="_blank">
-            Privacy and Cookie Policy
+            Privacy
 				  </a>
           </li>
           <li
