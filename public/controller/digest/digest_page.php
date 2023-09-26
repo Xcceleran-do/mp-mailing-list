@@ -24,8 +24,16 @@ class Mp_mail_digest_public
 {
     public function mp_mails_digest_shortcode()
     {
-        // $lewis_chois =
-
+        $lewis_choises = get_option('mp_mails_lewis_selected', array());
+        $lewis_choise_posts = get_posts(
+            array(
+                'include' => $lewis_choises,
+                'order'          => 'DESC',
+                'orderby'        => "ID",
+                'post_type'      => 'digest',
+                'post_status'    => 'publish',
+            )
+        );
         // weekly digest
         $weekly_digest = self::mp_mails_digest_recommendations('popularity', 1);
         // on discover
@@ -33,7 +41,7 @@ class Mp_mail_digest_public
         // on latest
         $latest_news = get_posts(
             array(
-                'order'          => 'DESC', //'RAND', //ASC,DESC
+                'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => 0,
                 'post_type'      => 'digest',
@@ -97,7 +105,7 @@ class Mp_mail_digest_public
             $offset = $offset * $posts_per_page;
 
             $args = array(
-                'order'          => 'DESC', //'RAND', //ASC,DESC
+                'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => $offset,
                 'post_type'      => 'digest',

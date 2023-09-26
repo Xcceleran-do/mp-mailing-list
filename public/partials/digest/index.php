@@ -166,50 +166,35 @@
         </div>
         <div class="digest-cards">
             <!-- card 1 -->
-            <div class="digest-card">
-                <img class="digest-thumbnail" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/Rectangle 1.png' ?>">
-                <div class="digest-profile">
-                    <img src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>">
-                    <p class="digest-profile-description">Clive Thompson . Jul 19, 2021 </p>
+            <?php foreach ($lewis_choise_posts as $chosed) { ?>
+                <?php
+                $post_type_format = get_post_meta($chosed->ID, 'post_type_format', true);
+                if ($post_type_format === "video")
+                    $chosed_thumbnail = mp_gl_PLAGIN_URL . 'public/assets/video_not_found.png';
 
+                else if ($post_type_format === "audio")
+                    $chosed_thumbnail = mp_gl_PLAGIN_URL . 'public/assets/Music_fallback.png';
+
+                else
+                    $chosed_thumbnail = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
+                ?>
+                <div class="digest-card">
+                    <img style="width: 267px;height: 162px;border-radius: 5px;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($chosed->ID, 'thumbnail_image', true)['src']) ? get_post_meta($chosed->ID, 'thumbnail_image', true)['src'] : $chosed_thumbnail ?>">
+
+                    <div class="digest-profile">
+                        <a href="<?php echo home_url('user/' . get_the_author_meta('user_login', $chosed->post_author)); ?>">
+                            <img style="border-radius:50%;" src="<?php echo get_avatar_url($chosed->post_author, 16); ?>">
+                            <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $chosed->post_author); ?>
+                        </a>
+                        <?php echo  date('M. d, Y', strtotime($chosed->post_date)) ?></p>
+                    </div>
+                    <a href="<?php echo esc_url(get_permalink($chosed->ID)); ?>">
+                        <h3> <?php echo $chosed->post_title; ?></h3>
+                    </a>
+                    <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $chosed->ID . '"]'); ?> . 19.9K views </p>
                 </div>
-                <h3>Lorem ipsum dolor sit amet, consectetur</h3>
+            <?php } ?>
 
-                <p class="digest-views">11 min watch . 19.9K views </p>
-
-
-
-            </div>
-            <!-- card 2 -->
-            <div class="digest-card">
-                <img class="digest-thumbnail" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/Rectangle 1.png' ?>">
-                <div class="digest-profile">
-                    <img src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>">
-                    <p class="digest-profile-description">Clive Thompson . Jul 19, 2021 </p>
-
-                </div>
-                <h3>Lorem ipsum dolor sit amet, consectetur</h3>
-
-                <p class="digest-views">11 min watch . 19.9K views </p>
-
-
-
-            </div>
-            <!-- card 3 -->
-            <div class="digest-card">
-                <img class="digest-thumbnail" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/Rectangle 1.png' ?>">
-                <div class="digest-profile">
-                    <img src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>">
-                    <p class="digest-profile-description">Clive Thompson . Jul 19, 2021 </p>
-
-                </div>
-                <h3>Lorem ipsum dolor sit amet, consectetur</h3>
-
-                <p class="digest-views">11 min watch . 19.9K views </p>
-
-
-
-            </div>
         </div>
     </div>
 </div>
