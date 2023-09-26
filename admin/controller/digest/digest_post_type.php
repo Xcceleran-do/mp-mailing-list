@@ -70,4 +70,59 @@ class Mp_mail_digest_admin
 
         register_post_type('digest', $args);
     }
+    public function main()
+    {
+        function mp_gl_register_digest_metabox()
+        {
+            add_meta_box("mp_mails_digest_selection", "Lewis Choise", "mp_mails_lewis_selection", array("digest"), "side", "low");
+        }
+        add_action('admin_init', 'mp_gl_register_digest_metabox');
+
+        function mp_mails_lewis_selection()
+        {
+            $lewis_selected_posts =  get_option('mp_mails_lewis_selected', 'none');
+            $lewis_posts = get_posts(
+                array(
+                    'fields' => 'ids',
+                    'post_type' => 'digest',
+                    'post_status' => 'publish',
+                    'orderby'    => 'ID',
+                    'order'    => 'DESC',
+                    'posts_per_page' => -1
+                )
+            );
+?>
+
+            <div id="mp-mailing-selections">
+                <?php foreach ($lewis_posts as $id) { ?>
+                    <div class="mp-mailing-digest-checkbox">
+                        <label class="label">
+                            <input type="checkbox" name="lewis_choise_posts[]" value="<?php echo $id ?>" <?php if (is_array($lewis_selected_posts) && in_array($id, $lewis_selected_posts)) echo 'checked' ?>>
+                            <?php echo get_the_title($id) ?>
+                        </label>
+                    </div>
+                <?php } ?>
+            </div>
+
+<?php
+        }
+        function mp_mails_register_digest_metabox_script()
+        {
+            wp_enqueue_script('wp_digest_selection', mp_mails_PLAGIN_URL . 'admin/js/mp-mailing-selections.js', array('jquery'), '0.0.2', true);
+            // wp_localize_script('wp_digest_selection', 'customUploads', array('imageData' => get_post_meta(get_the_ID(), 'thumbnail_image', true)));
+        }
+        add_action('admin_enqueue_scripts', 'mp_mails_register_digest_metabox_script');
+
+        function mp_mails_save_lewis_selected($post_ID)
+        {
+            if (get_post_type($post_ID) == 'digest') {
+                if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
+                if ($parent_id = wp_is_post_revision($post_ID)) {
+                    $post_ID = $parent_id;
+                }
+                update_option('mp_mails_lewis_selected', $_POST['lewis_choise_posts']);
+            }
+        }
+        add_action('save_post', 'mp_mails_save_lewis_selected');
+    }
 }

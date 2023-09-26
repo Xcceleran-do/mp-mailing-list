@@ -193,6 +193,7 @@ class Mp_Mailing_List
 		$this->loader->add_action('init', $Mp_mail_promotions_Admin, 'Mp_mail_promotion_registration_init', 1, 1);
 
 		$mp_mail_digest_admin = new Mp_mail_digest_admin();
+		$mp_mail_digest_admin->main();
 		$this->loader->add_action('init', $mp_mail_digest_admin, 'mp_mail_digest_post_type', 1, 1);
 
 		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
