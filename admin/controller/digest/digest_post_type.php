@@ -95,9 +95,9 @@ class Mp_mail_digest_admin
 
             <div id="mp-mailing-selections">
                 <?php foreach ($lewis_posts as $id) { ?>
-                    <div class="mp-mailing-digest-checkbox">
+                    <div class="mp-mailing-digest-checkbox" style="padding-block: 10px;">
                         <label class="label">
-                            <input type="checkbox" name="lewis_choise_posts[]" value="<?php echo $id ?>" <?php if (is_array($lewis_selected_posts) && in_array($id, $lewis_selected_posts)) echo 'checked' ?>>
+                            <input style="width: 20px;height: 20px;border-radius: 0px;" type="checkbox" name="lewis_choise_posts[]" value="<?php echo $id ?>" <?php if (is_array($lewis_selected_posts) && in_array($id, $lewis_selected_posts)) echo 'checked' ?>>
                             <?php echo get_the_title($id) ?>
                         </label>
                     </div>
@@ -115,7 +115,7 @@ class Mp_mail_digest_admin
 
         function mp_mails_save_lewis_selected($post_ID)
         {
-            if (get_post_type($post_ID) == 'digest') {
+            if (get_post_type($post_ID) == 'digest' && isset($_POST['lewis_choise_posts'])) {
                 if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) return;
                 if ($parent_id = wp_is_post_revision($post_ID)) {
                     $post_ID = $parent_id;

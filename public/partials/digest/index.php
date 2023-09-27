@@ -31,11 +31,11 @@
                         <!-- <img src="< ?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>"> -->
                         <a href="<?php echo get_the_author_meta('user_login', $single_weekly->post_author); ?>">
                             <?php echo get_avatar($single_weekly->post_author, 16); ?>
-                            <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_weekly->post_author); ?>
+                            <div class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_weekly->post_author); ?>
                         </a>
                         .
                         <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_weekly->post_date)) ?></span>
-                        </p>
+                            </div>
 
                     </div>
 
@@ -77,7 +77,7 @@
                     <div class="digest-blog-description">
                         <div class="digest-profile">
                             <a href="<?php echo get_the_author_meta('user_login', $lewis_latest->post_author); ?>">
-                                <?php echo get_avatar($single_weekly->post_author, 16); ?>
+                                <?php echo get_avatar($lewis_latest->post_author, 16); ?>
                                 <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $lewis_latest->post_author); ?>
                             </a>
                             . <?php echo  date('M. d, Y.', strtotime($lewis_latest->post_date)) ?></p>
@@ -123,7 +123,7 @@
                     else
                         $src_img = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
                     ?>
-                    <img style="width: 267px;height: 162px;border-radius: 5px;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_discover->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_discover->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
+                    <img style="width: 267px;height: 162px" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_discover->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_discover->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
                     <div class="digest-profile">
                         <!-- <img src="< ?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>"> -->
                         <a href="<?php echo get_the_author_meta('user_login', $single_discover->post_author); ?>">
