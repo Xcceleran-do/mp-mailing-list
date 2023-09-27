@@ -41,6 +41,7 @@ class Mp_mail_digest_public
         // on latest
         $latest_news = get_posts(
             array(
+                // 'exclude' => $lewis_choises,
                 'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => 0,
@@ -56,6 +57,8 @@ class Mp_mail_digest_public
 
     function mp_mails_digest_recommendations($recommender, $offset)
     {
+        $lewis_choises = get_option('mp_mails_lewis_selected', array());
+
         $mp_rep_community_slug = get_option('mp_rep_community_slug', 'none');
         $mp_rc_base_api = get_option('mp_rc_base_api');
         $posts_per_page = 10;
@@ -88,6 +91,7 @@ class Mp_mail_digest_public
             if (isset($responses['results'])) {
 
                 foreach ($responses['results'] as $response) {
+                    if(in_array($response['content_id'],$lewis_choises)) continue;
                     $postIds[] = $response['content_id'];
                 }
             }
@@ -105,6 +109,7 @@ class Mp_mail_digest_public
             $offset = $offset * $posts_per_page;
 
             $args = array(
+                'exclude' => $lewis_choises,
                 'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => $offset,
