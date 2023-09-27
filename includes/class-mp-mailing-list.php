@@ -233,6 +233,8 @@ class Mp_Mailing_List
 
 		$mp_mails_digest = new Mp_mail_digest_public();
 		$this->loader->add_shortcode('mp_digest_page', $mp_mails_digest, 'mp_mails_digest_shortcode');
+		$this->loader->add_action('wp_ajax_mp_mails_digest_subscribe', $mp_mails_digest, 'wp_ajax_mp_mails_digest_subscribe');
+
 
 		$mp_mails = new Mp_mails();
 		$this->loader->add_shortcode('mp_mails_list_code', $mp_mails, 'mp_mails_list_code');
