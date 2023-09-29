@@ -24,6 +24,8 @@ class Mp_mail_digest_public
 {
     public function mp_mails_digest_shortcode()
     {
+        $is_user_subscribed = get_user_meta(get_current_user_id(), 'notify_me_on_new_digest', true);
+
         $lewis_choises = get_option('mp_mails_lewis_selected', array());
         $lewis_choise_posts = get_posts(
             array(
@@ -91,7 +93,7 @@ class Mp_mail_digest_public
             if (isset($responses['results'])) {
 
                 foreach ($responses['results'] as $response) {
-                    if(in_array($response['content_id'],$lewis_choises)) continue;
+                    if (in_array($response['content_id'], $lewis_choises)) continue;
                     $postIds[] = $response['content_id'];
                 }
             }
@@ -119,5 +121,14 @@ class Mp_mail_digest_public
             );
             return get_posts($args);
         }
+    }
+
+    public function wp_ajax_mp_mails_digest_subscribe()
+    {
+        $user_email = $_POST['userEmail'];
+        if (is_user_logged_in()) {
+            update_user_meta(get_current_user_id(), 'notify_me_on_new_digest', $user_email);
+        }
+        die();
     }
 }
