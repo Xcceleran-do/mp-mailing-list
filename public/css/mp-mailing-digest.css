@@ -205,6 +205,7 @@
     margin-top: 12px;
     margin-right: 0px;
     margin-bottom: 0px;
+    flex:1;
 }
 
 .digest-footer h2 {

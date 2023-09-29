@@ -126,8 +126,9 @@ class Mp_mail_digest_public
     public function wp_ajax_mp_mails_digest_subscribe()
     {
         $user_email = $_POST['userEmail'];
-
-        update_user_meta(get_current_user_id(), 'notify_me_on_new_digest', $user_email);
+        if (is_user_logged_in()) {
+            update_user_meta(get_current_user_id(), 'notify_me_on_new_digest', $user_email);
+        }
         die();
     }
 }

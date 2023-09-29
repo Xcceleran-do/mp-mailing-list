@@ -49,7 +49,9 @@
                     $digest_teaser = get_post_meta($single_weekly->ID, 'mp_gl_post_brief_overview', true);
                     echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
                     ?></p>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_weekly->ID . '"]'); ?> . 19.9K views </p>
+                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_weekly->ID . '"]'); ?> .
+                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $single_weekly->ID . '"]') ?> likes
+                </p>
         </div>
     <?php
             } ?>
@@ -92,7 +94,9 @@
                         echo $latest_teaser;
                         ?>
                     </P>
-                    <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $lewis_latest->ID . '"]'); ?> . 19.9K views </p>
+                    <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $lewis_latest->ID . '"]'); ?> .
+                        <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $lewis_latest->ID . '"]') ?> likes
+                    </p>
 
                 </div>
                 <img style="width: 267px;height: 162px;min-width: 267px;min-height: 162px;border-radius: 5px;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src']) ? get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src'] : $latest_img ?>">
@@ -146,7 +150,8 @@
                     $digest_teaser = get_post_meta($single_discover->ID, 'mp_gl_post_brief_overview', true);
                     echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
                     ?></p>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_discover->ID . '"]'); ?> . 19.9K views </p>
+                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_discover->ID . '"]'); ?> .
+                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $single_discover->ID . '"]') ?> likes </p>
             </div>
         <?php
         } ?>
@@ -163,7 +168,7 @@
 
         <p class="digest-message-txt"></p>
         <input type="text" placeholder="Email here" class="digest-email-input " value="<?php echo $is_user_subscribed ? $is_user_subscribed : ''; ?>">
-        <button class="digest-subscribe-button">Subscribe</button>
+        <button class="digest-subscribe-button" data-logged-in="<?php echo is_user_logged_in() ?>">Subscribe</button>
 
     </div>
     <div class="digest-cards">
@@ -193,7 +198,8 @@
                 <a href="<?php echo esc_url(get_permalink($chosed->ID)); ?>">
                     <h3> <?php echo $chosed->post_title; ?></h3>
                 </a>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $chosed->ID . '"]'); ?> . 19.9K views </p>
+                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $chosed->ID . '"]'); ?> .
+                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $chosed->ID . '"]') ?> likes</p>
             </div>
         <?php } ?>
 
@@ -231,6 +237,10 @@
         }
 
         subscribeBtn.addEventListener('click', function(element) {
+            if (!subscribeBtn.getAttribute('.data-logged-in')) {
+                window.location.href = `<?php echo home_url('?type=login') ?>`
+                return
+            }
             if (!emailField.value) {
                 digestEmailValidation('Email field cannot be empty!', 'digest-error-txt')
             } else if (!checkDigestEmail(emailField.value)) {
