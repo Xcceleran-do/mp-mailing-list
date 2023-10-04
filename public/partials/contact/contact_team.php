@@ -66,8 +66,13 @@
 
           },
           success: function(response) {
+            const res = JSON.parse(response)
+            if(res.status === 'success') 
+              showNotification('Your message has been submitted, thank you.')
+            else
+              showNotification('Please try again later.','danger')
             sendBtn.innerHTML = 'Send'
-            console.log(response);
+            
           },
           error: function(data) {
             sendBtn.innerHTML = 'Send'
