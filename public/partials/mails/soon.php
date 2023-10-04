@@ -4,9 +4,10 @@
   let queryString = window.location.search;
   const urlParams = new URLSearchParams(queryString);
   const page_type = urlParams.get('type')
-  if (page_type === 'newsletter' && Number(isLoggedIn) !== 0) {
-    window.location.href = `<?php echo home_url('/edit-profile/?tab=settings') ?>`;
-  }
+  // if (page_type === 'newsletter' && Number(isLoggedIn) !== 0) {
+    
+  //   window.location.href = `< ?php echo home_url('/edit-profile/?tab=settings') ?>`;
+  // }
 </script>
 
 <div class="coming-soon-container">
