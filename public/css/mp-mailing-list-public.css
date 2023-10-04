@@ -39,3 +39,13 @@
 .input-text-container {
   width: 76%;
 } */
+.digest-input-error {
+  border: 3px solid var(--color-input-error) !important;
+}
+
+.digest-error-txt {
+  margin-bottom: -10px;
+  color: #DC8B9A !important;
+  font-size: 15px !important;
+  display: none;
+}

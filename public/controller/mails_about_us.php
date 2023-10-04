@@ -31,6 +31,26 @@ class Mp_mails_about_contact
   {
       include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_us.php';
   }
+  public function mp_mails_contact_team_code()
+  {
+      include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_team.php';
+  }
+
+  public function wp_ajax_mp_mail_email_team(){
+
+    $first_name = $_POST['first_name'];
+    $last_name = $_POST['last_name'];
+    $user_email = $_POST['user_email'];
+    $user_message = $_POST['user_message'];
+    include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+    
+    $mp_mails_templetes = new Mp_mails_templetes();
+    $bodyReplacements['full-name'] = $first_name.' '.$last_name;
+    $bodyReplacements['user-email'] = $user_email;
+    $bodyReplacements['user-message'] = $user_message;
+    $mp_mails_templetes->contact_our_team_template('email@mindplex.ai' , 'user-feedback-from-contact-our-team-page', $bodyReplacements);
+    die();
+  }
 
   public function wp_ajax_mp_mail_insert_contact(){
 
@@ -123,14 +143,15 @@ class Mp_mails_about_contact
           <p class="instruction-description">
           <b>Name: </b>'.$name.',<br>
           <b>Email: </b>'.$email.',<br>
-          <b>Message: </b>'.$message.'
+          <b>Message: </b>'.stripslashes($message).'
           </p>
       </div>
       </body>
       </html>';
 
       $headers = array('Content-Type: text/html; charset=UTF-8');
-      echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+      echo wp_mail("khalinoid@gmail.com", 'Mindplex New Moderators', $emailContent, $headers);
+      // echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
       die();
     }
   }

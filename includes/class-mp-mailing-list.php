@@ -242,6 +242,7 @@ class Mp_Mailing_List
 
 		$Mp_contact = new Mp_contact();
 		$this->loader->add_shortcode('mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code');
+		
 		$this->loader->add_action('wp_ajax_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
 		$this->loader->add_action('wp_ajax_nopriv_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
 
@@ -250,8 +251,14 @@ class Mp_Mailing_List
 
 		$mp_mails_contact_us = new Mp_mails_about_contact();
 		$this->loader->add_shortcode('mp_mails_contact_us_code', $mp_mails_contact_us, 'mp_mails_contact_us_code');
+		$this->loader->add_shortcode('mp_mails_contact_our_team_code', $mp_mails_contact_us, 'mp_mails_contact_team_code');
+		
 		$this->loader->add_action('wp_ajax_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
 		$this->loader->add_action('wp_ajax_nopriv_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
+
+		$this->loader->add_action('wp_ajax_mp_mail_email_team', $mp_mails_contact_us, 'wp_ajax_mp_mail_email_team');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mail_email_team', $mp_mails_contact_us, 'wp_ajax_mp_mail_email_team');
+		
 
 		$mp_mails_cta = new Mp_mails_cta_page();
 		$this->loader->add_shortcode('mp_cta_code', $mp_mails_cta, 'mp_mails_cta_page');
