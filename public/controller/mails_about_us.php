@@ -52,7 +52,7 @@ class Mp_mails_about_contact
       $data = array(
         "name" => esc_attr($first_name . ' ' . $last_name),
         "email" => esc_attr($user_email),
-        "message" => esc_attr($user_message),
+        "message" => esc_attr(stripslashes($user_message)),
       );
 
       $email_team_post = array(
@@ -69,7 +69,7 @@ class Mp_mails_about_contact
       $bodyReplacements['title'] = $email_type;
       $bodyReplacements['full-name'] = $first_name . ' ' . $last_name;
       $bodyReplacements['user-email'] = $user_email;
-      $bodyReplacements['user-message'] = $user_message;
+      $bodyReplacements['user-message'] = stripslashes($user_message);
       $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements);
 
     } else echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));

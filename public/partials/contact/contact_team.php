@@ -52,6 +52,14 @@
 
         }
       })
+
+      if(!userEmail.value.split('@')[1]){
+        cancelSending = true
+          userEmail.classList.add('digest-input-error')
+          userEmail.nextElementSibling.innerHTML = "The email you provide is not valid"
+          userEmail.nextElementSibling.style.display = 'block'
+
+      }
       if (!cancelSending) {
         sendBtn.innerHTML = "Sending..."
         jQuery.ajax({
