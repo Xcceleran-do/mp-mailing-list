@@ -62,7 +62,8 @@
             first_name: firstName.value,
             last_name: lastName.value,
             user_email: userEmail.value,
-            user_message: contactMessage.value
+            user_message: contactMessage.value,
+            type: 'team'
 
           },
           success: function(response) {

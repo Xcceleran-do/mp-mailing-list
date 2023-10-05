@@ -46,6 +46,9 @@ class Mp_mails_about_contact
       $user_email = $_POST['user_email'];
       $user_message = $_POST['user_message'];
 
+      $email_type = $_POST['type'];
+      if($email_type == 'team') $email = 'email@mindplex.ai';
+      else if($email_type == 'editors') $email = 'editors@mindplex.ai';
       $data = array(
         "name" => esc_attr($first_name . ' ' . $last_name),
         "email" => esc_attr($user_email),
@@ -63,10 +66,11 @@ class Mp_mails_about_contact
       include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
 
       $mp_mails_templetes = new Mp_mails_templetes();
+      $bodyReplacements['title'] = $email_type;
       $bodyReplacements['full-name'] = $first_name . ' ' . $last_name;
       $bodyReplacements['user-email'] = $user_email;
       $bodyReplacements['user-message'] = $user_message;
-      $mp_mails_templetes->contact_our_team_template('email@mindplex.ai' , 'user-feedback-from-contact-our-team-page', $bodyReplacements);
+      $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements);
 
     } else echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));
     die();
