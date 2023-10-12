@@ -1,13 +1,13 @@
 
 <form class="about-us-container-form" id="theForm">
     <label for="name">First Name</label>
-    <input type="text" name="name" id="firstName" placeholder="Enter your first name">
+    <input type="text" name="name" id="firstName" placeholder="">
 
     <label for="name">last Name</label>
-    <input type="text" name="name" id="lastName" placeholder="Enter your lsat name">
+    <input type="text" name="name" id="lastName" placeholder="">
 
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" placeholder="Enter yout email address">
+    <input type="text" name="email" id="email" placeholder="">
     <label for="biography">Message</label>
     <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea>
     <button id="contactUsSubmit"class="about-us-form-submit"> Submit</button>

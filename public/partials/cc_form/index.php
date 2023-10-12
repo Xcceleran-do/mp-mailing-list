@@ -1,16 +1,16 @@
 
 <form class="about-us-container-form content" id="theForm">
     <label for="fname">First Name</label>
-    <input type="text" name="fname" id="fname" placeholder="Enter your first name">
+    <input type="text" name="fname" id="fname" placeholder="">
 
     <label for="lname">Last Name</label>
-    <input type="text" name="name" id="lname" placeholder="Enter your last name">
+    <input type="text" name="name" id="lname" placeholder="">
 
     <label for="wallet_address">Wallet address (Optional)</label>
     <input type="text" name="wallet_address" id="wallet_address" placeholder="Enter Etheruim or Cardano network wallet address">
 
     <label for="email">Email</label>
-    <input type="text" name="email" id="email" placeholder="Enter your email address">
+    <input type="text" name="email" id="email" placeholder="">
     <label for="description">Description of the content</label>
 
     <!-- <textarea name="biography" id="biography" cols="30" rows="10" class="about-us-bio"></textarea> -->
