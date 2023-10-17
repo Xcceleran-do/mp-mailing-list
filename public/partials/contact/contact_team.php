@@ -5,18 +5,20 @@
   <form class="input-container">
     <div class="input-text-container">
       <label for="firstName">First Name</label>
-      <input type="text" id="firstName" class="coming-input" name="new_user_email">
+      <input type="text" id="firstName" class="coming-input required-input" name="new_user_email">
+      <span class="digest-error-txt">First Name should not be empty!</span>
 
     </div>
     <div class="input-text-container">
       <label for="lastName">last Name</label>
-      <input type="text" id="lastName" class="coming-input" name="new_user_email">
+      <input type="text" id="lastName" class="coming-input required-input" name="new_user_email">
+      <span class="digest-error-txt">Last Name should not be empty!</span>
     </div>
     <div class="input-text-container">
       <label for="email">email</label>
 
       <input type="email" id="email" class="coming-input required-input " name="new_user_email" required>
-      <span class="digest-error-txt">Email should not be empty!</span>
+      <span class="digest-error-txt"></span>
     </div>
     <div class="input-text-container">
       <label for="message">message</label>
