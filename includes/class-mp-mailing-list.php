@@ -27,7 +27,8 @@
  * @subpackage Mp_Mailing_List/includes
  * @author     Esubalew Amenu <esubalew.a2009@gmail.com>
  */
-class Mp_Mailing_List {
+class Mp_Mailing_List
+{
 
 	/**
 	 * The loader that's responsible for maintaining and registering all hooks that power
@@ -66,8 +67,9 @@ class Mp_Mailing_List {
 	 *
 	 * @since    1.0.0
 	 */
-	public function __construct() {
-		if ( defined( 'MP_MAILING_LIST_VERSION' ) ) {
+	public function __construct()
+	{
+		if (defined('MP_MAILING_LIST_VERSION')) {
 			$this->version = MP_MAILING_LIST_VERSION;
 		} else {
 			$this->version = '1.0.0';
@@ -78,7 +80,6 @@ class Mp_Mailing_List {
 		$this->set_locale();
 		$this->define_admin_hooks();
 		$this->define_public_hooks();
-
 	}
 
 	/**
@@ -97,19 +98,20 @@ class Mp_Mailing_List {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function load_dependencies() {
+	private function load_dependencies()
+	{
 
 		/**
 		 * The class responsible for orchestrating the actions and filters of the
 		 * core plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mp-mailing-list-loader.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-mp-mailing-list-loader.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
 		 * of the plugin.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-mp-mailing-list-i18n.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'includes/class-mp-mailing-list-i18n.php';
 
 		if (!class_exists('Tax_Meta_Class'))
 			require_once plugin_dir_path(dirname(__FILE__)) . '../mp-general/meta_files/Taxonomy-meta-class.php';
@@ -117,32 +119,36 @@ class Mp_Mailing_List {
 		/**
 		 * The class responsible for defining all actions that occur in the admin area.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-mp-mailing-list-admin.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-mp-mailing-list-admin.php';
 
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/email_types_taxonomy.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/post_type_promotions.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/subscribers-list.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/yearly-report.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/send.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/report.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_types_taxonomy.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/controller/promotion/templete_post_type.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/email_types_taxonomy.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/post_type_promotions.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/subscribers-list.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/yearly-report.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/send.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/report.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/templete_types_taxonomy.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/templete_post_type.php';
+
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/digest/digest_post_type.php';
 
 		/**
 		 * The class responsible for defining all actions that occur in the public-facing
 		 * side of the site.
 		 */
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-mp-mailing-list-public.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mp_mails.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mp_contact.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/cta_page.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/community_content.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/mails_about_us.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/become_moderator.php';
-		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/controller/api/view_tracker.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/class-mp-mailing-list-public.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/mp_mails.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/mp_contact.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/cta_page.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/community_content.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/mails_about_us.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/become_moderator.php';
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/api/view_tracker.php';
+
+		require_once plugin_dir_path(dirname(__FILE__)) . 'public/controller/digest/digest_page.php';
+
 
 		$this->loader = new Mp_Mailing_List_Loader();
-
 	}
 
 	/**
@@ -154,12 +160,12 @@ class Mp_Mailing_List {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function set_locale() {
+	private function set_locale()
+	{
 
 		$plugin_i18n = new Mp_Mailing_List_i18n();
 
-		$this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
-
+		$this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
 	}
 
 	/**
@@ -169,21 +175,26 @@ class Mp_Mailing_List {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_admin_hooks() {
+	private function define_admin_hooks()
+	{
 
-		$plugin_admin = new Mp_Mailing_List_Admin( $this->get_plugin_name(), $this->get_version() );
+		$plugin_admin = new Mp_Mailing_List_Admin($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
 		$Mp_mail_subscribers_list_Admin = new Mp_mail_subscribers_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_subscribers_list_Admin, 'posts_catalog_submenu_page', 1, 1);
 
 		$Mp_mail_yearly_report_list_Admin = new Mp_mail_yearly_report_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_yearly_report_list_Admin, 'yearly_report_submenu_page', 1, 1);
-		
+
 		$Mp_mail_promotions_Admin = new Mp_mail_promotions_Admin();
 		$this->loader->add_action('init', $Mp_mail_promotions_Admin, 'Mp_mail_promotion_registration_init', 1, 1);
+
+		$mp_mail_digest_admin = new Mp_mail_digest_admin();
+		$mp_mail_digest_admin->main();
+		$this->loader->add_action('init', $mp_mail_digest_admin, 'mp_mail_digest_post_type', 1, 1);
 
 		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
 		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
@@ -203,8 +214,6 @@ class Mp_Mailing_List {
 		$this->loader->add_filter('manage_mp_mail_promotions_posts_columns', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column');
 		$this->loader->add_action('manage_mp_mail_promotions_posts_custom_column', $Mp_mail_sent_report_Admin, 'mp_mail_promotions_sent_to_column_content', 10, 2);
 		$this->loader->add_action('admin_menu', $Mp_mail_sent_report_Admin, 'posts_catalog_report_page', 1, 1);
-
-
 	}
 
 	/**
@@ -214,48 +223,59 @@ class Mp_Mailing_List {
 	 * @since    1.0.0
 	 * @access   private
 	 */
-	private function define_public_hooks() {
+	private function define_public_hooks()
+	{
 
-		$plugin_public = new Mp_Mailing_List_Public( $this->get_plugin_name(), $this->get_version() );
+		$plugin_public = new Mp_Mailing_List_Public($this->get_plugin_name(), $this->get_version());
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+		$this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+		$mp_mails_digest = new Mp_mail_digest_public();
+		$this->loader->add_shortcode('mp_digest_page', $mp_mails_digest, 'mp_mails_digest_shortcode');
+		$this->loader->add_action('wp_ajax_mp_mails_digest_subscribe', $mp_mails_digest, 'wp_ajax_mp_mails_digest_subscribe');
+
 
 		$mp_mails = new Mp_mails();
-		$this->loader->add_shortcode( 'mp_mails_list_code', $mp_mails, 'mp_mails_list_code' );
-		$this->loader->add_shortcode( 'mp_mails_soon_code', $mp_mails, 'mp_mails_soon_code' );
-		
+		$this->loader->add_shortcode('mp_mails_list_code', $mp_mails, 'mp_mails_list_code');
+		$this->loader->add_shortcode('mp_mails_soon_code', $mp_mails, 'mp_mails_soon_code');
+
 		$Mp_contact = new Mp_contact();
-		$this->loader->add_shortcode( 'mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code' );
+		$this->loader->add_shortcode('mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code');
+		
 		$this->loader->add_action('wp_ajax_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
 		$this->loader->add_action('wp_ajax_nopriv_mp_mails_insert_contact', $Mp_contact, 'wp_ajax_mp_mails_insert_contact');
-		
+
 		$this->loader->add_action('wp_ajax_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
 		$this->loader->add_action('wp_ajax_nopriv_mp_gl_save_new_email', $mp_mails, 'wp_ajax_mp_gl_save_new_email');
-		
+
 		$mp_mails_contact_us = new Mp_mails_about_contact();
-		$this->loader->add_shortcode( 'mp_mails_contact_us_code', $mp_mails_contact_us, 'mp_mails_contact_us_code' );
+		$this->loader->add_shortcode('mp_mails_contact_us_code', $mp_mails_contact_us, 'mp_mails_contact_us_code');
+		$this->loader->add_shortcode('mp_mails_contact_our_team_code', $mp_mails_contact_us, 'mp_mails_contact_team_code');
+		
 		$this->loader->add_action('wp_ajax_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
 		$this->loader->add_action('wp_ajax_nopriv_mp_mail_insert_contact', $mp_mails_contact_us, 'wp_ajax_mp_mail_insert_contact');
-				
-		$mp_mails_cta = new Mp_mails_cta_page();
-		$this->loader->add_shortcode( 'mp_cta_code', $mp_mails_cta, 'mp_mails_cta_page' );
-		$this->loader->add_shortcode( 'mp_mails_interested_in_code', $mp_mails_cta, 'mp_mails_be_moderator' );
-		$this->loader->add_action( 'wp_ajax_mp_mails_save_moderator', $mp_mails_cta, 'wp_ajax_mp_mails_save_moderator' );
-		
-		
-		$mp_mails_cc_form = new Mp_mails_community_content();
-		$this->loader->add_shortcode( 'mp_mails_cc_code', $mp_mails_cc_form, 'mp_mails_cc_form' );
-		$this->loader->add_action( 'wp_ajax_mp_mail_upload_content', $mp_mails_cc_form, 'wp_ajax_mp_mail_upload_content' );
-		
-		$mp_mails_moderator = new Mp_mails_moderator();
-		$this->loader->add_shortcode( 'mp_mails_become_moderator_code', $mp_mails_moderator, 'mp_mails_become_moderator_code' );
-		$this->loader->add_action('wp_ajax_mp_mails_become_moderator', $mp_mails_moderator, 'wp_ajax_mp_mails_become_moderator');
-		
-		$Mp_mail_get_view_tracks_api_public = new Mp_mail_get_view_tracks_api_public();
-		$this->loader->add_action('rest_api_init', $Mp_mail_get_view_tracks_api_public, 'wp_rest_view_tracks_endpoints');
+
+		$this->loader->add_action('wp_ajax_mp_mail_email_team', $mp_mails_contact_us, 'wp_ajax_mp_mail_email_team');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mail_email_team', $mp_mails_contact_us, 'wp_ajax_mp_mail_email_team');
 		
 
+		$mp_mails_cta = new Mp_mails_cta_page();
+		$this->loader->add_shortcode('mp_cta_code', $mp_mails_cta, 'mp_mails_cta_page');
+		$this->loader->add_shortcode('mp_mails_interested_in_code', $mp_mails_cta, 'mp_mails_be_moderator');
+		$this->loader->add_action('wp_ajax_mp_mails_save_moderator', $mp_mails_cta, 'wp_ajax_mp_mails_save_moderator');
+
+
+		$mp_mails_cc_form = new Mp_mails_community_content();
+		$this->loader->add_shortcode('mp_mails_cc_code', $mp_mails_cc_form, 'mp_mails_cc_form');
+		$this->loader->add_action('wp_ajax_mp_mail_upload_content', $mp_mails_cc_form, 'wp_ajax_mp_mail_upload_content');
+
+		$mp_mails_moderator = new Mp_mails_moderator();
+		$this->loader->add_shortcode('mp_mails_become_moderator_code', $mp_mails_moderator, 'mp_mails_become_moderator_code');
+		$this->loader->add_action('wp_ajax_mp_mails_become_moderator', $mp_mails_moderator, 'wp_ajax_mp_mails_become_moderator');
+
+		$Mp_mail_get_view_tracks_api_public = new Mp_mail_get_view_tracks_api_public();
+		$this->loader->add_action('rest_api_init', $Mp_mail_get_view_tracks_api_public, 'wp_rest_view_tracks_endpoints');
 	}
 
 	/**
@@ -263,7 +283,8 @@ class Mp_Mailing_List {
 	 *
 	 * @since    1.0.0
 	 */
-	public function run() {
+	public function run()
+	{
 		$this->loader->run();
 	}
 
@@ -274,7 +295,8 @@ class Mp_Mailing_List {
 	 * @since     1.0.0
 	 * @return    string    The name of the plugin.
 	 */
-	public function get_plugin_name() {
+	public function get_plugin_name()
+	{
 		return $this->plugin_name;
 	}
 
@@ -284,7 +306,8 @@ class Mp_Mailing_List {
 	 * @since     1.0.0
 	 * @return    Mp_Mailing_List_Loader    Orchestrates the hooks of the plugin.
 	 */
-	public function get_loader() {
+	public function get_loader()
+	{
 		return $this->loader;
 	}
 
@@ -294,8 +317,8 @@ class Mp_Mailing_List {
 	 * @since     1.0.0
 	 * @return    string    The version number of the plugin.
 	 */
-	public function get_version() {
+	public function get_version()
+	{
 		return $this->version;
 	}
-
 }

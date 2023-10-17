@@ -3,16 +3,16 @@
 	<div class="mod-top-form">
 		<div class="mode-contain">
 			<label for="firstName">First Name</label>
-			<input type="text" name="firstName" id="firstName" placeholder="Enter your First Name">
+			<input type="text" name="firstName" id="firstName" placeholder="">
 		</div>
 		<div class="mode-contain">
 			<label for="lastName">Last Name</label>
-			<input type="text" name="lastName" id="lastName" placeholder="Enter your Last Name">
+			<input type="text" name="lastName" id="lastName" placeholder="">
 		</div>
 	</div>
 	<div class="mode-contain">
 		<label for="email">Email</label>
-		<input type="text" name="email" id="moderatorEmail" placeholder="Enter email">
+		<input type="text" name="email" id="moderatorEmail" placeholder="">
 	</div>
 	<label for="motivationLetter">Motivation letter</label>
 	<textarea name="motivationLetter" id="motivationLetter" cols="30" rows="10" class="mod-bio"></textarea>

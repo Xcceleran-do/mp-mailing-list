@@ -14,6 +14,12 @@
           echo $promo_type->name . '<br>';
       }
 
+      foreach ($additional_subscribers as $additional_subscriber) {
+        ?>
+          <option value="<?php echo $additional_subscriber['slug']?>" <?php if($filter_by===$additional_subscriber['slug']) echo 'selected="selected"'?>><?php echo $additional_subscriber['name']?></option> 
+      <?php
+          echo $additional_subscriber['name'] . '<br>';
+      }
   ?>
   </select>
   

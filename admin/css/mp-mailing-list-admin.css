@@ -2,3 +2,11 @@
  * All of the CSS for your admin-specific functionality should be
  * included in this file.
  */
+ .mp-mailing-digest-checkbox{
+    padding-block: 10px;
+ }
+ .mp-mailing-digest-checkbox input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    border-radius: 0px;
+ }

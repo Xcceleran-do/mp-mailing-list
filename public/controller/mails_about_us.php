@@ -29,34 +29,88 @@ class Mp_mails_about_contact
 
   public function mp_mails_contact_us_code()
   {
-      include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_us.php';
+    include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_us.php';
+  }
+  public function mp_mails_contact_team_code()
+  {
+    include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_team.php';
   }
 
-  public function wp_ajax_mp_mail_insert_contact(){
+  public function wp_ajax_mp_mail_email_team()
+  {
 
 
-    if(isset($_POST['firstName'])
-    && isset($_POST['email']) 
-    && isset($_POST['message'])){
+    if (isset($_POST['user_email']) && isset($_POST['user_message'])) {
+      $first_name = $_POST['first_name'];
+      $last_name = $_POST['last_name'];
+      $user_email = $_POST['user_email'];
+      $user_message = $_POST['user_message'];
+
+      $email_type = $_POST['type'];
+      if($email_type == 'team') $email = 'email@mindplex.ai';
+      else if($email_type == 'editors') $email = 'editors@mindplex.ai';
+
+      $full_name = $first_name . ' ' . $last_name;
+      $data = array(
+        "name" => esc_attr($full_name),
+        "email" => esc_attr($user_email),
+        "message" => esc_attr(stripslashes($user_message)),
+      );
+
+      $email_team_post = array(
+        'post_title' => 'Contact Us message',
+        'post_content' => json_encode($data),
+        'post_type' => 'mp_mails_contact',
+      );
+
+      $insert_user_message = wp_insert_post($email_team_post);
+      include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+      
+      $mp_mails_templetes = new Mp_mails_templetes();
+      $bodyReplacements['type'] = $email_type.'\'s';
+      $bodyReplacements['full-name'] = $full_name;
+      $bodyReplacements['user-email'] = $user_email;
+      $bodyReplacements['user-message'] = stripslashes($user_message);
+      
+      $sender_data = array('sender_name'=> $full_name, 'sender_email'=> $user_email);
+      $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
+      if($is_sent) 
+        echo json_encode(array('status' => 'success'));
+      else 
+        echo json_encode(array('status' => 'error', 'message' => 'Try again later'));
+    } else 
+        echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));
+    die();
+  }
+
+  public function wp_ajax_mp_mail_insert_contact()
+  {
+
+
+    if (
+      isset($_POST['firstName'])
+      && isset($_POST['email'])
+      && isset($_POST['message'])
+    ) {
 
       $first_name = $_POST['firstName'];
       $last_name = isset($_POST['lastName']) ? $_POST['lastName'] : '';
-      $name = $first_name . ' '. $last_name;
+      $name = $first_name . ' ' . $last_name;
       $email = $_POST['email'];
       $message = $_POST['message'];
-    $data = array(
-      "name" => esc_attr($name),
-      "email" => esc_attr($email),
-      "message" => esc_attr($message),
-    );
+      $data = array(
+        "name" => esc_attr($name),
+        "email" => esc_attr($email),
+        "message" => esc_attr($message),
+      );
 
-    $postarr = array(
-      'post_title' => 'Contact Us message',
-      'post_content' => json_encode($data),
-      'post_type' => 'mp_mails_contact',
-    );
-      
-      $new_post_id = wp_insert_post( $postarr );
+      $postarr = array(
+        'post_title' => 'Contact Us message',
+        'post_content' => json_encode($data),
+        'post_type' => 'mp_mails_contact',
+      );
+
+      $new_post_id = wp_insert_post($postarr);
       echo $new_post_id;
 
       $emailContent = '<!DOCTYPE html>
@@ -121,16 +175,17 @@ class Mp_mails_about_contact
           Below is a user message from Mindplex contact us page.
           </p>
           <p class="instruction-description">
-          <b>Name: </b>'.$name.',<br>
-          <b>Email: </b>'.$email.',<br>
-          <b>Message: </b>'.$message.'
+          <b>Name: </b>' . $name . ',<br>
+          <b>Email: </b>' . $email . ',<br>
+          <b>Message: </b>' . stripslashes($message) . '
           </p>
       </div>
       </body>
       </html>';
 
       $headers = array('Content-Type: text/html; charset=UTF-8');
-      echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+      echo wp_mail("khalinoid@gmail.com", 'Mindplex New Moderators', $emailContent, $headers);
+      // echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
       die();
     }
   }

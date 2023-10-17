@@ -24,62 +24,83 @@ class Mp_mail_subscribers_list_Admin
 {
 
     // Add submenu page
-function posts_catalog_submenu_page() {
-    add_submenu_page(
-      'edit.php?post_type=mp_mail_promotions',
-      'Subscribers',
-      'Subscribers',
-      'manage_options',
-      'subscribers',
-      array($this, 'posts_catalog_submenu_callback')
-    );
-  }
-  
-  // Callback function for submenu page
-  function posts_catalog_submenu_callback() {
-
-    // Handle search form submission
-    if (isset($_POST['submit'])) {
-        $filter_by = isset($_POST['filter_by']) ? sanitize_text_field($_POST['filter_by']) : '';
-    } else {
-        $filter_by = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : 'mp_gl_notify_weekly';
+    function posts_catalog_submenu_page()
+    {
+        add_submenu_page(
+            'edit.php?post_type=mp_mail_promotions',
+            'Subscribers',
+            'Subscribers',
+            'manage_options',
+            'subscribers',
+            array($this, 'posts_catalog_submenu_callback')
+        );
     }
-    $subscribers = get_users( array(
-        'meta_query' => array(
-            array(
-                'key' => $filter_by,
-                'value' => "true",
-                'compare' => '=='
-            )
-        )
+
+    // Callback function for submenu page
+    function posts_catalog_submenu_callback()
+    {
+
+        // Handle search form submission
+        if (isset($_POST['submit'])) {
+            $filter_by = isset($_POST['filter_by']) ? sanitize_text_field($_POST['filter_by']) : '';
+
+            if ($filter_by === 'all-users') {
+                $subscribers = get_users();
+            }else{
+                $subscribers = get_users(array(
+                    'meta_query' => array(
+                        array(
+                            'key' => $filter_by,
+                            'value' => "true",
+                            'compare' => '=='
+                        )
+                    )
+                ));
+            }
+        } else {
+            $filter_by = isset($_GET['s']) ? sanitize_text_field($_GET['s']) : 'mp_gl_notify_weekly';
+
+            $subscribers = get_users(array(
+                'meta_query' => array(
+                    array(
+                        'key' => $filter_by,
+                        'value' => "true",
+                        'compare' => '=='
+                    )
+                )
             ));
-        
-    // mp_gl_notify_mp_updates, mp_gl_notify_weekly
+        }
+
+        // mp_gl_notify_mp_updates, mp_gl_notify_weekly
 
 
-    // // Filter subscribers based on search term
-    // $filtered_subscribers = array_filter($subscribers, function ($subscriber) use ($search) {
-    //     return empty($search) || stripos($subscriber->email, $search) !== false;
-    // });
+        // // Filter subscribers based on search term
+        // $filtered_subscribers = array_filter($subscribers, function ($subscriber) use ($search) {
+        //     return empty($search) || stripos($subscriber->email, $search) !== false;
+        // });
 
-    // Prepare pagination
-    $per_page = 10; // Number of subscribers to display per page
-    $total_items = count($subscribers);
-    $total_pages = ceil($total_items / $per_page);
+        // Prepare pagination
+        $per_page = 10; // Number of subscribers to display per page
+        $total_items = count($subscribers);
+        $total_pages = ceil($total_items / $per_page);
 
-    $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
-    $start = ($current_page - 1) * $per_page;
-    $end = $start + $per_page;
-    $subscribers_slice = array_slice($subscribers, $start, $per_page);
+        $current_page = isset($_GET['paged']) ? absint($_GET['paged']) : 1;
+        $start = ($current_page - 1) * $per_page;
+        $end = $start + $per_page;
+        $subscribers_slice = array_slice($subscribers, $start, $per_page);
 
-    $mail_promo_types = get_terms(array(
-        'taxonomy' => 'mp_mail_promo_types',
-        'hide_empty' => false,
-    ));
-    
-    
-      include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/subscribers.php';
-        
-}
-  
+        $mail_promo_types = get_terms(array(
+            'taxonomy' => 'mp_mail_promo_types',
+            'hide_empty' => false,
+        ));
+
+        $additional_subscribers = array(
+            array("slug" => "all-users", "name" => "All Users"),
+            array("slug" => "mindplex-ai", "name" => "Mindplex.ai"),
+            array("slug" => "magazine-users", "name" => "Magazine Users"),
+            array("slug" => "editorial", "name" => "Editorial"),
+        );
+
+        include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/subscribers.php';
+    }
 }
