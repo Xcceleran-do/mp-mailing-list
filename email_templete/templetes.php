@@ -230,7 +230,7 @@ class Mp_mails_templetes
     }
     return $full_posts;
   }
-  public function contact_our_team_template($email, $slug, $bodyReplacements)
+  public function contact_our_team_template($email, $slug, $bodyReplacements, $sender_data)
   {
     $args = array(
       'name' => $slug,
@@ -254,7 +254,7 @@ class Mp_mails_templetes
       }
 
 
-      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
+      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/normal_email.php';
       $email_content = file_get_contents($file_path);
 
       $email_content = str_replace("{{--subject--}}", $subject, $email_content);
@@ -263,7 +263,8 @@ class Mp_mails_templetes
 
       $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
 
-      $header = array('Content-Type: text/html; charset=UTF-8');
+      // $header[] = array();
+      $header = array('Content-Type: text/html; charset=UTF-8','From: '.$sender_data['sender_name']. ' <'. $sender_data['sender_email'].'>');
 
       return wp_mail($email, $subject, $email_content, $header);
     }

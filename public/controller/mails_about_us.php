@@ -49,8 +49,10 @@ class Mp_mails_about_contact
       $email_type = $_POST['type'];
       if($email_type == 'team') $email = 'email@mindplex.ai';
       else if($email_type == 'editors') $email = 'editors@mindplex.ai';
+
+      $full_name = $first_name . ' ' . $last_name;
       $data = array(
-        "name" => esc_attr($first_name . ' ' . $last_name),
+        "name" => esc_attr($full_name),
         "email" => esc_attr($user_email),
         "message" => esc_attr(stripslashes($user_message)),
       );
@@ -62,17 +64,22 @@ class Mp_mails_about_contact
       );
 
       $insert_user_message = wp_insert_post($email_team_post);
-      echo json_encode(array('status' => 'success'));
       include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
-
+      
       $mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['title'] = $email_type;
-      $bodyReplacements['full-name'] = $first_name . ' ' . $last_name;
+      $bodyReplacements['type'] = $email_type.'\'s';
+      $bodyReplacements['full-name'] = $full_name;
       $bodyReplacements['user-email'] = $user_email;
       $bodyReplacements['user-message'] = stripslashes($user_message);
-      $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements);
-
-    } else echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));
+      
+      $sender_data = array('sender_name'=> $full_name, 'sender_email'=> $user_email);
+      $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
+      if($is_sent) 
+        echo json_encode(array('status' => 'success'));
+      else 
+        echo json_encode(array('status' => 'error', 'message' => 'Try again later'));
+    } else 
+        echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));
     die();
   }
 
