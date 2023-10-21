@@ -167,7 +167,7 @@ class Mp_mails_templetes
       $body = $my_posts[0]->post_content;
 
       foreach ($bodyReplacements as $key => $value) {
-        $subject = str_replace("{{--" . $key . "--}}", $value, $subject);
+        $subject = str_replace("{{--" . $key . "--}}", $value, html_entity_decode($subject));
         $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
         $body = str_replace("{{--" . $key . "--}}", $value, $body);
       }
