@@ -63,7 +63,7 @@ class Mp_mail_digest_public
 
         $mp_rep_community_slug = get_option('mp_rep_community_slug', 'none');
         $mp_rc_base_api = get_option('mp_rc_base_api');
-        $posts_per_page = 10;
+        $posts_per_page = 5;
         $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=community_content&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
         $data = array(
             "id" => get_current_user_id(),
@@ -121,6 +121,16 @@ class Mp_mail_digest_public
             );
             return get_posts($args);
         }
+    }
+
+    public function wp_ajax_mp_mails_load_digest(){
+        $offset = $_POST['offset'];
+        
+        $discover = self::mp_mails_digest_recommendations('default', $offset);
+        if(count($discover) > 0)
+            include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/discover.php';
+        else echo 'end';
+        die();
     }
 
     public function wp_ajax_mp_mails_digest_subscribe()
