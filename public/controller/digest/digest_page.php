@@ -141,4 +141,67 @@ class Mp_mail_digest_public
         }
         die();
     }
+
+    function send_notif_digest($author_id, $user, $post_ID, $source){
+        $author = get_user_by("id", $author_id);
+
+        include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+        $Mp_mails_templetes = new Mp_mails_templetes();
+        $post_ids = array($post_ID);
+
+        $bodyReplacements['body1'] = '<a href="' . home_url("/user/" . $user->user_login) . '">' . $user->user_login . '</a>';
+        $bodyReplacements['body2'] = '<a href="' . home_url("/user/" . $author->user_login) . '">' . $author->first_name . '</a>';
+
+        if($source === 'subscriber'){
+            $Mp_mails_templetes->template2($user->user_email, 'new-mindbytes-mirror-hot-news-article', $post_ids, $bodyReplacements);
+        }
+        else if($source === 'follower'){
+            $Mp_mails_templetes->template2($user->user_email, 'new-mindbytes-mirror-for-follow', $post_ids, $bodyReplacements);
+        }
+        
+    }
+
+    // checks if the users is author's follower and users has turned on follower notification 
+    public function is_follower($author_id,$user_id){
+        global $table_prefix, $wpdb;
+        $mp_rp_follow = $table_prefix . "mp_rp_follow";
+        $user_notify_follow_data = get_users(
+            array(
+                'meta_key' => 'mp_gl_notify_follower',
+                'meta_value' => 'true',
+                'fields' => 'ids'
+            )
+        );
+        $ids = implode(',',$user_notify_follow_data);
+        $follower_query = $wpdb->get_row("SELECT follower_id FROM $mp_rp_follow where following_id = $author_id and follower_id = $user_id and follower_id in ($ids) and deleted_at IS NULL");
+        if(null !== $follower_query){ 
+            return true ;
+        }
+        return false;
+    }
+
+    // email user 
+    public function mp_mails_notify_digest($new_status, $old_status, $post){
+        $subscribed_users = get_users(
+            array(
+                'meta_key' => 'notify_me_on_new_digest',
+                'fields' => 'ids'
+            )
+        );
+        $post_author = get_post_field('post_author', $post->ID);
+
+        if ($new_status === 'publish' && $old_status !== 'publish' && $post->post_type === 'digest') {
+            foreach($subscribed_users as $subscriber){
+                $subscriber_data = get_user_by('id', $subscriber);
+                $is_follower = self::is_follower($post_author, $subscriber);
+                if($is_follower){
+                    self::send_notif_digest($post_author, $subscriber_data, $post->ID,'follower');
+                }
+                else {
+                    self::send_notif_digest($post_author, $subscriber_data, $post->ID,'subscriber');
+                }
+            }
+        }
+
+    }
 }

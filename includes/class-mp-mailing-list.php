@@ -236,6 +236,8 @@ class Mp_Mailing_List
 		$this->loader->add_action('wp_ajax_mp_mails_digest_subscribe', $mp_mails_digest, 'wp_ajax_mp_mails_digest_subscribe');
 		$this->loader->add_action('wp_ajax_mp_mails_load_digest', $mp_mails_digest, 'wp_ajax_mp_mails_load_digest');
 		$this->loader->add_action('wp_ajax_nopriv_mp_mails_load_digest', $mp_mails_digest, 'wp_ajax_mp_mails_load_digest');
+		$this->loader->add_action('transition_post_status', $mp_mails_digest, 'mp_mails_notify_digest', 10, 3);
+
 
 		$mp_mails = new Mp_mails();
 		$this->loader->add_shortcode('mp_mails_list_code', $mp_mails, 'mp_mails_list_code');
