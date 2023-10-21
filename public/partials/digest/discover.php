@@ -15,7 +15,7 @@
         <img style="width: 267px;height: 162px" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_discover->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_discover->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
         <div class="digest-profile">
             <!-- <img src="< ?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>"> -->
-            <a href="<?php echo get_the_author_meta('user_login', $single_discover->post_author); ?>">
+            <a href="<?php echo home_url('user/'.get_the_author_meta('user_login', $single_discover->post_author)); ?>">
                 <?php echo get_avatar($single_discover->post_author, 16); ?>
                 <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_discover->post_author); ?>
             </a>
