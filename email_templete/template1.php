@@ -113,7 +113,7 @@
         >
         {{--body--}}
         <br><br>
-        <p class="para_5" style="margin: 0; padding: 0; margin-bottom: 16px; padding-top:20px">
+        <p class="para_5" style="margin-bottom: 16px; padding-top:30px;">
           Thanks,<br/>
           Team Mindplex.
         </p>
