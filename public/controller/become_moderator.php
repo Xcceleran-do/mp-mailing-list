@@ -69,7 +69,7 @@ class Mp_mails_moderator
       include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
       $Mp_mails_templetes = new Mp_mails_templetes();
       $bodyReplacements['body1'] = json_encode($data);
-      $Mp_mails_templetes->to_email("moderators@mindplex.ai", 'moderator-application-template', $bodyReplacements);
+      $Mp_mails_templetes->to_email("moderator@mindplex.ai", 'moderator-application-template', $bodyReplacements);
 
       //   $emailContent = '<!DOCTYPE html>
       //   <html lang="en">
