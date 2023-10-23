@@ -198,6 +198,7 @@ class Mp_Mailing_List
 
 		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
 		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
+		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'Mp_mail_template_metas', 1, 1);
 
 		$Mp_mail_templete_post_type_Admin = new Mp_mail_templete_post_type_Admin();
 		$this->loader->add_action('init', $Mp_mail_templete_post_type_Admin, 'Mp_mail_templete_format_init', 1, 1);

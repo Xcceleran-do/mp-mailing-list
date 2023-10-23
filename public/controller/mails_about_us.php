@@ -184,8 +184,7 @@ class Mp_mails_about_contact
       </html>';
 
       $headers = array('Content-Type: text/html; charset=UTF-8');
-      echo wp_mail("khalinoid@gmail.com", 'Mindplex New Moderators', $emailContent, $headers);
-      // echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+      echo wp_mail("editor@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
       die();
     }
   }
