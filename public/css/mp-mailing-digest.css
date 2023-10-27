@@ -345,3 +345,24 @@
     font-size: 15px !important;
     display: none;
 }
+
+/* more topic btn */
+.more-btn-container {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding-block: 10px;
+    max-width: fit-content;
+    align-content: center;
+    left: 50%;
+    position: relative;
+}
+
+.more-btn-container button {
+    background: transparent;
+    border-width: 1px;
+    border-radius: 10px;
+    color: #fff;
+    padding: 10px;
+    cursor: pointer
+}

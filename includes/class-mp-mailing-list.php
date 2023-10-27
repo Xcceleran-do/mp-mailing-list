@@ -198,6 +198,7 @@ class Mp_Mailing_List
 
 		$Mp_mail_email_types_taxonomy_Admin = new Mp_mail_email_types_taxonomy_Admin();
 		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'wpdocs_create_Mp_mail_email_types_taxonomy', 1, 1);
+		$this->loader->add_action('init', $Mp_mail_email_types_taxonomy_Admin, 'Mp_mail_template_metas', 1, 1);
 
 		$Mp_mail_templete_post_type_Admin = new Mp_mail_templete_post_type_Admin();
 		$this->loader->add_action('init', $Mp_mail_templete_post_type_Admin, 'Mp_mail_templete_format_init', 1, 1);
@@ -234,6 +235,9 @@ class Mp_Mailing_List
 		$mp_mails_digest = new Mp_mail_digest_public();
 		$this->loader->add_shortcode('mp_digest_page', $mp_mails_digest, 'mp_mails_digest_shortcode');
 		$this->loader->add_action('wp_ajax_mp_mails_digest_subscribe', $mp_mails_digest, 'wp_ajax_mp_mails_digest_subscribe');
+		$this->loader->add_action('wp_ajax_mp_mails_load_digest', $mp_mails_digest, 'wp_ajax_mp_mails_load_digest');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mails_load_digest', $mp_mails_digest, 'wp_ajax_mp_mails_load_digest');
+		$this->loader->add_action('transition_post_status', $mp_mails_digest, 'mp_mails_notify_digest', 10, 3);
 
 
 		$mp_mails = new Mp_mails();

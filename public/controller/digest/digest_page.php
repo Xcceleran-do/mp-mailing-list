@@ -26,10 +26,10 @@ class Mp_mail_digest_public
     {
         $is_user_subscribed = get_user_meta(get_current_user_id(), 'notify_me_on_new_digest', true);
 
-        $lewis_choises = get_option('mp_mails_lewis_selected', array());
-        $lewis_choise_posts = get_posts(
+        $lewis_choices = get_option('mp_mails_lewis_selected', array());
+        $lewis_choice_posts = get_posts(
             array(
-                'include' => $lewis_choises,
+                'include' => $lewis_choices,
                 'order'          => 'DESC',
                 'orderby'        => "ID",
                 'post_type'      => 'digest',
@@ -43,7 +43,7 @@ class Mp_mail_digest_public
         // on latest
         $latest_news = get_posts(
             array(
-                // 'exclude' => $lewis_choises,
+                // 'exclude' => $lewis_choices,
                 'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => 0,
@@ -59,11 +59,11 @@ class Mp_mail_digest_public
 
     function mp_mails_digest_recommendations($recommender, $offset)
     {
-        $lewis_choises = get_option('mp_mails_lewis_selected', array());
+        $lewis_choices = get_option('mp_mails_lewis_selected', array());
 
         $mp_rep_community_slug = get_option('mp_rep_community_slug', 'none');
         $mp_rc_base_api = get_option('mp_rc_base_api');
-        $posts_per_page = 10;
+        $posts_per_page = 5;
         $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=community_content&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
         $data = array(
             "id" => get_current_user_id(),
@@ -93,7 +93,7 @@ class Mp_mail_digest_public
             if (isset($responses['results'])) {
 
                 foreach ($responses['results'] as $response) {
-                    if (in_array($response['content_id'], $lewis_choises)) continue;
+                    if (in_array($response['content_id'], $lewis_choices)) continue;
                     $postIds[] = $response['content_id'];
                 }
             }
@@ -111,7 +111,7 @@ class Mp_mail_digest_public
             $offset = $offset * $posts_per_page;
 
             $args = array(
-                'exclude' => $lewis_choises,
+                'exclude' => $lewis_choices,
                 'order'          => 'DESC',
                 'orderby'        => "ID",
                 'offset'         => $offset,
@@ -123,6 +123,16 @@ class Mp_mail_digest_public
         }
     }
 
+    public function wp_ajax_mp_mails_load_digest(){
+        $offset = $_POST['offset'];
+        
+        $discover = self::mp_mails_digest_recommendations('default', $offset);
+        if(count($discover) > 0)
+            include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/discover.php';
+        else echo 'end';
+        die();
+    }
+
     public function wp_ajax_mp_mails_digest_subscribe()
     {
         $user_email = $_POST['userEmail'];
@@ -130,5 +140,68 @@ class Mp_mail_digest_public
             update_user_meta(get_current_user_id(), 'notify_me_on_new_digest', $user_email);
         }
         die();
+    }
+
+    function send_notif_digest($author_id, $user, $post_ID, $source){
+        $author = get_user_by("id", $author_id);
+
+        include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+        $Mp_mails_templetes = new Mp_mails_templetes();
+        $post_ids = array($post_ID);
+
+        $bodyReplacements['body1'] = '<a href="' . home_url("/user/" . $user->user_login) . '">' . $user->user_login . '</a>';
+        $bodyReplacements['body2'] = '<a href="' . home_url("/user/" . $author->user_login) . '">' . $author->first_name . '</a>';
+
+        if($source === 'subscriber'){
+            $Mp_mails_templetes->template2($user->user_email, 'new-mindbytes-mirror-hot-news-article', $post_ids, $bodyReplacements);
+        }
+        else if($source === 'follower'){
+            $Mp_mails_templetes->template2($user->user_email, 'new-mindbytes-mirror-for-follow', $post_ids, $bodyReplacements);
+        }
+        
+    }
+
+    // checks if the users is author's follower and users has turned on follower notification 
+    public function is_follower($author_id,$user_id){
+        global $table_prefix, $wpdb;
+        $mp_rp_follow = $table_prefix . "mp_rp_follow";
+        $user_notify_follow_data = get_users(
+            array(
+                'meta_key' => 'mp_gl_notify_follower',
+                'meta_value' => 'true',
+                'fields' => 'ids'
+            )
+        );
+        $ids = implode(',',$user_notify_follow_data);
+        $follower_query = $wpdb->get_row("SELECT follower_id FROM $mp_rp_follow where following_id = $author_id and follower_id = $user_id and follower_id in ($ids) and deleted_at IS NULL");
+        if(null !== $follower_query){ 
+            return true ;
+        }
+        return false;
+    }
+
+    // email user 
+    public function mp_mails_notify_digest($new_status, $old_status, $post){
+        $subscribed_users = get_users(
+            array(
+                'meta_key' => 'notify_me_on_new_digest',
+                'fields' => 'ids'
+            )
+        );
+        $post_author = get_post_field('post_author', $post->ID);
+
+        if ($new_status === 'publish' && $old_status !== 'publish' && $post->post_type === 'digest') {
+            foreach($subscribed_users as $subscriber){
+                $subscriber_data = get_user_by('id', $subscriber);
+                $is_follower = self::is_follower($post_author, $subscriber);
+                if($is_follower){
+                    self::send_notif_digest($post_author, $subscriber_data, $post->ID,'follower');
+                }
+                else {
+                    self::send_notif_digest($post_author, $subscriber_data, $post->ID,'subscriber');
+                }
+            }
+        }
+
     }
 }

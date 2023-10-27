@@ -66,82 +66,82 @@ class Mp_mails_moderator
       //   echo $new_post_id;
 
 
-      include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
-      $Mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['body1'] = json_encode($data);
-      $Mp_mails_templetes->to_email("moderators@mindplex.ai", 'moderator-application-template', $bodyReplacements);
+      // include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+      // $Mp_mails_templetes = new Mp_mails_templetes();
+      // $bodyReplacements['body1'] = json_encode($data);
+      // $Mp_mails_templetes->to_email("moderator@mindplex.ai", 'moderator-application-template', $bodyReplacements);
 
-      //   $emailContent = '<!DOCTYPE html>
-      //   <html lang="en">
-      //   <head>
-      //   <meta charset="UTF-8" />
-      //   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-      //   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      //   <link rel="stylesheet" href="style.css" />
-      //   <link rel="preconnect" href="https://fonts.googleapis.com" />
-      //   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-      //   <link
-      //       href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
-      //       rel="stylesheet"
-      //   />
-      //   <title>Mindplex</title>
-      //   <style>
-      //   *{
-      //       padding: 0;
-      //       margin: 0;
-      //       box-sizing: border-box;
-      //       font-family: "Barlow", sans-serif;
-      //   }
+        $emailContent = '<!DOCTYPE html>
+        <html lang="en">
+        <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+        <title>Mindplex</title>
+        <style>
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            font-family: "Barlow", sans-serif;
+        }
 
-      //   .email-wrapper{
-      //       padding: 1rem;
-      //       line-height: 1.7rem;
-      //   }
-      //   .email-heading {
-      //       font-size: 30px;
-      //       margin-bottom: 2rem;
-      //   }
-      //   .email-wrapper p{
-      //       color: #787777;
-      //       font-size: 20px;
-      //       font-weight: 400;
-      //   }
-      //   .instructions-heading{
-      //       border-bottom:1px solid #c0c0c0;
-      //       padding-bottom: 1rem;
-      //   }
-      //   .instruction-description{
-      //       padding-top: 1rem;
-      //   }
-      //   .activation-btn{
-      //           background-color: #3C48A5;
-      //           border: none;
-      //           color: #fff;
-      //           border-radius: 0.3rem;
-      //           padding: 0.5rem 2rem;
-      //           cursor: pointer;
-      //           font-size: 20px;
-      //           margin: 1rem 0;
-      //           font-weight: 400;
-      //           text-transform: capitalize;
-      //   }</style>
-      //   </head>
-      //   <body>
-      //   <div class="email-wrapper">
-      //       <h1 class="email-heading">Mail from Mindplex moderator page</h1>
-      //       <p class="instructions-heading">
-      //       Below is a user message to become a Mindplex moderator.
-      //       </p>
-      //       <p class="instruction-description">
-      //       <b>Name: </b>'.$firstName.',<br>
-      //       <b>Letter: </b><br>'.$letter.'
-      //       </p>
-      //   </div>
-      //   </body>
-      //   </html>';
-
-      //   $headers = array('Content-Type: text/html; charset=UTF-8');
-      //   echo wp_mail("moderators@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
+        .email-wrapper{
+            padding: 1rem;
+            line-height: 1.7rem;
+        }
+        .email-heading {
+            font-size: 30px;
+            margin-bottom: 2rem;
+        }
+        .email-wrapper p{
+            color: #787777;
+            font-size: 20px;
+            font-weight: 400;
+        }
+        .instructions-heading{
+            border-bottom:1px solid #c0c0c0;
+            padding-bottom: 1rem;
+        }
+        .instruction-description{
+            padding-top: 1rem;
+        }
+        .activation-btn{
+                background-color: #3C48A5;
+                border: none;
+                color: #fff;
+                border-radius: 0.3rem;
+                padding: 0.5rem 2rem;
+                cursor: pointer;
+                font-size: 20px;
+                margin: 1rem 0;
+                font-weight: 400;
+                text-transform: capitalize;
+        }</style>
+        </head>
+        <body>
+        <div class="email-wrapper">
+            <h1 class="email-heading">Mail from Mindplex moderator page</h1>
+            <p class="instructions-heading">
+            Below is a user message to become a Mindplex moderator.
+            </p>
+            <p class="instruction-description">
+            <b>Name: </b>'.$firstName.',<br>
+            <b>Letter: </b><br>'.$letter.'
+            </p>
+        </div>
+        </body>
+        </html>';
+        $headers = array('Content-Type: text/html; charset=UTF-8','From: '.$firstName.' '.$lastName . ' <'. $email.'>');
+        
+        echo wp_mail("moderator@mindplex.ai", 'Mindplex New Moderators', $emailContent, $headers);
       die();
     }
   }

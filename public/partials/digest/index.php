@@ -29,12 +29,12 @@
                     <img style="width: 267px;height: 162px;border-radius: 5px;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
                     <div class="digest-profile">
                         <!-- <img src="< ?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>"> -->
-                        <a href="<?php echo get_the_author_meta('user_login', $single_weekly->post_author); ?>">
+                        <a href="<?php echo home_url('user/'.get_the_author_meta('user_login', $single_weekly->post_author)); ?>">
                             <?php echo get_avatar($single_weekly->post_author, 16); ?>
                             <div class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_weekly->post_author); ?>
                         </a>
                         .
-                        <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_weekly->post_date)) ?></span>
+                        <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_weekly->post_modified)) ?></span>
                     </div>
 
                 </div>
@@ -78,11 +78,11 @@
             <div class="digest-card">
                 <div class="digest-blog-description">
                     <div class="digest-profile">
-                        <a href="<?php echo get_the_author_meta('user_login', $lewis_latest->post_author); ?>">
+                        <a href="<?php echo home_url('user/'.get_the_author_meta('user_login', $lewis_latest->post_author)); ?>">
                             <?php echo get_avatar($lewis_latest->post_author, 16); ?>
                             <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $lewis_latest->post_author); ?>
                         </a>
-                        . <?php echo  date('M. d, Y.', strtotime($lewis_latest->post_date)) ?></p>
+                        . <?php echo  date('M. d, Y.', strtotime($lewis_latest->post_modified)) ?></p>
                     </div>
                     <a href="<?php echo esc_url(get_permalink($lewis_latest->ID)); ?>">
                         <h3><?php echo $lewis_latest->post_title; ?></h3>
@@ -111,51 +111,14 @@
 <div class="digest-Discover">
     <h2>Discover</h2>
 
-    <div class="digest-cards">
+    <div class="digest-cards discover-container">
         <!-- card 1 -->
-        <?php foreach ($discover as $single_discover) { ?>
-            <!-- card 1 -->
-            <div class="digest-card ">
-                <?php
-                $post_type_format = get_post_meta($single_discover->ID, 'post_type_format', true);
-                if ($post_type_format === "video")
-                    $src_img = mp_gl_PLAGIN_URL . 'public/assets/video_not_found.png';
-
-                else if ($post_type_format === "audio")
-                    $src_img = mp_gl_PLAGIN_URL . 'public/assets/Music_fallback.png';
-
-                else
-                    $src_img = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
-                ?>
-                <img style="width: 267px;height: 162px" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_discover->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_discover->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
-                <div class="digest-profile">
-                    <!-- <img src="< ?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/profile.svg' ?>"> -->
-                    <a href="<?php echo get_the_author_meta('user_login', $single_discover->post_author); ?>">
-                        <?php echo get_avatar($single_discover->post_author, 16); ?>
-                        <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_discover->post_author); ?>
-                    </a>
-                    .
-                    <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_discover->post_date)) ?></span>
-                    </p>
-
-                </div>
-
-                <a href="<?php echo esc_url(get_permalink($single_discover->ID)); ?>">
-                    <h3 class="card-title">
-                        <?php echo $single_discover->post_title; ?>
-                    </h3>
-                </a>
-                <p class="digest-description">
-                    <?php
-                    $digest_teaser = get_post_meta($single_discover->ID, 'mp_gl_post_brief_overview', true);
-                    echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
-                    ?></p>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_discover->ID . '"]'); ?> .
-                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $single_discover->ID . '"]') ?> likes </p>
-            </div>
-        <?php
-        } ?>
-
+        <?php 
+            include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/discover.php';
+        ?>
+    </div>
+    <div class="more-btn-container">
+        <button id="more-digest">More topics</button>
     </div>
 
     <img class="digest-line" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/line.svg' ?>">
@@ -163,7 +126,7 @@
 
 <div class="digest-footer">
     <div class="digest-newsletter">
-        <h2>Lewi's Choice</h2>
+        <h2>Lewis' Choice</h2>
         <p>"Lewis' Choice" highlights the week's most important AI stories on the latest advances and insights about AI's future.</p>
 
         <p class="digest-message-txt"></p>
@@ -173,7 +136,7 @@
     </div>
     <div class="digest-cards">
         <!-- card 1 -->
-        <?php foreach ($lewis_choise_posts as $chosed) { ?>
+        <?php foreach ($lewis_choice_posts as $chosed) { ?>
             <?php
             $post_type_format = get_post_meta($chosed->ID, 'post_type_format', true);
             if ($post_type_format === "video")
@@ -193,7 +156,7 @@
                         <img style="border-radius:50%;" src="<?php echo get_avatar_url($chosed->post_author, 16); ?>">
                         <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $chosed->post_author); ?>
                     </a>
-                    <?php echo  date('M. d, Y', strtotime($chosed->post_date)) ?></p>
+                    <?php echo  date('M. d, Y', strtotime($chosed->post_modified)) ?></p>
                 </div>
                 <a href="<?php echo esc_url(get_permalink($chosed->ID)); ?>">
                     <h3> <?php echo $chosed->post_title; ?></h3>
@@ -210,11 +173,19 @@
 
 <script>
     var ajaxurl = "<?php echo admin_url('admin-ajax.php'); ?>";
+    let offset = 2;
+    let stopDigest = false
+    let isUserLoggedIn = `<?php echo is_user_logged_in()?>`
 
     window.addEventListener("DOMContentLoaded", () => {
         const subscribeBtn = document.querySelector('.digest-subscribe-button')
         const errorTxt = document.querySelector('.digest-message-txt')
         const emailField = document.querySelector('.digest-email-input')
+        const moreDigestBtn = document.querySelector('#more-digest')
+        const btnContainer = document.querySelector('.more-btn-container')
+
+        const discoverContainer = document.querySelector('.discover-container')
+        
 
         function checkDigestEmail(email) {
             const emailDomain = email.split('@')[1]
@@ -236,8 +207,40 @@
             }, 5000)
         }
 
+        function loadMoreDigest(){
+            stopDigest = true
+            jQuery.ajax({
+                    url: ajaxurl,
+                    type: 'POST',
+                    data: {
+                        action: 'mp_mails_load_digest',
+                        offset
+                    },
+                    beforeSend: function(data) {
+                        moreDigestBtn.innerHTML = `<img class="loading-btn" style="width:20px;height:20px" src="<?php echo get_template_directory_uri(); ?>/assets/header/loader.svg" alt=""/>`
+                    },
+                    success: function(response) {
+                        moreDigestBtn.innerHTML = 'More topics'
+                        if(response !== 'end'){
+                            discoverContainer.insertAdjacentHTML('beforeend', response)
+                            offset+=1
+                            stopDigest = false
+                        }
+                        else {
+                            
+                            stopDigest = true;
+                        }
+
+                    },
+                    error: function(response) {
+
+                    }
+
+                });
+        }
+
         subscribeBtn.addEventListener('click', function(element) {
-            if (!subscribeBtn.getAttribute('.data-logged-in')) {
+            if (isUserLoggedIn == '') {
                 window.location.href = `<?php echo home_url('?type=login') ?>`
                 return
             }
@@ -266,6 +269,12 @@
                     }
 
                 });
+            }
+        })
+
+        moreDigestBtn.addEventListener('click', function(){
+            if(!stopDigest){
+                loadMoreDigest()
             }
         })
     })
