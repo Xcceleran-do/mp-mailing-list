@@ -20,7 +20,7 @@
                 <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_discover->post_author); ?>
             </a>
             .
-            <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_discover->post_date)) ?></span>
+            <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_discover->post_modified)) ?></span>
             </p>
 
         </div>

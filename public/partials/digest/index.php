@@ -34,7 +34,7 @@
                             <div class="digest-profile-description"><?php echo get_the_author_meta('display_name', $single_weekly->post_author); ?>
                         </a>
                         .
-                        <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_weekly->post_date)) ?></span>
+                        <span class="meta-date"><?php echo  date('M. d, Y.', strtotime($single_weekly->post_modified)) ?></span>
                     </div>
 
                 </div>
@@ -82,7 +82,7 @@
                             <?php echo get_avatar($lewis_latest->post_author, 16); ?>
                             <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $lewis_latest->post_author); ?>
                         </a>
-                        . <?php echo  date('M. d, Y.', strtotime($lewis_latest->post_date)) ?></p>
+                        . <?php echo  date('M. d, Y.', strtotime($lewis_latest->post_modified)) ?></p>
                     </div>
                     <a href="<?php echo esc_url(get_permalink($lewis_latest->ID)); ?>">
                         <h3><?php echo $lewis_latest->post_title; ?></h3>
@@ -156,7 +156,7 @@
                         <img style="border-radius:50%;" src="<?php echo get_avatar_url($chosed->post_author, 16); ?>">
                         <p class="digest-profile-description"><?php echo get_the_author_meta('display_name', $chosed->post_author); ?>
                     </a>
-                    <?php echo  date('M. d, Y', strtotime($chosed->post_date)) ?></p>
+                    <?php echo  date('M. d, Y', strtotime($chosed->post_modified)) ?></p>
                 </div>
                 <a href="<?php echo esc_url(get_permalink($chosed->ID)); ?>">
                     <h3> <?php echo $chosed->post_title; ?></h3>
