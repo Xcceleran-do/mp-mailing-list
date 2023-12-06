@@ -46,7 +46,7 @@ class Mp_mails_templetes_posts_div
 
 
     $posts_content .= '<a style="color: #fff !important;text-decoration:none;" href='.get_permalink($filtered_post->ID).'> <div style="width: 176px; height: auto; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-right:10px;">
-        <img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative;   margin: 4px auto;  min-height: 63%; width: 100%" />
+        <img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative; max-height:200px;  margin: 4px auto; width: 100%" />
         <a href='.home_url("user/".get_the_author_meta('display_name', $filtered_post->post_author)).'>'.
         get_avatar($filtered_post->post_author, 16).
             '<span style="color: #fff !important;font-size:10px; margin-left: 4px;">'.get_the_author_meta('display_name', $filtered_post->post_author).'</span>
