@@ -8,7 +8,7 @@
             <p>Get weekly update about our product on your email, no spam guaranteed we promise ✌️</p>
             <p class="digest-message-txt" style="color: var(--color-input-error) !important;"></p>
             <div class="newsletter-input-container">
-                <input id="subscriber-email" type="text" placeholder="email" class="newsletter-input" />
+                <input id="subscriber-email" type="text" placeholder="Please enter your email address... " class="newsletter-input" />
                 <button id="newsletter-subscribe-btn" class="newsletter-subscribe">Subscribe</button>
 
             </div>
