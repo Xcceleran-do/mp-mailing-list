@@ -243,6 +243,8 @@ class Mp_Mailing_List
 		$mp_mails = new Mp_mails();
 		$this->loader->add_shortcode('mp_mails_list_code', $mp_mails, 'mp_mails_list_code');
 		$this->loader->add_shortcode('mp_mails_soon_code', $mp_mails, 'mp_mails_soon_code');
+		$this->loader->add_shortcode('mp_mails_newsletter', $mp_mails, 'mp_mails_newsletter_subscribe');
+		$this->loader->add_action('wp_ajax_nopriv_mp_mails_save_newsletter', $mp_mails, 'wp_ajax_mp_mails_save_newsletter');
 
 		$Mp_contact = new Mp_contact();
 		$this->loader->add_shortcode('mp_mails_contact_editors_code', $Mp_contact, 'mp_mails_contact_editors_code');

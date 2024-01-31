@@ -56,4 +56,28 @@ class Mp_mails
 
         die();
     }
+
+    public function mp_mails_newsletter_subscribe(){
+        if(!is_user_logged_in()){
+            wp_enqueue_style( 'mp-mails-newsletter-style',mp_mails_PLAGIN_DIR . 'public/css/mp-mails-newsletter.css', false, '1.0', 'all' ); 
+            include_once mp_mails_PLAGIN_DIR . 'public/partials/mails/newsletter.php';
+        }
+    }
+
+    public function wp_ajax_mp_mails_save_newsletter(){
+        global $table_prefix, $wpdb;
+        $subscriber_email = sanitize_email($_POST['emailValue']);
+		$mp_mailing_list_table = $table_prefix . "mp_mailing_lists";
+		$is_email_exist = $wpdb->query($wpdb->prepare("SELECT id from $mp_mailing_list_table WHERE `email_address`=%s and mail_type= %s and deleted_at IS NULL", $subscriber_email, 'newsletter'));
+
+        if($is_email_exist > 0  || email_exists( $subscriber_email )){
+            echo json_encode(array('status' =>'error', 'message' => 'Email already exist!'));
+        }
+        else { 
+		    $insert_email = $wpdb->query($wpdb->prepare("INSERT INTO  $mp_mailing_list_table  (email_address, mail_type) values ('%s','%s')", $subscriber_email, 'newsletter'));
+
+            echo json_encode(array('status' =>'success', 'message' => $subscriber_email));
+        }
+        die();
+    }
 }
