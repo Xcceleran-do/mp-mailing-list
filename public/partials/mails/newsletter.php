@@ -64,7 +64,7 @@
                     if(res.status == 'success'){
                         subscribeBtn.innerHTML = `Subscribe`
                         subscriberEmail.value = ''
-                        showNotification('Your email saved successfully, thank you!')
+                        showNotification('Thank you for subscribing! Your email address has been successfully saved.')
 
                     }
                     else {
