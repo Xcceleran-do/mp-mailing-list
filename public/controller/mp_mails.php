@@ -59,7 +59,7 @@ class Mp_mails
 
     public function mp_mails_newsletter_subscribe(){
         if(!is_user_logged_in()){
-            wp_enqueue_style( 'mp-mails-newsletter-style',mp_mails_PLAGIN_DIR . 'public/css/mp-mails-newsletter.css', false, '1.0', 'all' ); 
+            wp_enqueue_style( 'mp-mails-newsletter-style',mp_mails_PLAGIN_URL . 'public/css/mp-mailing-newsletter.css', false, '1.0', 'all' ); 
             include_once mp_mails_PLAGIN_DIR . 'public/partials/mails/newsletter.php';
         }
     }
