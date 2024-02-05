@@ -59,6 +59,11 @@ class Mp_Mailing_List_Activator {
 
 			dbDelta($sql);
 		}
+		else {
+			$res = $wpdb->query("SHOW COLUMNS FROM $wp_mp_table LIKE 'mail_type'");
+			if (!$res) $wpdb->query("ALTER TABLE $wp_mp_table ADD `mail_type` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL AFTER email_address;");
+		}
+
 	}
 
 	public static function mp_mailing_contact_create_table()

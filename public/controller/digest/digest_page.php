@@ -37,7 +37,7 @@ class Mp_mail_digest_public
             )
         );
         // weekly digest
-        $weekly_digest = self::mp_mails_digest_recommendations('popularity', 1);
+        $weekly_digest = self::mp_digest_weekly_recommendation(7);
         // on discover
         $discover = self::mp_mails_digest_recommendations('default', 1);
         // on latest
@@ -57,7 +57,47 @@ class Mp_mail_digest_public
         include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/index.php';
     }
 
-    function mp_mails_digest_recommendations($recommender, $offset)
+    public function mp_mails_digest_homepage(){
+        $mindbytes_homepage = self::mp_mails_digest_recommendations('default', 1,3);
+
+        include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/homepage.php';
+    }
+
+    public function mp_digest_weekly_recommendation($day=''){
+        $mp_rep_community_slug = get_option('mp_rep_community_slug');
+        $url = get_option('mp_rc_base_api') . "recommendations?recommender=popularity&verbose=false&community=" . $mp_rep_community_slug ."&day=".$day."&post_type=digest&post_type_format=all&page_size=5&category=all";
+        
+        $digest_rec_weekly = wp_remote_get(
+            $url,
+            array(
+                'timeout' => 10,
+                'headers' => array(
+                    'X-API-Key' => get_option('mp_rc_base_api_key')
+                )
+            )
+        );
+        if (!is_wp_error($digest_rec_weekly) && $digest_rec_weekly['response']['code'] == 200){
+            $weekly_content = json_decode($digest_rec_weekly['body'],true);
+            if(isset($weekly_content['results']) && $weekly_content['count'] > 0) {
+                // return $weekly_content['results'];
+                foreach($weekly_content['results'] as $digests){
+                    $return_array[]=$digests['content_id'];
+                }
+                if (count($return_array)) {
+                    $args = array(
+                        'include'          => $return_array,
+                        'post_type'      => 'digest',
+                        'post_status'    => 'publish',
+                    );
+                    return get_posts($args);
+                }
+            }
+        }
+        return array();
+        
+    }
+
+    function mp_mails_digest_recommendations($recommender, $offset,$posts_per_page = 5)
     {
         $lewis_choices = get_option('mp_mails_lewis_selected', array());
 
@@ -65,18 +105,7 @@ class Mp_mail_digest_public
         $mp_rc_base_api = get_option('mp_rc_base_api');
         $posts_per_page = 5;
         $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=community_content&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
-        $data = array(
-            "id" => get_current_user_id(),
-            "from" => "mindplex",
-            "community" => $mp_rep_community_slug,
-            "page_size" => $posts_per_page,
-            "page" => $offset,
-            "post_type" => 'digest',
-            "post_type_format" => "all",
-            "category" => "all",
-            "verbose" => false,
-            "recommender" => $recommender,
-        );
+       
         $digest_rec_responses = wp_remote_get(
             $url,
             array(
@@ -84,7 +113,6 @@ class Mp_mail_digest_public
                 'headers' => array(
                     'X-API-Key' =>  get_option('mp_rc_base_api_key'),
                 ),
-                'body' => $data
             )
         );
         if (!is_wp_error($digest_rec_responses) && $digest_rec_responses['response']['code'] == '200') {
@@ -118,6 +146,8 @@ class Mp_mail_digest_public
                 'post_type'      => 'digest',
                 'post_status'    => 'publish',
                 'posts_per_page' => $posts_per_page,
+                // 'author' => 356
+            
             );
             return get_posts($args);
         }
