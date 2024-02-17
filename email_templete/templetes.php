@@ -31,12 +31,16 @@ class Mp_mails_templetes
     $email = $user->user_email;
     $adt_rp_key = get_password_reset_key($user);
     $user_login = $user->user_login;
-    $rp_link = '<a href="' . home_url("/mindplex_resetpass/?key=$adt_rp_key&login=" . rawurlencode($user_login)) . '">' . home_url("/mindplex_resetpass/?key=$adt_rp_key&login=" . rawurlencode($user_login)) . '</a>';
-
+    $encoded = rawurlencode($user->user_login);
+    $url = home_url("/mindplex_resetpass/?key=$adt_rp_key&login=$encoded");
+    // $rp_link = '<a href="' . home_url("/mindplex_resetpass/?key=$adt_rp_key&login=" . rawurlencode($user_login)) . '">' . home_url("/mindplex_resetpass/?key=$adt_rp_key&login=" . rawurlencode($user_login)) . '</a>';
+    $rp_link = "<a href='$url'>$url</a>";
+    
 
 
     $args = array(
-      'name' => 'reset-password-template',
+      
+      'name' => 'promotional-reset-email',
       'post_type' => array('mp_mail_formats'),
       'post_status' => 'publish',
       'showposts' => 1,
@@ -47,28 +51,17 @@ class Mp_mails_templetes
     if ($my_posts) {
       $subject = $my_posts[0]->post_title;
       $content_title = $my_posts[0]->post_title;
-
       $body = $my_posts[0]->post_content;
-      // $email_address = 'dawit.mekonnen@singularitynet.io';
-      // $email_address = 'esubalew.amenu@singularitynet.io';
 
-      $body = str_replace("{{--username--}}", $user_login, $body);
-      $body = str_replace("{{--email--}}", $email, $body);
-      $body = str_replace("{{--reset_link--}}", $rp_link, $body);
+      $body = preg_replace("/{{--username--}}/", $user_login, $body);
+      $body = preg_replace("/{{--email--}}/", $email, $body);
+      $body = preg_replace("/{{--reset_link--}}/", $rp_link, $body);
 
 
-      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
-      $email_content = file_get_contents($file_path);
-
-      $email_content = str_replace("{{--subject--}}", $subject, $email_content);
-      $email_content = str_replace("{{--content_title--}}", $content_title, $email_content);
-      $email_content = str_replace("{{--body--}}", $body, $email_content);
-      $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
-
-
+       
       $header = array('Content-Type: text/html; charset=UTF-8');
 
-      return wp_mail($email, $subject, $email_content, $header);
+      return wp_mail($email, $content_title, $body, $header);
     }
     return 0;
   }
@@ -132,18 +125,18 @@ class Mp_mails_templetes
       }
 
 
-      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
-      $email_content = file_get_contents($file_path);
+      // $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
+      // $email_content = file_get_contents($file_path);
 
-      $email_content = str_replace("{{--subject--}}", $subject, $email_content);
-      $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
-      $email_content = str_replace("{{--body--}}", $body, $email_content);
+      // $email_content = str_replace("{{--subject--}}", $subject, $email_content);
+      // $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
+      // $email_content = str_replace("{{--body--}}", $body, $email_content);
 
-      $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+      // $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
 
       $header = array('Content-Type: text/html; charset=UTF-8');
 
-      return wp_mail($email, $subject, $email_content, $header);
+      return wp_mail($email, $subject, $body, $header);
     }
     return 0;
   }
@@ -182,18 +175,18 @@ class Mp_mails_templetes
         // $body = str_replace("{{--posts--}}", self::posts_div($post_ids), $body);
       }
 
-      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
-      $email_content = file_get_contents($file_path);
+      // $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
+      // $email_content = file_get_contents($file_path);
 
-      $email_content = str_replace("{{--subject--}}", $subject, $email_content);
-      $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
-      $email_content = str_replace("{{--body--}}", $body, $email_content);
+      // $email_content = str_replace("{{--subject--}}", $subject, $email_content);
+      // $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
+      // $email_content = str_replace("{{--body--}}", $body, $email_content);
 
-      $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+      // $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
 
       $header = array('Content-Type: text/html; charset=UTF-8');
 
-      return wp_mail($email, $subject, $email_content, $header);
+      return wp_mail($email, $subject, $body, $header);
     }
     return 0;
   }
