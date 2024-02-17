@@ -44,30 +44,25 @@ class Mp_mails_templetes_posts_div
       $overview = get_post_meta($filtered_post->ID, 'mp_gl_post_brief_overview', true);
       $strippedContent=  strlen(strip_tags($overview)) > 100 ? substr(strip_tags($overview), 0, 100).'....' :strip_tags($overview);
 
+      // $post_content = '<a style="color: #fff !important;text-decoration:none;" href='.get_permalink($filtered_post->ID).'> <div style="width: 176px; height: auto; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-right:10px;">
+      //   <img src="'.mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png'.'" alt="" style="position: relative; max-height:200px;  margin: 4px auto; width: 100%" />
+      //   <a href='.home_url("user/".get_the_author_meta('display_name', $filtered_post->post_author)).'>'.
+      //   get_avatar($filtered_post->post_author, 16).'<span style="color: #fff !important;font-size:10px; margin-left: 4px;">'.get_the_author_meta('display_name', $filtered_post->post_author).'</span></a>
+      //   <div style="color: #fff !important;font-size:10px;">'.date('M. d, Y.', strtotime($filtered_post->post_date)).'</div><div style="text-align: start;"><p style="font-size: 15px; color: #49FFB3; margin: 6px auto;">'.$filtered_post->post_title.'</p><p style="font-size: 11px;margin: 6px auto;">'.get_post_meta($filtered_post->ID, 'mp_gl_post_brief_overview', true).'</p></div></div> </a>';
 
-    $posts_content .= '<a style="color: #fff !important;text-decoration:none;" href='.get_permalink($filtered_post->ID).'> <div style="width: 176px; height: auto; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-right:10px;">
-        <img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative; max-height:200px;  margin: 4px auto; width: 100%" />
-        <a href='.home_url("user/".get_the_author_meta('display_name', $filtered_post->post_author)).'>'.
-        get_avatar($filtered_post->post_author, 16).
-            '<span style="color: #fff !important;font-size:10px; margin-left: 4px;">'.get_the_author_meta('display_name', $filtered_post->post_author).'</span>
-            </a>
-            <div style="color: #fff !important;font-size:10px;">'.date('M. d, Y.', strtotime($filtered_post->post_date)).'</div>
-        
-        <div style="text-align: start;">
-            <p style="font-size: 15px; color: #49FFB3; margin: 6px auto;">
-                '.$filtered_post->post_title.'
-            </p>
-            <p style="font-size: 11px;margin: 6px auto;">
-                '.$strippedContent.'
-            </p>';
-            // <p style="font-size: 6px;">21 min read . 19.9K views</p>
-        $posts_content .= '</div>
-    </div> </a>';
+    $posts_content .= '<a style="color: #fff !important;text-decoration:none;" href="'.get_permalink($filtered_post->ID).'">';
+    $posts_content .= '<div style="width: 176px; height: auto; color: #FFFFFF; border-radius: 10px; padding: 6px 4px; border-radius: 8px; background: linear-gradient(181deg, rgba(128, 172, 237, 0.38) 0%, rgba(73, 190, 255, 0.00) 100%); box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25); margin-right:10px;">';
+    $posts_content .= '<img src="'.(isset(get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src']) ? get_post_meta($filtered_post->ID, 'thumbnail_image', true)['src'] : $src_img).'" alt="" style="position: relative; max-height:200px;  margin: 4px auto; width: 100%" />';
+    $posts_content .= '<a href='.home_url("user/".get_the_author_meta('display_name', $filtered_post->post_author)).'>'.get_avatar($filtered_post->post_author, 16).'<span style="color: #fff !important;font-size:10px; margin-left: 4px;">'.get_the_author_meta('display_name', $filtered_post->post_author).'</span></a>';
+    $posts_content .= '<div style="color: #fff !important;font-size:10px;">'.date('M. d, Y.', strtotime($filtered_post->post_date)).'</div>';
+    $posts_content .= '<div style="text-align: start;"><p style="font-size: 15px; color: #49FFB3; margin: 6px auto;">'.$filtered_post->post_title.'</p>';
+    $posts_content .= '<p style="font-size: 11px;margin: 6px auto;">'.$strippedContent.'</p>';
+    $posts_content .= '</div>';
+    $posts_content .= '</div>';
+    $posts_content .= '</a>';
     
   }
   if($posts_content == "") return "";
-  $posts_content = '<div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 25px;">'.
-  $posts_content . '</div>';
 
   return $posts_content;
 
