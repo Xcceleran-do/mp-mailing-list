@@ -78,7 +78,7 @@
           },
           success: function(response) {
             const res = JSON.parse(response)
-            if(res.status === 'success') 
+            if(res && res.status === 'success') 
               showNotification('Your message has been submitted, thank you.')
             else
               showNotification('Please try again later.','danger')

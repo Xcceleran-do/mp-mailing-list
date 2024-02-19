@@ -259,7 +259,7 @@ class Mp_mails_templetes
       // $header[] = array();
       $header = array('Content-Type: text/html; charset=UTF-8','From: '.$sender_data['sender_name']. ' <'. $sender_data['sender_email'].'>');
 
-      return wp_mail($email, $subject, $email_content, $header);
+      return wp_mail($email, $subject, '{{ignore_9mail}}'.$email_content, $header);
     }
     return 0;
   }
