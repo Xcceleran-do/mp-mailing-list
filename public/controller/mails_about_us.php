@@ -27,6 +27,30 @@ class Mp_mails_about_contact
   {
   }
 
+
+
+
+
+  function mp_mails_team_editor_api()
+    {
+        add_action('rest_api_init', function () {
+            register_rest_route(mp_mails . '/v1', '/contact', array(
+                'methods' => 'POST',
+                'callback' => array($this, "mp_mail_team_editor_api"),
+                // function (WP_REST_Request $request) {
+                //   return array(
+                //     "success" => true,
+                //     "error" => false,
+                //     "request" => $request->get_params()
+                //   );
+                // },
+                'permission_callback' => function () {
+                  return true;
+              }
+            ));
+        });
+    }
+  
   public function mp_mails_contact_us_code()
   {
     include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_us.php';
@@ -36,48 +60,71 @@ class Mp_mails_about_contact
     include_once mp_mails_PLAGIN_DIR . 'public/partials/contact/contact_team.php';
   }
 
+  function mp_mail_team_editor_api(WP_REST_Request $request)
+  {
+    $arrayData = $request->get_params();
+    if (isset($arrayData['fullname']) && isset($arrayData['email']) && isset($arrayData['message'])){
+      return self::mp_mail_team_editor($arrayData['fullname'],$arrayData['email'],$arrayData['message'],'');
+    }
+    else{
+      return $request->get_params();
+    }
+  }
+
+  public function mp_mail_team_editor($full_name, $user_email, $user_message, $email_type = 'editors')
+  {
+    if($email_type == 'team') $email = 'email@mindplex.ai';
+    else if($email_type == 'editors') $email = 'editors@mindplex.ai';
+    
+    $data = array(
+      "name" => esc_attr($full_name),
+      "email" => esc_attr($user_email),
+      "message" => esc_attr(stripslashes($user_message)),
+    );
+
+    $email_team_post = array(
+      'post_title' => 'Contact Us message',
+      'post_content' => json_encode($data),
+      'post_type' => 'mp_mails_contact',
+    );
+    
+    $insert_user_message = wp_insert_post($email_team_post);
+    
+    include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+    
+    $mp_mails_templetes = new Mp_mails_templetes();
+    $bodyReplacements['type'] = $email_type.'\'s';
+    $bodyReplacements['full-name'] = $full_name;
+    $bodyReplacements['user-email'] = $user_email;
+    $bodyReplacements['user-message'] = stripslashes($user_message);
+    
+    $sender_data = array('sender_name'=> $full_name, 'sender_email'=> $user_email);
+    // $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
+    $is_sent = $mp_mails_templetes->contact_our_team_template('khalicog@gmail.com' , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
+    if($is_sent) 
+      return array('status' => 'success');
+    else 
+      return array('status' => 'error', 'message' => 'Try again later');
+  }
+
+
+  
+
   public function wp_ajax_mp_mail_email_team()
   {
 
 
     if (isset($_POST['user_email']) && isset($_POST['user_message'])) {
-      $first_name = $_POST['first_name'];
-      $last_name = $_POST['last_name'];
+      $first_name = isset($_POST['first_name']) ? $_POST['first_name'] : '';
+      $last_name = isset($_POST['last_name']) ? $_POST['last_name'] : '';
       $user_email = $_POST['user_email'];
       $user_message = $_POST['user_message'];
 
-      $email_type = $_POST['type'];
-      if($email_type == 'team') $email = 'email@mindplex.ai';
-      else if($email_type == 'editors') $email = 'editors@mindplex.ai';
-
+      $email_type = isset($_POST['type']) ? $_POST['type'] : '';
       $full_name = $first_name . ' ' . $last_name;
-      $data = array(
-        "name" => esc_attr($full_name),
-        "email" => esc_attr($user_email),
-        "message" => esc_attr(stripslashes($user_message)),
-      );
 
-      $email_team_post = array(
-        'post_title' => 'Contact Us message',
-        'post_content' => json_encode($data),
-        'post_type' => 'mp_mails_contact',
-      );
-
-      $insert_user_message = wp_insert_post($email_team_post);
-      include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
-      
-      $mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['type'] = $email_type.'\'s';
-      $bodyReplacements['full-name'] = $full_name;
-      $bodyReplacements['user-email'] = $user_email;
-      $bodyReplacements['user-message'] = stripslashes($user_message);
-      
-      $sender_data = array('sender_name'=> $full_name, 'sender_email'=> $user_email);
-      $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
-      if($is_sent) 
-        echo json_encode(array('status' => 'success'));
-      else 
-        echo json_encode(array('status' => 'error', 'message' => 'Try again later'));
+      $response = self::mp_mail_team_editor($full_name, $user_email , $user_message,$email_type);
+      echo json_encode($response );
     } else 
         echo json_encode(array('status' => 'error', 'message' => 'email or message is empty'));
     die();
@@ -113,7 +160,7 @@ class Mp_mails_about_contact
       $new_post_id = wp_insert_post($postarr);
       echo $new_post_id;
 
-      $emailContent = '<!DOCTYPE html>
+      $emailContent = '{{ignore_9mail}}<!DOCTYPE html>
       <html lang="en">
       <head>
       <meta charset="UTF-8" />

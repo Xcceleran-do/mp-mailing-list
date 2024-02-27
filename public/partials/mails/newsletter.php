@@ -2,10 +2,10 @@
     <img class="newsletter-bg-img" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/newsletter.jpeg' ?>"/>
     <div class="newsletter-content">
         <div class="newsletter-heading">
-            <h2>Subscribe to our newsletter</h2>
+            <h2>Subscribe to our Newsletter</h2>
         </div>
         <div class="newsletter-paragraph">
-            <p>Get weekly update about our product on your email, no spam guaranteed we promise ✌️</p>
+            <p>Get weekly updates. No spam, we promise ✌️</p>
             <p class="digest-message-txt" style="color: var(--color-input-error) !important;"></p>
             <div class="newsletter-input-container">
                 <input id="subscriber-email" type="text" placeholder="Enter your email" class="newsletter-input" />

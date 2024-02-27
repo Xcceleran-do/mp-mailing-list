@@ -121,6 +121,8 @@ class Mp_Mailing_List
 		 */
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/class-mp-mailing-list-admin.php';
 
+		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/base.php';
+
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/email_types_taxonomy.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/post_type_promotions.php';
 		require_once plugin_dir_path(dirname(__FILE__)) . 'admin/controller/promotion/subscribers-list.php';
@@ -182,6 +184,10 @@ class Mp_Mailing_List
 
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+
+		$mp_mails_admin_base = new Mp_Mails_Admin_Base();
+		$this->loader->add_action('admin_menu', $mp_mails_admin_base, 'mp_mail_base_menu_section');
+		$this->loader->add_action('wp_ajax_mp_mails_emails_content', $mp_mails_admin_base, 'wp_ajax_mp_mails_emails_content');
 
 		$Mp_mail_subscribers_list_Admin = new Mp_mail_subscribers_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_subscribers_list_Admin, 'posts_catalog_submenu_page', 1, 1);
