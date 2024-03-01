@@ -66,6 +66,26 @@ class Mp_mails_templetes
     return 0;
   }
 
+  public function one_time_token_function($body,$email){
+      include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+      $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+
+      $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
+
+
+
+      $body = str_replace("{{--home_url--}}", home_url(), $body);
+      $user = get_user_by( 'email', $email );
+      if ( $user ) {
+        // $user_id = $user->ID;
+        // $onetime_token = wp_generate_uuid4();
+        // add_user_meta($user_id, 'onetime_login', $onetime_token);
+        $body = str_replace("{{onetime_token}}", "mpredirect=".$user->user_login, $body);
+      }
+      return $body;
+  }
+
   public function to_email($email, $slug, $bodyReplacements)
   {
     $args = array(
@@ -133,7 +153,7 @@ class Mp_mails_templetes
       // $email_content = str_replace("{{--body--}}", $body, $email_content);
 
       // $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
-
+      $body = self::one_time_token_function($body, $email);
       $header = array('Content-Type: text/html; charset=UTF-8');
 
       return wp_mail($email, $subject, $body, $header);
@@ -172,17 +192,31 @@ class Mp_mails_templetes
         $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
 
         $body = str_replace("{{--posts--}}", $Mp_mails_templetes_posts_div->posts_div($post_ids), $body);
-        // $body = str_replace("{{--posts--}}", self::posts_div($post_ids), $body);
       }
 
-      // $file_path = mp_mails_PLAGIN_DIR . 'email_templete/template1.php';
-      // $email_content = file_get_contents($file_path);
-
-      // $email_content = str_replace("{{--subject--}}", $subject, $email_content);
+      // $body = str_replace("{{--subject--}}", 'generated_token', $email_content);
       // $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
       // $email_content = str_replace("{{--body--}}", $body, $email_content);
 
-      // $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+      // include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+      // $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+
+      // $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
+
+
+
+      // $body = str_replace("{{--home_url--}}", home_url(), $body);
+      // $user = get_user_by( 'email', $email );
+      // if ( $user ) {
+      //   $user_id = $user->ID;
+      //   $onetime_token = wp_generate_uuid4();
+      //   add_user_meta($user_id, 'onetime_login', $onetime_token);
+      //   $body = str_replace("{{onetime_token}}", "mpredirect=".$onetime_token, $body);
+      // }
+
+      $body = self::one_time_token_function($body, $email);
+      
 
       $header = array('Content-Type: text/html; charset=UTF-8');
 
@@ -190,6 +224,8 @@ class Mp_mails_templetes
     }
     return 0;
   }
+
+  
 
   public function template1($subject, $content_title, $body)
   {
