@@ -23,6 +23,28 @@
 class Mp_mails_templetes
 {
 
+
+  public function one_time_token_function($body,$email){
+    include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+    $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+
+    $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
+
+
+
+    $body = str_replace("{{--home_url--}}", home_url(), $body);
+    $user = get_user_by( 'email', $email );
+    if ( $user ) {
+      // $user_id = $user->ID;
+      // $onetime_token = wp_generate_uuid4();
+      // add_user_meta($user_id, 'onetime_login', $onetime_token);
+      $body = str_replace("{{onetime_token}}", "mpredirect=".$user->user_login, $body);
+    }
+    return $body;
+}
+
+
   public function password_reset_template($user_id)
   {
 
@@ -58,6 +80,7 @@ class Mp_mails_templetes
       $body = preg_replace("/{{--reset_link--}}/", $rp_link, $body);
 
 
+      $body = self::one_time_token_function($body, $email);
        
       $header = array('Content-Type: text/html; charset=UTF-8');
 
@@ -66,25 +89,6 @@ class Mp_mails_templetes
     return 0;
   }
 
-  public function one_time_token_function($body,$email){
-      include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
-
-      $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
-
-      $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
-
-
-
-      $body = str_replace("{{--home_url--}}", home_url(), $body);
-      $user = get_user_by( 'email', $email );
-      if ( $user ) {
-        // $user_id = $user->ID;
-        // $onetime_token = wp_generate_uuid4();
-        // add_user_meta($user_id, 'onetime_login', $onetime_token);
-        $body = str_replace("{{onetime_token}}", "mpredirect=".$user->user_login, $body);
-      }
-      return $body;
-  }
 
   public function to_email($email, $slug, $bodyReplacements)
   {
