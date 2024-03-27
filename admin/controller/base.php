@@ -39,7 +39,7 @@ class Mp_Mails_Admin_Base
 	{
 		$page_title = "MP Promotional Mails";
 		$menu_title = "MP Promotional Mails";
-		$capability = "edit_posts";
+		$capability = "manage_options";
 		$menu_slug = "mp-mail-menu";
 		$functionCallable = array($this, "mp_mails_dashboard_landing");
 		$icon_url = "dashicons-email";
@@ -48,7 +48,7 @@ class Mp_Mails_Admin_Base
 	}
 	function mp_mails_dashboard_landing()
 	{
-        if (current_user_can('edit_posts')) {
+        if (current_user_can('manage_options') || current_user_can('marketer')) {
             include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/index.php';
         } 
         
