@@ -118,7 +118,7 @@
         ?>
     </div>
     <div class="more-btn-container">
-        <button id="more-digest">More topics</button>
+        <button id="more-digest">More</button>
     </div>
 
     <img class="digest-line" src="<?php echo mp_mails_PLAGIN_URL . 'public/assets/digest/line.svg' ?>">
@@ -220,7 +220,7 @@
                         moreDigestBtn.innerHTML = `<img class="loading-btn" style="width:20px;height:20px" src="<?php echo get_template_directory_uri(); ?>/assets/header/loader.svg" alt=""/>`
                     },
                     success: function(response) {
-                        moreDigestBtn.innerHTML = 'More topics'
+                        moreDigestBtn.innerHTML = 'More'
                         if(response !== 'end'){
                             discoverContainer.insertAdjacentHTML('beforeend', response)
                             offset+=1
