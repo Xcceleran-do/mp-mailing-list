@@ -104,7 +104,7 @@ class Mp_mail_digest_public
         $mp_rep_community_slug = get_option('mp_rep_community_slug', 'none');
         $mp_rc_base_api = get_option('mp_rc_base_api');
         $posts_per_page = 5;
-        $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=community_content&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
+        $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=digest&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
        
         $digest_rec_responses = wp_remote_get(
             $url,
@@ -118,6 +118,7 @@ class Mp_mail_digest_public
         if (!is_wp_error($digest_rec_responses) && $digest_rec_responses['response']['code'] == '200') {
             $postIds = array();
             $responses = json_decode($digest_rec_responses['body'], true);
+            $args = array();
             if (isset($responses['results'])) {
 
                 foreach ($responses['results'] as $response) {
@@ -133,7 +134,6 @@ class Mp_mail_digest_public
                 );
                 return get_posts($args);
             }
-            return array();
         } else {
             $offset = $offset - 1;
             $offset = $offset * $posts_per_page;
@@ -149,8 +149,8 @@ class Mp_mail_digest_public
                 // 'author' => 356
             
             );
-            return get_posts($args);
         }
+        return count($args)> 0 ? get_posts($args) : array();
     }
 
     public function wp_ajax_mp_mails_load_digest(){
