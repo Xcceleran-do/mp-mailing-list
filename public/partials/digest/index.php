@@ -49,7 +49,7 @@
                     echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
                     ?></p>
                 <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_weekly->ID . '"]'); ?> .
-                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $single_weekly->ID . '"]') ?> likes
+                    <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $single_weekly->ID . '"]') ?> likes
                 </p>
         </div>
     <?php
@@ -94,7 +94,7 @@
                         ?>
                     </P>
                     <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $lewis_latest->ID . '"]'); ?> .
-                        <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $lewis_latest->ID . '"]') ?> likes
+                        <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $lewis_latest->ID . '"]') ?> likes
                     </p>
 
                 </div>
@@ -161,7 +161,7 @@
                     <h3> <?php echo $chosed->post_title; ?></h3>
                 </a>
                 <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $chosed->ID . '"]'); ?> .
-                    <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $chosed->ID . '"]') ?> likes</p>
+                    <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $chosed->ID . '"]') ?> likes</p>
             </div>
         <?php } ?>
 
