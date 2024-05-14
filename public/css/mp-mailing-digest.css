@@ -70,7 +70,6 @@
     padding-bottom: 40px;
     gap: 30px;
     flex-wrap: wrap;
-
 }
 
 .digest-card {
@@ -78,8 +77,7 @@
     font-family: Barlow;
     display: flex;
     flex-direction: column;
-    max-width: 270px;
-
+    max-width: 291px;
 }
 
 .digest-profile {

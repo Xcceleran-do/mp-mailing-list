@@ -36,7 +36,7 @@
             echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
             ?></p>
         <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_discover->ID . '"]'); ?> .
-            <?php do_shortcode('[mp_rp_get_postlikes_code likers="true" post_id="' . $single_discover->ID . '"]') ?> likes </p>
+            <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $single_discover->ID . '"]') ?> likes </p>
     </div>
 <?php
 } ?>
