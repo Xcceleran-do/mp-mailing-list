@@ -303,4 +303,43 @@ class Mp_mails_templetes
     }
     return 0;
   }
+
+  public function community_content_template($email, $slug, $bodyReplacements, $subject){
+    $args = array(
+      'name' => $slug,
+      'post_type' => array('mp_mail_formats'),
+      'post_status' => 'publish',
+      'showposts' => 1,
+      'ignore_sticky_posts' => 1,
+    );
+    $my_posts = get_posts($args);
+
+    if ($my_posts) {
+      $content_title = $my_posts[0]->post_title;
+
+      $body = $my_posts[0]->post_content;
+
+      foreach ($bodyReplacements as $key => $value) {
+        $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+        $body = str_replace("{{--" . $key . "--}}", $value, $body);
+      }
+
+
+      $file_path = mp_mails_PLAGIN_DIR . 'email_templete/normal_email.php';
+      $email_content = file_get_contents($file_path);
+
+      $email_content = str_replace("{{--subject--}}", $subject, $email_content);
+      $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
+      $email_content = str_replace("{{--body--}}", $body, $email_content);
+
+      $email_content = str_replace("{{--home_url--}}", home_url(), $email_content);
+
+      // $header[] = array();
+      $header = array('Content-Type: text/html; charset=UTF-8');
+
+      return wp_mail($email, $subject, '{{ignore_9mail}}'.$email_content, $header);
+    }
+  }
+
+
 }
