@@ -100,7 +100,7 @@ class Mp_mails_about_contact
     
     $sender_data = array('sender_name'=> $full_name, 'sender_email'=> $user_email);
     // $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
-    $is_sent = $mp_mails_templetes->contact_our_team_template('khalicog@gmail.com' , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
+    $is_sent = $mp_mails_templetes->contact_our_team_template($email , 'user-feedback-from-contact-page', $bodyReplacements,$sender_data);
     if($is_sent) 
       return array('status' => 'success');
     else 
