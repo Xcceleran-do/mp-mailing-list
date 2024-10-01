@@ -184,7 +184,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }else{
     contentLink.placeholder = "Enter your youtube link (for more info click on the I icon above)"
   }
-  $('#type').change( function() {
+  jQuery('#type').change( function() {
     if(this.value.toLowerCase() === "text"){
       return contentLink.placeholder = "Enter your document link"
     }
@@ -279,16 +279,16 @@ window.addEventListener('DOMContentLoaded', () => {
         success: function(data){
           hideLoader()
           console.log(data);
-          if(data ==='success'){
-            submitFrom.reset();
+          // if(data ==='success'){
+            // submitFrom.reset();
             submitCommunityLoader('community-submit', false, 'Submit')
 
             return showNotification('Submitted successfully!');
-          }
+          // }
         },
         error: function(data){
           hideLoader();
-          submitFrom.reset();
+          // submitFrom.reset();
           submitCommunityLoader('community-submit', false, 'Submit')
 
           return showNotification('Please try again later', 'danger');
