@@ -101,7 +101,7 @@ class Mp_mails_community_content
                 $subject = $attachments ? "Community Content with attachment" : "Community Content";
 
 
-                $is_sent = $mp_mails_templetes->community_content_template('khalicog@gmail.com' , 'community-content-from-user', $bodyReplacements,$subject);
+                $is_sent = $mp_mails_templetes->community_content_template($email_address , 'community-content-from-user', $bodyReplacements,$subject);
                 if($is_sent) {
                     $to_sender = 'Dear ' . esc_attr($first_name) .',<br><br>'.
                     'Thank you for submitting your content to our platform. We have received your submission, and it is currently awaiting approval from our community content moderators. We appreciate your patience as we carefully review and consider each submission.
