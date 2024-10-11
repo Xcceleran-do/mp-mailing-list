@@ -1,0 +1,28 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches:
+      - production  # Triggers workflow on production branch update.
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Set up SSH
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+        ssh-private-key: ${{ secrets.ESUBALEW_MAC_SSH_PRIVATE_KEY }}  # Access SSH key from secrets.
+
+    - name: Set Environment Variables
+      run: |
+        echo "JUMP_SERVER_IP=${{ secrets.JUMP_SERVER_IP }}" >> $GITHUB_ENV
+        echo "WORDPRESS_PRODUCTION_SERVER_IP=${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}" >> $GITHUB_ENV
+
+    - name: Sync Files to Target Server via Jump Server
+      run: |
+        scp -o "ProxyJump esubalew@${{ env.JUMP_SERVER_IP }}" -r ./ esubalew@${{ env.WORDPRESS_PRODUCTION_SERVER_IP }}:/testwp/mailing/
