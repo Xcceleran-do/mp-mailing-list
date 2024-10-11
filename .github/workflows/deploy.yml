@@ -21,10 +21,9 @@ jobs:
     - name: Add Jump Server to Known Hosts
       run: ssh-keyscan -H ${{ secrets.JUMP_SERVER_IP }} >> ~/.ssh/known_hosts
 
-    - name: Add Target Server to Known Hosts
-      run: ssh-keyscan -H ${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }} >> ~/.ssh/known_hosts
-
-
+    - name: Add Target Server to Known Hosts via Jump Server
+      run: |
+        ssh -o StrictHostKeyChecking=no esubalew@${{ secrets.JUMP_SERVER_IP }} "ssh-keyscan -H ${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }} >> ~/.ssh/known_hosts"
 
     - name: Sync Files to Target Server via Jump Server
       run: |
