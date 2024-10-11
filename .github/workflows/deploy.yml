@@ -3,7 +3,7 @@ name: Deploy to Production
 on:
   push:
     branches:
-      - production  # Triggers workflow on production branch update.
+      - production
 
 jobs:
   deploy:
