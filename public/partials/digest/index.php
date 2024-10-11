@@ -26,7 +26,7 @@
                     else
                         $src_img = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
                     ?>
-                    <img style="width:267px;height:162px;border-radius:5px;object-fit:contain;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
+                    <img style="width:267px;height:162px;border-radius:5px;object-fit:cover;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
                     <div class="digest-profile">
                         <a href="<?php echo home_url('user/'.get_the_author_meta('user_login', $single_weekly->post_author)); ?>">
                             <?php echo get_avatar($single_weekly->post_author, 16); ?>
