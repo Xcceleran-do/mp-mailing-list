@@ -33,4 +33,4 @@ jobs:
 
     - name: Sync Files to Target Server via Jump Server
       run: |
-        scp -J esubalew@${{ secrets.JUMP_SERVER_IP }} -r * esubalew@${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}:/home/esubalew/testwp/mailing
+        scp -J esubalew@${{ secrets.JUMP_SERVER_IP }} -r * esubalew@${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}:/var/www/wordpress/wp-content/plugins/mp-mailing-list
