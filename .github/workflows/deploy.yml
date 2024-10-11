@@ -18,11 +18,8 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.ESUBALEW_MAC_SSH_PRIVATE_KEY }}  # Access SSH key from secrets.
 
-    - name: Add Jump Server to Known Hosts
-      run: ssh-keyscan -H ${{ secrets.JUMP_SERVER_IP }} >> ~/.ssh/known_hosts
-
-    - name: Add Target Server to Known Hosts
-      run: ssh-keyscan -H ${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }} >> ~/.ssh/known_hosts
+    - name: Test SSH Connection
+      run: ssh -o StrictHostKeyChecking=no esubalew@${{ secrets.JUMP_SERVER_IP }} exit
 
     - name: Sync Files to Target Server via Jump Server
       run: |
