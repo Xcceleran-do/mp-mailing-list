@@ -31,6 +31,8 @@ jobs:
 
 
 
+    - name: List Files for Debugging
+      run: ls -R ./
 
     - name: Sync Files to Target Server via Jump Server
       run: |
