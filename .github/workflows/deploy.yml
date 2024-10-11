@@ -18,9 +18,6 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.ESUBALEW_MAC_SSH_PRIVATE_KEY }}  # Access SSH key from secrets.
 
-    - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no esubalew@${{ secrets.JUMP_SERVER_IP }} exit
-
     - name: Sync Files to Target Server via Jump Server
       run: |
-        scp -o "ProxyJump esubalew@${{ env.JUMP_SERVER_IP }}" -r ./ esubalew@${{ env.WORDPRESS_PRODUCTION_SERVER_IP }}:/testwp/mailing/
+        scp -o "ProxyJump esubalew@${{ secrets.JUMP_SERVER_IP }}" -r ./ esubalew@${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}:/testwp/mailing/
