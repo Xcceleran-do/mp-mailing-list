@@ -18,6 +18,20 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.ESUBALEW_MAC_SSH_PRIVATE_KEY }}  # Access SSH key from secrets.
 
+
+
+
+    - name: Test SSH Connection to Jump Server
+      run: |
+        ssh -o StrictHostKeyChecking=no esubalew@${{ secrets.JUMP_SERVER_IP }} "echo 'Connected to Jump Server!'"
+        
+    - name: Test SSH Connection to Target Server via Jump Server
+      run: |
+        ssh -o "ProxyJump esubalew@${{ secrets.JUMP_SERVER_IP }}" -o StrictHostKeyChecking=no esubalew@${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }} "echo 'Connected to Target Server!'"
+
+
+
+
     - name: Sync Files to Target Server via Jump Server
       run: |
         scp -J esubalew@${{ secrets.JUMP_SERVER_IP }} -r * esubalew@${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}:/var/www/wordpress/wp-content/plugins/mp-mailing-list
