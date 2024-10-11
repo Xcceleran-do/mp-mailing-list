@@ -35,8 +35,10 @@
             $digest_teaser = get_post_meta($single_discover->ID, 'mp_gl_post_brief_overview', true);
             echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
             ?></p>
-        <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_discover->ID . '"]'); ?> .
-            <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $single_discover->ID . '"]') ?> likes </p>
+        <p class="digest-views">
+            <?php echo apply_filters('mp_time_hms', $single_discover->ID , 'card'); ?>
+            <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $single_discover->ID . '"]') ?> likes
+        </p>
     </div>
 <?php
 } ?>
