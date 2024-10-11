@@ -18,10 +18,11 @@ jobs:
       with:
         ssh-private-key: ${{ secrets.ESUBALEW_MAC_SSH_PRIVATE_KEY }}  # Access SSH key from secrets.
 
-    - name: Set Environment Variables
-      run: |
-        echo "JUMP_SERVER_IP=${{ secrets.JUMP_SERVER_IP }}" >> $GITHUB_ENV
-        echo "WORDPRESS_PRODUCTION_SERVER_IP=${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }}" >> $GITHUB_ENV
+    - name: Add Jump Server to Known Hosts
+      run: ssh-keyscan -H ${{ secrets.JUMP_SERVER_IP }} >> ~/.ssh/known_hosts
+
+    - name: Add Target Server to Known Hosts
+      run: ssh-keyscan -H ${{ secrets.WORDPRESS_PRODUCTION_SERVER_IP }} >> ~/.ssh/known_hosts
 
     - name: Sync Files to Target Server via Jump Server
       run: |
