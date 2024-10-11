@@ -26,7 +26,7 @@
                     else
                         $src_img = mp_gl_PLAGIN_URL . 'public/assets/img_not_found.png';
                     ?>
-                    <img style="width:267px;height:162px;border-radius:5px;object-fit:cover;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
+                    <img style="width:267px;height:162px;border-radius:5px;object-fit:contain;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src']) ? get_post_meta($single_weekly->ID, 'thumbnail_image', true)['src'] : $src_img ?>">
                     <div class="digest-profile">
                         <a href="<?php echo home_url('user/'.get_the_author_meta('user_login', $single_weekly->post_author)); ?>">
                             <?php echo get_avatar($single_weekly->post_author, 16); ?>
@@ -48,7 +48,8 @@
                     $digest_teaser = get_post_meta($single_weekly->ID, 'mp_gl_post_brief_overview', true);
                     echo strlen($digest_teaser) > 150 ? substr($digest_teaser, 0, 150) . '...' : $digest_teaser;
                     ?></p>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $single_weekly->ID . '"]'); ?> .
+                <p class="digest-views">
+                    <?php echo apply_filters('mp_time_hms', $single_weekly->ID , 'card'); ?>
                     <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $single_weekly->ID . '"]') ?> likes
                 </p>
         </div>
@@ -93,12 +94,13 @@
                         echo $latest_teaser;
                         ?>
                     </P>
-                    <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $lewis_latest->ID . '"]'); ?> .
+                    <p class="digest-views">
+                    <?php echo apply_filters('mp_time_hms', $lewis_latest->ID , 'card'); ?>
                         <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $lewis_latest->ID . '"]') ?> likes
                     </p>
 
                 </div>
-                <img style="width:267px; height:162px; min-width:267px; min-height:162px; border-radius:5px; object-fit:cover;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src']) ? get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src'] : $latest_img ?>">
+                <img style="width:267px; height:162px; min-width:267px; min-height:162px; border-radius:5px; object-fit:conver;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src']) ? get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src'] : $latest_img ?>">
 
             </div>
         <?php } ?>
@@ -160,7 +162,8 @@
                 <a href="<?php echo esc_url(get_permalink($chosed->ID)); ?>">
                     <h3> <?php echo $chosed->post_title; ?></h3>
                 </a>
-                <p class="digest-views"><?php do_shortcode('[mp_gl_min_to_read_code post_id="' . $chosed->ID . '"]'); ?> .
+                <p class="digest-views">
+                    <?php echo apply_filters('mp_time_hms', $chosed->ID , 'card'); ?>
                     <?php do_shortcode('[mp_rp_get_postlikes_code content_type="like" post_id="' . $chosed->ID . '"]') ?> likes</p>
             </div>
         <?php } ?>
