@@ -45,7 +45,7 @@ class Mp_mail_digest_public
             array(
                 // 'exclude' => $lewis_choices,
                 'order'          => 'DESC',
-                'orderby'        => "ID",
+                'orderby'        => "date",
                 'offset'         => 0,
                 'post_type'      => 'digest',
                 'post_status'    => 'publish',
@@ -63,7 +63,7 @@ class Mp_mail_digest_public
         include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/homepage.php';
     }
 
-    public function mp_digest_weekly_recommendation($day=''){
+    public function mp_digest_weekly_recommendation($day=7){
         $mp_rep_community_slug = get_option('mp_rep_community_slug');
         $url = get_option('mp_rc_base_api') . "recommendations?recommender=popularity&verbose=false&community=" . $mp_rep_community_slug ."&day=".$day."&post_type=digest&post_type_format=all&page_size=5&category=all";
         
@@ -97,15 +97,14 @@ class Mp_mail_digest_public
         
     }
 
-    function mp_mails_digest_recommendations($recommender, $offset,$posts_per_page = 5)
+    function mp_mails_digest_recommendations($recommender, $page,$posts_per_page = 5)
     {
         $lewis_choices = get_option('mp_mails_lewis_selected', array());
 
         $mp_rep_community_slug = get_option('mp_rep_community_slug', 'none');
         $mp_rc_base_api = get_option('mp_rc_base_api');
-        $posts_per_page = 5;
-        $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $offset . "&post_type=digest&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
-       
+
+        $url =  $mp_rc_base_api . "recommendations?id=" . get_current_user_id() . "&from=mindplex&community=" . $mp_rep_community_slug . "&page_size=" . $posts_per_page . "&page=" . $page . "&post_type=digest&post_type_format=all&category=all&verbose=false&recommender=" . $recommender;
         $digest_rec_responses = wp_remote_get(
             $url,
             array(
@@ -135,7 +134,7 @@ class Mp_mail_digest_public
                 return get_posts($args);
             }
         } else {
-            $offset = $offset - 1;
+            $offset = $page - 1;
             $offset = $offset * $posts_per_page;
 
             $args = array(
