@@ -191,6 +191,7 @@ class Mp_Mailing_List
 
 		$Mp_mail_subscribers_list_Admin = new Mp_mail_subscribers_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_subscribers_list_Admin, 'posts_catalog_submenu_page', 1, 1);
+		$this->loader->add_action('wp_ajax_mp_add_new_subscriber', $Mp_mail_subscribers_list_Admin, 'wp_ajax_mp_add_new_subscriber');
 
 		$Mp_mail_yearly_report_list_Admin = new Mp_mail_yearly_report_list_Admin();
 		$this->loader->add_action('admin_menu', $Mp_mail_yearly_report_list_Admin, 'yearly_report_submenu_page', 1, 1);
