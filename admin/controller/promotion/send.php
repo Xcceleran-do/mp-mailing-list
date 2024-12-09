@@ -62,11 +62,18 @@ class Mp_mail_send_Admin
             // $subscribers = get_users(array(
             //     'meta_query' => $meta_query,
             // ));
+            $emails = array('esubalew.a2009@gmail.com');//, 'dwtmekonnen123@gmail.com');
+
             $args = array(
-                'include' => array(13), //, 1),
+                'fields' => array('ID', 'user_email', 'display_name', 'user_login'),
+                'number' => 0, // No limit on the number of results
             );
-            
-            $subscribers = get_users($args);
+
+            $users = get_users($args);
+
+            $subscribers = array_filter($users, function($user) use ($emails) {
+                return in_array($user->user_email, $emails);
+            });
 
             // Create an array to store the user IDs
             $userIds = array();
