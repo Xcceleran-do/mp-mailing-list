@@ -102,7 +102,6 @@ class Mp_mails_templetes
     $my_posts = get_posts($args);
 
     if ($my_posts) {
-      echo "in if";
       $subject = $my_posts[0]->post_title;
       $content_title = $my_posts[0]->post_title;
 
@@ -120,10 +119,6 @@ class Mp_mails_templetes
       $email_content = str_replace("{{--body--}}", $body, $email_content);
 
       $header = array('Content-Type: text/html; charset=UTF-8');
-echo "before send body";
-echo "email " . $email;
-echo "subject" . $subject;
-echo $email_content;
 
       return wp_mail($email, $subject, $email_content, $header);
     }

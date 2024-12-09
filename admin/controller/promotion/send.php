@@ -63,7 +63,7 @@ class Mp_mail_send_Admin
             //     'meta_query' => $meta_query,
             // ));
             $args = array(
-                'include' => array(13, 1),
+                'include' => array(13), //, 1),
             );
             
             $subscribers = get_users($args);
@@ -107,7 +107,7 @@ class Mp_mail_send_Admin
     //   $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
 
 
-      $is_sent = $Mp_mails_templetes->to_email($user->user_email, 'mindplex-publication-template', $bodyReplacements);
+      $is_sent = $Mp_mails_templetes->template2($user->user_email, 'mindplex-publication-template', [], $bodyReplacements);
     
 echo "is sent is " . $is_sent;
 
