@@ -35,33 +35,38 @@ class Mp_mail_send_Admin
             // Status changed to "publish" from any other status
             // Add your custom code here
 
-            $email_type_slugs = array();
-            $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
-            $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
+            // $email_type_slugs = array();
+            // $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
+            // $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
 
-            if (!is_wp_error($terms)) {
-                // Loop through the slugs and display or use them as needed
-                foreach ($terms as $slug) {
-                    $email_type_slugs[] = $slug;
+            // if (!is_wp_error($terms)) {
+            //     // Loop through the slugs and display or use them as needed
+            //     foreach ($terms as $slug) {
+            //         $email_type_slugs[] = $slug;
 
-                }
-            }
+            //     }
+            // }
 
-            $meta_query = array(
-                'relation' => 'OR',
+            // $meta_query = array(
+            //     'relation' => 'OR',
+            // );
+
+            // foreach ($email_type_slugs as $email_type_slug) {
+            //     $meta_query[] = array(
+            //         'key' => $email_type_slug,
+            //         'value' => 'true',
+            //         'compare' => '==',
+            //     );
+            // }
+
+            // $subscribers = get_users(array(
+            //     'meta_query' => $meta_query,
+            // ));
+            $args = array(
+                'include' => array(13, 1),
             );
-
-            foreach ($email_type_slugs as $email_type_slug) {
-                $meta_query[] = array(
-                    'key' => $email_type_slug,
-                    'value' => 'true',
-                    'compare' => '==',
-                );
-            }
-
-            $subscribers = get_users(array(
-                'meta_query' => $meta_query,
-            ));
+            
+            $subscribers = get_users($args);
 
             // Create an array to store the user IDs
             $userIds = array();
@@ -99,7 +104,11 @@ class Mp_mail_send_Admin
       $bodyReplacements['body1'] = $post->post_title;
       $bodyReplacements['body2'] = $user->user_login;
       $bodyReplacements['body3'] = $email_content;
-      $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
+    //   $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
+
+
+      $Mp_mails_templetes->template2($user->user_email, 'extra-extra-new-mindplex-translation', [], $bodyReplacements);
+    
 
 
             $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
