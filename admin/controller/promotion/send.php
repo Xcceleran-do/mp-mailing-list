@@ -101,13 +101,11 @@ class Mp_mail_send_Admin
 
       include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
       $Mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['body1'] = $post->post_title;
-      $bodyReplacements['body2'] = $user->user_login;
-      $bodyReplacements['body3'] = $email_content;
+      $bodyReplacements['body1'] = $user->user_login;
     //   $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
 
 
-      $is_sent = $Mp_mails_templetes->template2($user->user_email, 'mindplex-publication-template', [], $bodyReplacements);
+      $is_sent = $Mp_mails_templetes->template2($user->user_email, 'giveaway-campaign-winner', [], $bodyReplacements);
     
 echo "is sent is " . $is_sent;
 
