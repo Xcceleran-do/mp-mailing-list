@@ -62,7 +62,7 @@ class Mp_mail_send_Admin
             // $subscribers = get_users(array(
             //     'meta_query' => $meta_query,
             // ));
-            $emails = array('esubalew.a2009@gmail.com', 'dearfriend32@gmail.com', 'firehiwotk21@gmail.com', 'luka63723@gmail.com', 'alazarworkneh19@gmail.com', 'birukfetenezemen@gmail.com', 'gedyonbekeleruh@gmail.com');
+            $emails = array('esubalew.a2009@gmail.com', 'dearfriend32@gmail.com', 'abdetadawud123@gmail.com', 'raja098amir@gmail.com', 'rekiksolomon8@gmail.com', 'hanamyfav@gmail.com');
 
             $args = array(
                 'fields' => array('ID', 'user_email', 'display_name', 'user_login'),
