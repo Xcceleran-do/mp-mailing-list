@@ -107,9 +107,9 @@ class Mp_mail_send_Admin
     //   $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
 
 
-      $Mp_mails_templetes->template2($user->user_email, 'extra-extra-new-mindplex-translation', [], $bodyReplacements);
+      $is_sent = $Mp_mails_templetes->to_email($user->user_email, 'mindplex-publication-template', $bodyReplacements);
     
-
+echo "is sent is " . $is_sent;
 
             $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
 
