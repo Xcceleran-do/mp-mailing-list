@@ -62,7 +62,7 @@ class Mp_mail_send_Admin
             // $subscribers = get_users(array(
             //     'meta_query' => $meta_query,
             // ));
-            $emails = array('esubalew.a2009@gmail.com', 'dearfriend32@gmail.com');
+            $emails = array('esubalew.a2009@gmail.com', 'dearfriend32@gmail.com', "ethealsintayheu@gmail.com", "tazebgetnet21@gmail.com", "heeba.khalid42@gmail.com", "sagnihundee@gmail.com", "yeabsramelaku5@gmail.com", "mundinoabete@gmail.com", "aben.ezer443@gmail.com", "bmekdes61@gmail.com", "beimnetdawit075@gmail.com", "lilaalex94@gmail.com", "alexkalalw@gmail.com", "tsion706@gmail.com", "melakebie@gmail.com", "abrhamhabtom17@gmail.com", "tsibantegize@gmail.com", "yabse.z@gmail.com", "dmengae1993@gmail.com", "tcxg68111@gmail.com", "shegerkey@gmail.com", "kiracherub866@gmail.com", "deborahmulugetagulma@gmail.com", "danielabdisa12@gmail.com", "amaniiiwzethio@gmail.com", "kalkidandereje666@gmail.com", "fikeeshetu@gmail.com", "studentethiopia21@gmail.com", "wondimnehtigist@gmail.com", "yohanneslemma700@gmail.com", "duresaeshetu2001@gmail.com", "amanueldemelash12@gmail.com", "mohdkedirmohd@gmail.com", "reemabdella702@gmail.com", "nathnaeldes@gmail.com", "mikiyasfasil2@gmail.com", "libenhailu04@gmail.com", "simruineb@gmail.com", "infoforme012@gmail.com", "babibebshu@gmail.com", "forabd24@gmail.com", "mulishtadesse2022@gmail.com", "felekebrook05@gmail.com", "saadmusema3@gmail.com", "tadiwosanegagregn@gmail.com", "michealturner200@gmail.com", "yosefzewdu07@gmail.com", "kalkidantadns@gmail.com", "ephrembedhaso@gmail.com");
 
             $args = array(
                 'fields' => array('ID', 'user_email', 'display_name', 'user_login'),
