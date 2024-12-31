@@ -341,5 +341,35 @@ class Mp_mails_templetes
     }
   }
 
+  public function contest_announcement_template($email, $slug, $bodyReplacements)
+  {
+    $args = array(
+      'name' => $slug,
+      'post_type' => array('mp_mail_formats'),
+      'post_status' => 'publish',
+      'showposts' => 1,
+      'ignore_sticky_posts' => 1,
+    );
+    $my_posts = get_posts($args);
+
+    if ($my_posts) {
+      $subject = $my_posts[0]->post_title;
+      $content_title = $my_posts[0]->post_title;
+
+      $body = $my_posts[0]->post_content;
+
+      foreach ($bodyReplacements as $key => $value) {
+        $subject = str_replace("{{--" . $key . "--}}", $value, html_entity_decode($subject));
+        $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+        $body = str_replace("{{--" . $key . "--}}", $value, $body);
+      }
+      
+      $header = array('Content-Type: text/html; charset=UTF-8');
+
+      return wp_mail($email, $subject, $body, $header);
+    }
+    return 0;
+  }
+
 
 }
