@@ -68,4 +68,35 @@
     No subscribers found.
     <?php } ?>
 
+
+    <input type="text" id="user_email" placeholder="Enter user email" required>
+    <input type="hidden" id="sub-type" value="<?php echo $filter_by ?>">
+    <button id="addNewUser">Add new subscriber to group</button>
+
+
   </div>
+
+<script>
+    const addNewUser = document.getElementById('addNewUser');
+
+    addNewUser.addEventListener('click', function (e){
+        e.preventDefault()
+
+        jQuery.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'mp_add_new_subscriber',
+                user_email: document.getElementById('user_email').value,
+                sub_type: document.getElementById('sub-type').value,
+            },
+            beforeSend: function(){
+                addNewUser.innerHTML = "Saving......"
+            },
+            success: function(response) {
+                alert(response);
+            },
+        });
+    })
+
+</script>
