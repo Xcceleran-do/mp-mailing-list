@@ -39,6 +39,10 @@ class Mp_mail_send_Admin
             $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
             $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
 
+            if(!$terms){
+                return;
+            }
+
             if (!is_wp_error($terms)) {
                 // Loop through the slugs and display or use them as needed
                 foreach ($terms as $slug) {
