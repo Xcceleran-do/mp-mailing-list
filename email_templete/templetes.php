@@ -90,11 +90,11 @@ class Mp_mails_templetes
   }
 
 
-  public function to_email($email, $slug, $bodyReplacements, $mail_type = "mp_mail_formats")
+  public function to_email($email, $slug, $bodyReplacements)
   {
     $args = array(
       'name' => $slug,
-      'post_type' => array($mail_type),
+      'post_type' => array('mp_mail_formats'),
       'post_status' => 'publish',
       'showposts' => 1,
       'ignore_sticky_posts' => 1,
@@ -119,19 +119,56 @@ class Mp_mails_templetes
       $email_content = str_replace("{{--body--}}", $body, $email_content);
 
       $header = array('Content-Type: text/html; charset=UTF-8');
-echo "email is " . $email;
-echo "subject is " . $subject;
-echo "email content " . $email_content;
-echo "header ";
-print_r($header);
-      $res = wp_mail($email, $subject, $email_content, $header);
+      return wp_mail($email, $subject, $email_content, $header);
+    }
+    return 0;
+  }
+
+  public function normal_email($email, $slug, $bodyReplacements, $mail_type = "mp_mail_formats")
+  {
+    $args = array(
+      'name' => $slug,
+      'post_type' => array($mail_type),
+      'post_status' => 'publish',
+      'showposts' => 1,
+      'ignore_sticky_posts' => 1,
+    );
+    $my_posts = get_posts($args);
+echo "my post is ";
+echo count($my_posts);
+
+    if ($my_posts) {
+      $subject = $my_posts[0]->post_title;
+      $content_title = $my_posts[0]->post_title;
+
+      $body = $my_posts[0]->post_content;
+
+      foreach ($bodyReplacements as $key => $value) {
+        $subject = str_replace("{{--" . $key . "--}}", $value, html_entity_decode($subject));
+        $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+        $body = str_replace("{{--" . $key . "--}}", $value, $body);
+      }
+      
+      include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+      $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+
+      $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
+      
+      $header = array('Content-Type: text/html; charset=UTF-8');
+      echo "email is " . $email;
+      echo "subject is " . $subject;
+      echo "email content " . $body;
+      echo "header ";
+      print_r($header);
+      
+      $res = wp_mail($email, $subject, $body, $header);
       echo "response is " . $res;
       return $res;
 
     }
     return 0;
   }
-
   public function account_activate_email_template($email, $slug, $bodyReplacements)
   {
     $args = array(
