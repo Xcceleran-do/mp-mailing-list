@@ -151,6 +151,9 @@ class Mp_mails_templetes
       $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
 
       $body .= $Mp_mails_templetes_posts_div->one_time_token();
+      $body = str_replace("{{--home_url--}}", home_url(), $body);
+
+
       
       $header = array('Content-Type: text/html; charset=UTF-8');
       return wp_mail($email, $subject, $body, $header);
