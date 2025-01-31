@@ -82,7 +82,7 @@ class Mp_mail_send_Admin
             $bodyReplacements['body1'] = $post->post_title;
             $bodyReplacements['body2'] = $user->user_login;
             $bodyReplacements['body3'] = $email_content;
-            $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
+            $is_sent = $Mp_mails_templetes->to_email($user->user_email, $post->post_name, $bodyReplacements, "mp_mail_promotions");
 
 
             $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
