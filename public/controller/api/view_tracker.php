@@ -33,7 +33,7 @@ class Mp_mail_get_view_tracks_api_public
     /**
      * Handle Get view_tracks request.
      */
-    register_rest_route('mp_mails' . '/v1', 'view-tracker/(?P<username>[a-zA-Z0-9-_]+)/(?P<email_id>[0-9]+)', array(
+    register_rest_route('mp_mails' . '/v1', 'view-tracker/(?P<username>[^\/]+)/(?P<email_id>[0-9]+)', array(
       'methods' => 'GET',
       'callback' => array($this, 'get_view_tracks'),
       'permission_callback' => function () {
