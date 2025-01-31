@@ -74,14 +74,14 @@ class Mp_mail_send_Admin
             foreach ($subscribers as $user) {
 
             $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" style="display: none;">';
-            $email_content = $tracker . $post->post_content;
 
 
             include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
             $Mp_mails_templetes = new Mp_mails_templetes();
             $bodyReplacements['body1'] = $post->post_title;
             $bodyReplacements['body2'] = $user->user_login;
-            $bodyReplacements['body3'] = $email_content;
+            
+            $bodyReplacements['tracker'] = $tracker;
             $is_sent = $Mp_mails_templetes->normal_email($user->user_email, $post->post_name, $bodyReplacements, "mp_mail_promotions");
 
 
