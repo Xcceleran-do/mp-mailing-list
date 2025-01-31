@@ -119,12 +119,48 @@ class Mp_mails_templetes
       $email_content = str_replace("{{--body--}}", $body, $email_content);
 
       $header = array('Content-Type: text/html; charset=UTF-8');
-
       return wp_mail($email, $subject, $email_content, $header);
     }
     return 0;
   }
 
+  public function normal_email($email, $slug, $bodyReplacements, $mail_type = "mp_mail_formats")
+  {
+    $args = array(
+      'name' => $slug,
+      'post_type' => array($mail_type),
+      'post_status' => 'publish',
+      'showposts' => 1,
+      'ignore_sticky_posts' => 1,
+    );
+    $my_posts = get_posts($args);
+    if ($my_posts) {
+      $subject = $my_posts[0]->post_title;
+      $content_title = $my_posts[0]->post_title;
+
+      $body = $my_posts[0]->post_content;
+
+      foreach ($bodyReplacements as $key => $value) {
+        $subject = str_replace("{{--" . $key . "--}}", $value, html_entity_decode($subject));
+        $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+        $body = str_replace("{{--" . $key . "--}}", $value, $body);
+      }
+      $body = $bodyReplacements['tracker'] . $body;
+      
+      include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+      $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+
+      $body .= $Mp_mails_templetes_posts_div->one_time_token();
+      $body = str_replace("{{--home_url--}}", home_url(), $body);
+
+
+      
+      $header = array('Content-Type: text/html; charset=UTF-8');
+      return wp_mail($email, $subject, $body, $header);
+    }
+    return 0;
+  }
   public function account_activate_email_template($email, $slug, $bodyReplacements)
   {
     $args = array(
@@ -197,27 +233,6 @@ class Mp_mails_templetes
 
         $body = str_replace("{{--posts--}}", $Mp_mails_templetes_posts_div->posts_div($post_ids), $body);
       }
-
-      // $body = str_replace("{{--subject--}}", 'generated_token', $email_content);
-      // $email_content = str_replace("{{--content_title--}}", "<p style='margin-top: -10px;margin-left: 48px;color: #49FFB3;font-size:15px !important'>Where the future gets [sur]real", $email_content);
-      // $email_content = str_replace("{{--body--}}", $body, $email_content);
-
-      // include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
-
-      // $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
-
-      // $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
-
-
-
-      // $body = str_replace("{{--home_url--}}", home_url(), $body);
-      // $user = get_user_by( 'email', $email );
-      // if ( $user ) {
-      //   $user_id = $user->ID;
-      //   $onetime_token = wp_generate_uuid4();
-      //   add_user_meta($user_id, 'onetime_login', $onetime_token);
-      //   $body = str_replace("{{onetime_token}}", "mpredirect=".$onetime_token, $body);
-      // }
 
       $body = self::one_time_token_function($body, $email);
       
@@ -339,6 +354,36 @@ class Mp_mails_templetes
 
       return wp_mail($email, $subject, '{{ignore_9mail}}'.$email_content, $header);
     }
+  }
+
+  public function contest_announcement_template($email, $slug, $bodyReplacements)
+  {
+    $args = array(
+      'name' => $slug,
+      'post_type' => array('mp_mail_formats'),
+      'post_status' => 'publish',
+      'showposts' => 1,
+      'ignore_sticky_posts' => 1,
+    );
+    $my_posts = get_posts($args);
+
+    if ($my_posts) {
+      $subject = $my_posts[0]->post_title;
+      $content_title = $my_posts[0]->post_title;
+
+      $body = $my_posts[0]->post_content;
+
+      foreach ($bodyReplacements as $key => $value) {
+        $subject = str_replace("{{--" . $key . "--}}", $value, html_entity_decode($subject));
+        $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
+        $body = str_replace("{{--" . $key . "--}}", $value, $body);
+      }
+      
+      $header = array('Content-Type: text/html; charset=UTF-8');
+
+      return wp_mail($email, $subject, $body, $header);
+    }
+    return 0;
   }
 
 
