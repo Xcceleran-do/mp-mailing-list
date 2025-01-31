@@ -145,6 +145,7 @@ class Mp_mails_templetes
         $content_title = str_replace("{{--" . $key . "--}}", $value, $content_title);
         $body = str_replace("{{--" . $key . "--}}", $value, $body);
       }
+      $body = $bodyReplacements['tracker'] . $body;
       
       include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
 
