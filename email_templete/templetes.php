@@ -134,9 +134,6 @@ class Mp_mails_templetes
       'ignore_sticky_posts' => 1,
     );
     $my_posts = get_posts($args);
-echo "my post is ";
-echo count($my_posts);
-
     if ($my_posts) {
       $subject = $my_posts[0]->post_title;
       $content_title = $my_posts[0]->post_title;
@@ -153,19 +150,10 @@ echo count($my_posts);
 
       $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
 
-      $body = str_replace("{{--one_time_token--}}", $Mp_mails_templetes_posts_div->one_time_token(), $body);
+      $body .= $Mp_mails_templetes_posts_div->one_time_token();
       
       $header = array('Content-Type: text/html; charset=UTF-8');
-      echo "email is " . $email;
-      echo "subject is " . $subject;
-      echo "email content " . $body;
-      echo "header ";
-      print_r($header);
-      
-      $res = wp_mail($email, $subject, $body, $header);
-      echo "response is " . $res;
-      return $res;
-
+      return wp_mail($email, $subject, $body, $header);
     }
     return 0;
   }
