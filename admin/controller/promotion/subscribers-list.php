@@ -103,4 +103,42 @@ class Mp_mail_subscribers_list_Admin
 
         include_once mp_mails_PLAGIN_DIR . 'admin/partials/promotion/subscribers.php';
     }
+
+
+    public function wp_ajax_mp_add_new_subscriber(){
+        $user_email = sanitize_email($_POST['user_email']);
+        $filter_by = sanitize_text_field($_POST['sub_type']);
+
+        if($user_email){
+            $user = get_user_by('email', $user_email);
+
+            if ($user) {
+
+                $user_id = $user->ID;
+                $meta_value = get_user_meta($user_id, $filter_by, true);
+
+                if ($meta_value === "true") {
+                    // If the meta key exists and the value is "true", do nothing
+                    $message = "Already subscribed!";
+                } elseif ($meta_value === "") {
+                    // If the meta key doesn't exist, add it with the value "true"
+
+                    add_user_meta($user_id, $filter_by, "true");
+                    $message = "User added to the list!";
+                } else {
+                    // If the meta key exists but the value is not "true", update it to "true"
+                    update_user_meta($user_id, $filter_by, "true");
+                    $message = "Preference updated!";
+
+                }
+            } else {
+                $message =  "No user found with this email. '" . $user_email . "'";
+            }
+        }else
+            $message =  "wrong email";
+
+            echo $message;
+        wp_die();
+    }
+    
 }

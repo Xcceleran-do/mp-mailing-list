@@ -39,6 +39,10 @@ class Mp_mail_send_Admin
             $taxonomy = 'mp_mail_promo_types'; // Replace with your custom taxonomy slug
             $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'slugs'));
 
+            if(!$terms){
+                return;
+            }
+
             if (!is_wp_error($terms)) {
                 // Loop through the slugs and display or use them as needed
                 foreach ($terms as $slug) {
@@ -69,37 +73,16 @@ class Mp_mail_send_Admin
             // Extract the user IDs from the retrieved user objects
             foreach ($subscribers as $user) {
 
-
-            // $taxonomy = 'mp_mail_promo_temp_types'; // Replace with your custom taxonomy slug
-            // $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'ids'));
-
-            // if(count($terms))
-            // {
-            //     $templete_id = $terms[0];
-
-            //     $before_content = get_term_meta($templete_id, 'mp_mail_template_before_content', true);
-            //     $after_content = get_term_meta($templete_id, 'mp_mail_template_after_content', true);
-       
-            //     $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
-            //     $email_content = $before_content . $tracker . $post->post_content . $after_content.'</body></html>';
-
-            //     $headers = array('Content-Type: text/html; charset=UTF-8');
-            //     $is_sent = wp_mail($user->user_email, $post->post_title, $email_content, $headers);
-            //     // $is_sent = 1;
-
-            //     $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
-            // }
-
-            $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
+            $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" style="display: none;">';
             $email_content = $tracker . $post->post_content;
 
 
-      include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
-      $Mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['body1'] = $post->post_title;
-      $bodyReplacements['body2'] = $user->user_login;
-      $bodyReplacements['body3'] = $email_content;
-      $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
+            include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+            $Mp_mails_templetes = new Mp_mails_templetes();
+            $bodyReplacements['body1'] = $post->post_title;
+            $bodyReplacements['body2'] = $user->user_login;
+            $bodyReplacements['body3'] = $email_content;
+            $is_sent = $Mp_mails_templetes->normal_email($user->user_email, $post->post_name, $bodyReplacements, "mp_mail_promotions");
 
 
             $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
