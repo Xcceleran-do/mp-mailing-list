@@ -53,8 +53,10 @@ class Mp_mail_digest_public
             )
         );
         wp_enqueue_style('mp-mails-digest-page-style', mp_mails_PLAGIN_URL . 'public/css/mp-mailing-digest.css', false, '1.0', 'all');
-
+        
+        ob_start();
         include_once mp_mails_PLAGIN_DIR . 'public/partials/digest/index.php';
+        return ob_get_clean();
     }
 
     public function mp_mails_digest_homepage(){
