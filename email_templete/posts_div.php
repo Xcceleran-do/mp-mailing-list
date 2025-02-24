@@ -82,4 +82,22 @@ class Mp_mails_templetes_posts_div
 
     return $post_content;
   }
+
+
+  public function contest_unsubscribe($email){
+    $post_content = '<p style="text-align:center"><span style="font-size:20px"><a title="Mindplex_AI Twitter" href="https://twitter.com/Mindplex_AI" rel="noopener" target="_blank" ><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/twitter.png" alt="twiiter" width="24" height="24" ></a>';
+    $post_content .= '<a title="MindplexAI Facebook" href="https://www.facebook.com/MindplexAI" rel="noopener" target="_blank" ><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/facebook.png" alt="facebook" width="24" height="24" ></a>';
+    $post_content .= '<a title="MINDPLEX YouTube" href="https://www.youtube.com/channel/UCUwdBITXX-aDXgt2ZmBD-IA" rel="noopener" target="_blank" ><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/youtube.png" alt="youtube" width="24" height="24" ></a>';
+    $post_content .= ' <a title="MINDPLEX Linkedin" href="https://www.linkedin.com/company/79915299/" rel="noopener" target="_blank" ><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/linkedin.png" alt="linkedin" width="24" height="24" ></a>';
+    $post_content .= '<a title="MINDPLEX Telegram" href="https://t.me/mindplex_ai" rel="noopener" target="_blank" ><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/telegram.png" alt="telegram" width="24" height="24" style="margin-left: 7px !important;"></a></span></p>';
+
+    $post_content .= '<p style="margin-left: 35px !important;"><img src="{{--home_url--}}/wp-content/plugins/mp-mailing-list/email_templete/assets/img/Line91.png" alt="" ></p>';
+
+    $post_content .= '<p style="text-align:center; color:#ffffff !important"><span style="font-size:15px"><span style="color:#ffffff"><a style="color:#ffffff" title="Mindplex privacy" href="{{--home_url--}}/privacy-policy/" rel="noopener" target="_blank" >Privacy</a>';
+    $post_content .= '  |  <a style="color:#ffffff" title="user agreement" href="{{--home_url--}}/terms" rel="noopener" target="_blank" >User Agreement</a>';
+    $post_content .= '  |  <a style="color:#ffffff" title="unsubscribe " href="{{--home_url--}}/?unsubscribe='.$email.'" rel="noopener" target="_blank" >Unsubscribe</a></span><span style="color:#ffffff">&nbsp;</span> </span></p>
+    ';
+
+    return $post_content;
+  }
 }
