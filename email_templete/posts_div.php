@@ -95,7 +95,7 @@ class Mp_mails_templetes_posts_div
 
     $post_content .= '<p style="text-align:center; color:#ffffff !important"><span style="font-size:15px"><span style="color:#ffffff"><a style="color:#ffffff" title="Mindplex privacy" href="{{--home_url--}}/privacy-policy/" rel="noopener" target="_blank" >Privacy</a>';
     $post_content .= '  |  <a style="color:#ffffff" title="user agreement" href="{{--home_url--}}/terms" rel="noopener" target="_blank" >User Agreement</a>';
-    $post_content .= '  |  <a style="color:#ffffff" title="unsubscribe " href="{{--home_url--}}/?unsubscribe='.$email.'" rel="noopener" target="_blank" >Unsubscribe</a></span><span style="color:#ffffff">&nbsp;</span> </span></p>
+    $post_content .= '  |  <a style="color:#ffffff" title="unsubscribe " href="{{--home_url--}}/?contest-unsubscribe='.$email.'" rel="noopener" target="_blank" >Unsubscribe</a></span><span style="color:#ffffff">&nbsp;</span> </span></p>
     ';
 
     return $post_content;
