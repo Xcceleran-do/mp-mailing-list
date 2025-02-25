@@ -379,6 +379,16 @@ class Mp_mails_templetes
         $body = str_replace("{{--" . $key . "--}}", $value, $body);
       }
       
+      include_once mp_mails_PLAGIN_DIR . '/email_templete/posts_div.php';
+
+      $Mp_mails_templetes_posts_div = new Mp_mails_templetes_posts_div();
+  
+      $body = str_replace("{{--contest_footer--}}", $Mp_mails_templetes_posts_div->contest_unsubscribe(base64_encode($email)), $body);
+  
+  
+  
+      $body = str_replace("{{--home_url--}}", home_url(), $body);
+       
       $header = array('Content-Type: text/html; charset=UTF-8');
 
       return wp_mail($email, $subject, $body, $header);
