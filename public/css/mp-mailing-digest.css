@@ -9,7 +9,7 @@
 }
 
 .digest-weekly-selection {
-    width: fit-content;
+    width: 100%;
 }
 
 .digest-header h1 {
@@ -63,8 +63,15 @@
 
     }
 }
+.digest-weekly-selection  .digest-cards{
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(291px, 1fr));
+    align-self: center;
 
-.digest-cards {
+}
+
+.digest-latest-news .digest-cards {
     display: flex;
     flex-direction: row;
     padding-bottom: 40px;
@@ -322,8 +329,7 @@
 
     }
 
-
-
+    
     .digest-latest-news .digest-blog-description {
         width: 80%;
         align-self: center;
