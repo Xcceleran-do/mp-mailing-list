@@ -74,13 +74,7 @@
 }
 
 
-.digest-latest-news .digest-cards {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 40px;
-    gap: 30px;
-    flex-wrap: wrap;
-}
+
 
 .digest-card {
     color: #FCFCFC;
@@ -157,6 +151,11 @@
     margin: 0 auto;
     display: grid;
     gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 40px;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .digest-thumbnail {
