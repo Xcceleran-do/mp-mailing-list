@@ -66,13 +66,12 @@
 .digest-weekly-selection  .digest-cards,
 .digest-Discover  .digest-cards
 {
-    display: grid !important;
+    display: grid;
     gap: 30px;
-    grid-template-columns: repeat(auto-fill, minmax(291px, 1fr)) !important;
-    align-self: center !important;
+    grid-template-columns: repeat(auto-fill, minmax(291px, 1fr)) ;
+    align-self: center ;
 
 }
-
 
 
 
@@ -141,7 +140,7 @@
 }
 
 .digest-discover {
-    width: fit-content;
+    width: 100%;
     position: absolute;
 }
 
