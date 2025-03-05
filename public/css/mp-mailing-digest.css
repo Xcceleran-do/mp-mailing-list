@@ -63,13 +63,16 @@
 
     }
 }
-.digest-weekly-selection  .digest-cards{
+.digest-weekly-selection  .digest-cards,
+.digest-Discover  .digest-cards
+{
     display: grid;
     gap: 30px;
     grid-template-columns: repeat(auto-fill, minmax(291px, 1fr));
     align-self: center;
 
 }
+
 
 .digest-latest-news .digest-cards {
     display: flex;
@@ -158,6 +161,7 @@
 
 .digest-thumbnail {
     padding: 9px 0;
+    object-fit: cover;
 }
 
 .digest-latest-news .digest-card {
