@@ -67,7 +67,7 @@
 .digest-Discover  .digest-cards
 {
     display: grid;
-    gap: 30px;
+    gap: 20px;
     grid-template-columns: repeat(auto-fill, minmax(291px, 1fr)) ;
     align-self: center ;
     margin-bottom: 20px;
