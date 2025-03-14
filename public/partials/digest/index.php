@@ -100,7 +100,7 @@
                     </p>
 
                 </div>
-                <img style="width:267px; height:162px; min-width:267px; min-height:162px; border-radius:5px; object-fit:conver;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src']) ? get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src'] : $latest_img ?>">
+                <img style="width:267px; height:162px; min-width:267px; min-height:162px; border-radius:5px; object-fit:cover;" class="digest-thumbnail" src="<?php echo isset(get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src']) ? get_post_meta($lewis_latest->ID, 'thumbnail_image', true)['src'] : $latest_img ?>">
 
             </div>
         <?php } ?>

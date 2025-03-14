@@ -65,19 +65,59 @@ class Mp_mails
     }
 
     public function wp_ajax_mp_mails_save_newsletter(){
+        $response = self::mp_add_new_newsletter_email($_POST['emailValue']);
+
+        echo json_encode($response);
+
+        die();
+    }
+
+    public function mp_add_new_newsletter_email($eamil_address){
         global $table_prefix, $wpdb;
-        $subscriber_email = sanitize_email($_POST['emailValue']);
+        $subscriber_email = sanitize_email($eamil_address);
+        
+        if(empty($subscriber_email))
+            return array('status' =>'error', 'message' => 'Email required!');
+
 		$mp_mailing_list_table = $table_prefix . "mp_mailing_lists";
 		$is_email_exist = $wpdb->query($wpdb->prepare("SELECT id from $mp_mailing_list_table WHERE `email_address`=%s and mail_type= %s and deleted_at IS NULL", $subscriber_email, 'newsletter'));
 
         if($is_email_exist > 0  || email_exists( $subscriber_email )){
-            echo json_encode(array('status' =>'error', 'message' => 'Email already exist!'));
+            return array('status' =>'error', 'message' => 'Email already exist!');
         }
         else { 
 		    $insert_email = $wpdb->query($wpdb->prepare("INSERT INTO  $mp_mailing_list_table  (email_address, mail_type) values ('%s','%s')", $subscriber_email, 'newsletter'));
 
-            echo json_encode(array('status' =>'success', 'message' => $subscriber_email));
+            return array('status' =>'success', 'message' => $subscriber_email);
         }
-        die();
     }
+
+    
+  function wp_rest_add_email_to_newsletter_endpoints()
+  {
+    register_rest_route('mp_mails' . '/v1', 'newsletter-email/add', array(
+      'methods' => 'POST',
+      'callback' => array($this, 'add_new_email_to_newsletter_list'),
+      'permission_callback' => function () {
+        return true;
+      }
+    ));
+  }
+
+  function add_new_email_to_newsletter_list($request = null)
+  {
+    $email = $request->get_param('email');
+    
+    $response = self::mp_add_new_newsletter_email($email);
+    
+    if( $response['status'] == "error"){
+        return new WP_Error(
+            $response['status'],
+            __($response['message'], 'wp-rest-courses'),
+            array('status' => 400)
+        );
+    }
+
+    return new WP_REST_Response($response, 123);
+  }
 }

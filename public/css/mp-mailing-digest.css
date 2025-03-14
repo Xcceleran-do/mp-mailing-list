@@ -9,7 +9,7 @@
 }
 
 .digest-weekly-selection {
-    width: fit-content;
+    width: 100%;
 }
 
 .digest-header h1 {
@@ -63,14 +63,18 @@
 
     }
 }
+.digest-weekly-selection  .digest-cards,
+.digest-Discover  .digest-cards
+{
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(291px, 1fr)) ;
+    align-self: center ;
+    margin-bottom: 20px;
 
-.digest-cards {
-    display: flex;
-    flex-direction: row;
-    padding-bottom: 40px;
-    gap: 30px;
-    flex-wrap: wrap;
 }
+
+
 
 .digest-card {
     color: #FCFCFC;
@@ -137,7 +141,7 @@
 }
 
 .digest-discover {
-    width: fit-content;
+    width: 100%;
     position: absolute;
 }
 
@@ -147,10 +151,16 @@
     margin: 0 auto;
     display: grid;
     gap: 1rem;
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 40px;
+    gap: 30px;
+    flex-wrap: wrap;
 }
 
 .digest-thumbnail {
     padding: 9px 0;
+    object-fit: cover;
 }
 
 .digest-latest-news .digest-card {
@@ -322,8 +332,7 @@
 
     }
 
-
-
+    
     .digest-latest-news .digest-blog-description {
         width: 80%;
         align-self: center;
