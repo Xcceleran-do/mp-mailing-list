@@ -322,8 +322,8 @@
 
 @media only screen and (max-width: 927px) {
     .main-container {
-        margin-left: 50px;
-        margin-right: 50px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
 
@@ -345,7 +345,7 @@
     }
 
     .digest-footer {
-        width: fit-content;
+        width: 100%;
     }
 
 
