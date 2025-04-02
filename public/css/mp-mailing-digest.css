@@ -192,11 +192,14 @@
 }
 
 @media screen and (max-width:600px) {
-    .digest-footer {
-        justify-content: center;
-        flex-direction: column;
+   
+    .digest-card {
+        max-width: 100%;
     }
-
+    img{
+        width:100% !important;
+        object-fit: cover;
+    }
     .digest-cards {
         justify-content: center;
     }
@@ -329,7 +332,10 @@
         margin-right: 35px;
     }
 
-
+    .digest-footer {
+        justify-content: center;
+        flex-direction: column;
+    }
     .digest-latest-news .digest-card {
         display: flex;
         flex-direction: column-reverse;
@@ -346,9 +352,7 @@
         width: 80%;
         align-self: center;
     }
-    .digest-card {
-        max-width: 100%;
-    }
+ 
     .digest-footer {
         width: 100%;
     }
