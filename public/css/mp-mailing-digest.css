@@ -81,7 +81,7 @@
     font-family: Barlow;
     display: flex;
     flex-direction: column;
-    max-width: 291px;
+    max-width: 238px;
 }
 
 .digest-profile {
@@ -215,8 +215,11 @@
     margin-top: 12px;
     margin-right: 0px;
     margin-bottom: 0px;
-    display: grid;
-    grid-template-columns:repeat(auto-fill, minmax(291px, 1fr));
+    /* display: grid;
+    grid-template-columns:repeat(auto-fill, minmax(291px, 1fr)); */
+    dislay:flex;
+    flex-wrap: wrap;
+    justify-content: center;
     align-self: center;
     gap:50px;
     width:100%;
@@ -343,7 +346,9 @@
         width: 80%;
         align-self: center;
     }
-
+    .digest-card {
+        max-width: 100%;
+    }
     .digest-footer {
         width: 100%;
     }

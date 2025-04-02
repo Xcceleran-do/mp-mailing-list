@@ -127,8 +127,8 @@
 
 <div class="digest-footer">
     <div class="digest-newsletter">
-        <h2>Lewis' Choice</h2>
-        <p>"Lewis' Choice" highlights the week's most important AI stories on the latest advances and insights about AI's future.</p>
+        <h2>Mindplex's Choice</h2>
+        <p>"Mindplex's Choice" highlights the week's most important AI stories on the latest advances and insights about AI's future.</p>
 
         <p class="digest-message-txt"></p>
         <input type="text" placeholder="Email here" class="digest-email-input " value="<?php echo $is_user_subscribed ? $is_user_subscribed : ''; ?>">
