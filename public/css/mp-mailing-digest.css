@@ -49,7 +49,7 @@
 
 }
 
-@media screen and (max-width:600px) {
+@media screen and (max-width:700px) {
 
     .digest-header h1,
     .digest-weekly-selection h2,
@@ -74,15 +74,22 @@
 
 }
 
-
-
 .digest-card {
     color: #FCFCFC;
     font-family: Barlow;
     display: flex;
     flex-direction: column;
+    max-width: 291px;
+} 
+
+
+.digest-footer .digest-card {
+    color: #FCFCFC;
+    font-family: Barlow;
+    display: flex;
+    flex-direction: column;
     max-width: 238px;
-}
+} 
 
 .digest-profile {
     display: flex;
