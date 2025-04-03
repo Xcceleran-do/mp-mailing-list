@@ -36,6 +36,8 @@ class Mp_Mailing_List_Activator {
 
 		self::mp_mailing_lists_create_table();
 		self::mp_mailing_contact_create_table();
+		self::mp_mailing_group_emails_create_table();
+		self::mp_mailing_group_email_status_create_table();
 	}
 	
 	public static function mp_mailing_lists_create_table()
@@ -81,6 +83,59 @@ class Mp_Mailing_List_Activator {
 			$sql .= "  `email_address`  varchar(75) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 			$sql .= "  `message` text COLLATE utf8mb4_unicode_ci NOT NULL, ";
 			$sql .= "  `user_id` int(11), ";
+
+			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
+			$sql .= "  `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, ";
+			$sql .= "  `deleted_at` TIMESTAMP NULL DEFAULT NULL, ";
+
+			$sql .= "  PRIMARY KEY (`id`) ";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ; ";
+
+			dbDelta($sql);
+		}
+	}
+	public static function mp_mailing_group_emails_create_table()
+	{
+		global $table_prefix, $wpdb;
+
+		$wp_mp_table = $table_prefix . "mp_mailing_group_emails";
+
+		if ($wpdb->get_var("show tables like '$wp_mp_table'") != $wp_mp_table) {
+			$sql = "CREATE TABLE `" . $wp_mp_table . "` ( ";
+			$sql .= "  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ";
+
+			$sql .= "  `email_type`  varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL, "; //'article_notification', 'followers', 'mailing_list', 'opted_in', 'promotional'
+			$sql .= "  `title`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // how to identify one from another (such as article title)
+			$sql .= "  `subject`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // eg. sent to your followers
+			$sql .= "  `sent_status`  varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL, ";
+
+			$sql .= "  `user_id` int(11), ";
+
+			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
+			$sql .= "  `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, ";
+			$sql .= "  `deleted_at` TIMESTAMP NULL DEFAULT NULL, ";
+
+			$sql .= "  PRIMARY KEY (`id`) ";
+			$sql .= ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ; ";
+
+			dbDelta($sql);
+		}
+	}
+
+	public static function mp_mailing_group_email_status_create_table()
+	{
+		global $table_prefix, $wpdb;
+
+		$wp_mp_table = $table_prefix . "mp_mailing_group_email_status";
+
+		if ($wpdb->get_var("show tables like '$wp_mp_table'") != $wp_mp_table) {
+			$sql = "CREATE TABLE `" . $wp_mp_table . "` ( ";
+			$sql .= "  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ";
+
+			$sql .= "  `mailing_group_id` int(11) NOT NULL, ";
+			$sql .= "  `ses_message_id`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, ";
+			$sql .= "  `recipient_email`  varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL, ";
+			$sql .= "  `status`  varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 
 			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
 			$sql .= "  `updated_at` TIMESTAMP NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP, ";
