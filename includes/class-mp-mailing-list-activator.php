@@ -105,10 +105,11 @@ class Mp_Mailing_List_Activator {
 			$sql .= "  `id` int(10) unsigned NOT NULL AUTO_INCREMENT, ";
 
 			$sql .= "  `email_type`  varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL, "; //'article_notification', 'followers', 'mailing_list', 'opted_in', 'promotional'
-			$sql .= "  `title`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // how to identify one from another (such as article title)
-			$sql .= "  `subject`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // eg. sent to your followers
-			$sql .= "  `sent_status`  varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 
+			$sql .= "  `email_template`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // used email template id
+			$sql .= "  `object_id`  varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL, "; // is the email is post published email, the object_id is post id
+
+			$sql .= "  `sent_status`  varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL, ";
 			$sql .= "  `user_id` int(11), ";
 
 			$sql .= "  `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP, ";
