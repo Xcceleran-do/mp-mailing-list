@@ -63,49 +63,52 @@ class Mp_mail_send_Admin
                 'meta_query' => $meta_query,
             ));
 
+            self::ses_send_email("test subject", "Test body", $subscribers, "editor@mindplex.ai", "EmailTracking", 1);
+            
+
             // Create an array to store the user IDs
             $userIds = array();
 
-            // Extract the user IDs from the retrieved user objects
-            foreach ($subscribers as $user) {
+    //         // Extract the user IDs from the retrieved user objects
+    //         foreach ($subscribers as $user) {
 
 
-            // $taxonomy = 'mp_mail_promo_temp_types'; // Replace with your custom taxonomy slug
-            // $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'ids'));
+    //         // $taxonomy = 'mp_mail_promo_temp_types'; // Replace with your custom taxonomy slug
+    //         // $terms = wp_get_post_terms($post->ID, $taxonomy, array('fields' => 'ids'));
 
-            // if(count($terms))
-            // {
-            //     $templete_id = $terms[0];
+    //         // if(count($terms))
+    //         // {
+    //         //     $templete_id = $terms[0];
 
-            //     $before_content = get_term_meta($templete_id, 'mp_mail_template_before_content', true);
-            //     $after_content = get_term_meta($templete_id, 'mp_mail_template_after_content', true);
+    //         //     $before_content = get_term_meta($templete_id, 'mp_mail_template_before_content', true);
+    //         //     $after_content = get_term_meta($templete_id, 'mp_mail_template_after_content', true);
        
-            //     $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
-            //     $email_content = $before_content . $tracker . $post->post_content . $after_content.'</body></html>';
+    //         //     $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
+    //         //     $email_content = $before_content . $tracker . $post->post_content . $after_content.'</body></html>';
 
-            //     $headers = array('Content-Type: text/html; charset=UTF-8');
-            //     $is_sent = wp_mail($user->user_email, $post->post_title, $email_content, $headers);
-            //     // $is_sent = 1;
+    //         //     $headers = array('Content-Type: text/html; charset=UTF-8');
+    //         //     $is_sent = wp_mail($user->user_email, $post->post_title, $email_content, $headers);
+    //         //     // $is_sent = 1;
 
-            //     $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
-            // }
+    //         //     $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
+    //         // }
 
-            $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
-            $email_content = $tracker . $post->post_content;
-
-
-      include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
-      $Mp_mails_templetes = new Mp_mails_templetes();
-      $bodyReplacements['body1'] = $post->post_title;
-      $bodyReplacements['body2'] = $user->user_login;
-      $bodyReplacements['body3'] = $email_content;
-      $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
+    //         $tracker = '<img src="'.get_rest_url( null, 'mp_mails/v1/view-tracker/'.$user->user_login.'/'.$post->ID ).'" width="1" height="1" alt="Tracking Pixel" style="display: none;">';
+    //         $email_content = $tracker . $post->post_content;
 
 
-            $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
+    //   include_once mp_mails_PLAGIN_DIR . '/email_templete/templetes.php';
+    //   $Mp_mails_templetes = new Mp_mails_templetes();
+    //   $bodyReplacements['body1'] = $post->post_title;
+    //   $bodyReplacements['body2'] = $user->user_login;
+    //   $bodyReplacements['body3'] = $email_content;
+    //   $Mp_mails_templetes->template2($user->user_email, 'promotional-email-template', [], $bodyReplacements);
 
 
-            }
+    //         $userIds[] = array("id"=>$user->ID, "email"=>$user->user_email, 'username' => $user->user_login, 'status' => $is_sent, 'has_opened' => 0, 'opened_at' => null);
+
+
+    //         }
             
             $success = count($userIds); // temporary for now
             $sentEmails = array("success" => $success, 'all' => $userIds);
@@ -115,5 +118,33 @@ class Mp_mail_send_Admin
     }
   }
 
+  function ses_send_email($subject, $body, $subscribers, $sender, $configuration_set_name, $mailing_group_id)
+  {
+
+	  $aws_push_notification_api = "https://2uoezpjgxtjyvpw7rxytoi4rtu0tvaob.lambda-url.us-east-1.on.aws/";
+
+    //   "post_author" => get_user_meta($post_author_id, 'first_name', true),
+    //   "interacter" => get_user_meta($interacter_id, 'first_name', true),
+	  $json_data = array( 
+		"sender" => $sender,
+		"configuration_set_name" => $configuration_set_name,
+		"subject" => $subject,
+		"body" => $body,
+		"mailing_group_id" => $mailing_group_id,
+		"subscribers" => $subscribers
+		  );
+  
+	  wp_remote_post(
+		$aws_push_notification_api,
+		array(
+		  'timeout' => 10,
+		  'headers' => array(
+			'x-api-key' => get_option('mp_aws_api_getway_api_key'),
+			'Content-Type' => 'application/json'
+		  ),
+		  'body' => json_encode($json_data)
+		)
+	  );
+  }
 
 }
